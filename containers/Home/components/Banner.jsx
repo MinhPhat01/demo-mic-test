@@ -46,12 +46,11 @@ const Banner = () => {
           width: "10px !important",
         },
         "& .slick-dots li button:before": {
-          margin: "10px 0 0 0 !important",
+          margin: "-16px 0 0 0 !important",
           fontSize: "12px !important",
           color: "#B1B5C3 !important",
         },
       }}
-      className="test"
     >
       <Slider {...settings}>
         {listBanner.length > 0 &&
@@ -60,14 +59,14 @@ const Banner = () => {
               <Box
                 key={item.id}
                 ref={ref}
-                sx={{ borderRadius: "8px", width: "100%", height: "516px" }}
+                sx={{ borderRadius: "8px", width: "100%" }}
               >
                 <Image
+                  style={{ objectFit: "contain" }}
                   src={item.srcImg}
                   alt="banner1"
-                  objectFit="cover"
                   width={width}
-                  height={height}
+                  height={width / (1440 / 516)}
                 />
               </Box>
             );
