@@ -1,46 +1,30 @@
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
+import { TabContext, TabList } from "@material-ui/lab";
 import { Grid, Tab } from "@mui/material";
 import Box from "@mui/material/Box";
-import { useState } from "react";
-import ProductItem from "./ProductItem";
-
-const listTabs = [
-  {
-    id: 1,
-    name: "All items",
-  },
-  {
-    id: 2,
-    name: "Chalkboard Chalk",
-  },
-  {
-    id: 3,
-    name: "School Supplies and Student Tools",
-  },
-  {
-    id: 4,
-    name: "Art Supplies",
-  },
-  {
-    id: 5,
-    name: "School Supplies and Student Tools",
-  },
-  {
-    id: 6,
-    name: "School Supplies and Student Tools",
-  },
-];
+import { useState, useEffect } from "react";
+import SkeletonCard from "../../../components/skeletonCard/SkeletonCard";
+import { listTabs } from "../../../constant";
+import ListItem from "./ListItem";
 
 const ProductList = () => {
   const [value, setValue] = useState("1");
+  const [show, setShow] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setShow(true);
   };
 
   return (
     <Box
       sx={{
+        // height: "900px",
         mt: "40px",
         "& .MuiTabPanel-root": {
           paddingLeft: "0 !important",
@@ -75,27 +59,26 @@ const ProductList = () => {
           }}
         >
           <TabList onChange={handleChange}>
-            <Tab label="All items" value="1" />
-            <Tab label="Chalkboard Chalk" value="2" />
-            <Tab label="School Supplies and Student Tools" value="3" />
-            <Tab label="Art Supplies" value="4" />
-            <Tab label="School Supplies and Student Tools" value="5" />
-            <Tab label="Office Supplies" value="6" />
+            {listTabs.length > 0 &&
+              listTabs.map((item) => (
+                <Tab key={item.id} label={item.name} value={String(item.id)} />
+              ))}
           </TabList>
         </Box>
-
-        {listTabs.map((item) => (
-          <TabPanel key={item.id} value={String(item.id)}>
-            {item.id}
-          </TabPanel>
-        ))}
-        {/* <TabPanel value="1">
-          <Grid container spacing={4}>
-           <ProductItem /> 
+        {show ? (
+          <Grid container spacing={4} mt={"8px"}>
+            {Array(8)
+              .fill(0)
+              .map((item, index) => (
+                <SkeletonCard key={index} />
+              ))}
           </Grid>
-        </TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel> */}
+        ) : (
+          listTabs.length > 0 &&
+          listTabs.map((item) => {
+            return <ListItem key={item.id} value={item.id} />;
+          })
+        )}
       </TabContext>
     </Box>
   );

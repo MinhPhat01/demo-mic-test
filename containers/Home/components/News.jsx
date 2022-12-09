@@ -1,4 +1,5 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
+import BtnSeeMore from "../../../components/button/BtnSeeMore";
 import Title from "../../../components/title/Title";
 import Post from "./Post";
 
@@ -24,29 +25,14 @@ const News = () => {
       <Grid container sx={{ my: "12px" }} spacing={4}>
         {listNews.length > 0 &&
           listNews.map((item) => {
-            return <Post key={item.id} imgSrc={item.imgSrc} />;
+            return (
+              <Grid key={item.id} item xs={12} sm={6} md={4}>
+                <Post imgSrc={item.imgSrc} />
+              </Grid>
+            );
           })}
       </Grid>
-      <Button
-        disableRipple={true}
-        variant="contained"
-        sx={{
-          padding: "16px 24px",
-          background: "#00A859 !important",
-          borderRadius: "90px",
-          color: "#FCFCFD",
-          fontSize: "16px",
-          lineHeight: "16px",
-          fontFamily: "Lato",
-          fontWeight: "700",
-          mt: "40px",
-          position: "relative",
-          left: "50%",
-          transform: "translate(-50%,0)",
-        }}
-      >
-        See More
-      </Button>
+      <BtnSeeMore>See More</BtnSeeMore>
     </Box>
   );
 };

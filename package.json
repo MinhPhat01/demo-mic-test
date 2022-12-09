@@ -22,10 +22,13 @@
     "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.40.0",
+    "react-phone-number-input": "^3.2.13",
     "react-slick": "^0.29.0",
     "react-use": "^17.4.0",
     "react-use-measure": "^2.1.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",

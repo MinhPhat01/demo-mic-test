@@ -178,7 +178,6 @@ const Footer = () => {
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
                 <MailOutlineIcon
                   fontSize="small"
-                  F
                   sx={{ color: "white" }}
                 ></MailOutlineIcon>
                 <Typography

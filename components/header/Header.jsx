@@ -3,8 +3,8 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Search from "../search/Search";
 import Image from "next/image";
 import ChangeLanguage from "../changeLanguage/ChangeLanguage";
-import PopupState, { bindHover, bindMenu } from "material-ui-popup-state";
 import HoverPopover from "material-ui-popup-state/HoverPopover";
+import PopupState, { bindHover, bindMenu } from "material-ui-popup-state";
 import Link from "next/link";
 
 const Header = () => {
@@ -50,7 +50,7 @@ const Header = () => {
             </Typography>
           </Link>
           <Link href="/products">
-            <PopupState variant="popover" popupId="demoPopover">
+            <PopupState variant="popover" popupId="productList">
               {(popupState) => (
                 <Box>
                   <Typography
@@ -133,39 +133,45 @@ const Header = () => {
               )}
             </PopupState>
           </Link>
-          <Typography
-            sx={{
-              fontFamily: "Lato",
-              fontWeight: 700,
-              color: "#141416",
-              fontSize: "14px",
-              lineHeight: "16px",
-            }}
-          >
-            News
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Lato",
-              fontWeight: 700,
-              color: "#141416",
-              fontSize: "14px",
-              lineHeight: "16px",
-            }}
-          >
-            Gallery
-          </Typography>
-          <Typography
-            sx={{
-              fontFamily: "Lato",
-              fontWeight: 700,
-              color: "#141416",
-              fontSize: "14px",
-              lineHeight: "16px",
-            }}
-          >
-            Contact
-          </Typography>
+          <Link href="/news">
+            <Typography
+              sx={{
+                fontFamily: "Lato",
+                fontWeight: 700,
+                color: "#141416",
+                fontSize: "14px",
+                lineHeight: "16px",
+              }}
+            >
+              News
+            </Typography>
+          </Link>
+          <Link href="/gallery">
+            <Typography
+              sx={{
+                fontFamily: "Lato",
+                fontWeight: 700,
+                color: "#141416",
+                fontSize: "14px",
+                lineHeight: "16px",
+              }}
+            >
+              Gallery
+            </Typography>
+          </Link>
+          <Link href="/contact">
+            <Typography
+              sx={{
+                fontFamily: "Lato",
+                fontWeight: 700,
+                color: "#141416",
+                fontSize: "14px",
+                lineHeight: "16px",
+              }}
+            >
+              Contact
+            </Typography>
+          </Link>
         </Box>
         <Stack spacing="24px" direction="row" alignItems="center">
           <Search />
