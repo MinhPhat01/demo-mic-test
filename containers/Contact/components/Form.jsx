@@ -72,7 +72,7 @@ export default function Form() {
           type="submit"
           disableRipple={true}
           disableFocusRipple={true}
-          variant="contained"
+         
           sx={{
             fontSize: "16px",
             lineHeight: "16px",
@@ -83,8 +83,9 @@ export default function Form() {
             border: "1px solid #00A859",
             borderRadius: "8px",
             textTransform: "none",
+            background: "white",
             "&:hover": {
-              backgroundColor: "#00A859",
+              backgroundColor: "#00A859 !important",
               color: "white",
             },
           }}

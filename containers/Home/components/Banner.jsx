@@ -32,13 +32,14 @@ const Banner = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    adaptiveHeight: true
   };
-  const [ref, { width, height }] = useMeasure();
+  const [ref, { width }] = useMeasure();
 
   return (
     <Box
       sx={{
-        mt: "24px",
+        height: width / (1440 / 516),
         "& .slick-arrow": {
           display: "none !important",
         },
@@ -46,7 +47,7 @@ const Banner = () => {
           width: "10px !important",
         },
         "& .slick-dots li button:before": {
-          margin: "-16px 0 0 0 !important",
+          margin: "0 !important",
           fontSize: "12px !important",
           color: "#B1B5C3 !important",
         },
@@ -59,10 +60,14 @@ const Banner = () => {
               <Box
                 key={item.id}
                 ref={ref}
-                sx={{ borderRadius: "8px", width: "100%" }}
+                sx={{
+                  borderRadius: "8px",
+                  width: "100%",
+                  height: width / (1440 / 516),
+                }}
               >
                 <Image
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "cover", height: width / (1440 / 516) }}
                   src={item.srcImg}
                   alt="banner1"
                   width={width}
