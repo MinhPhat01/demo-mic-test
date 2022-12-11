@@ -13,7 +13,6 @@ export default function Form() {
       .string()
       .email("Please enter valid email address")
       .required("Please enter your email address"),
-
     message: yup.string().required("Please enter a message"),
   });
 
