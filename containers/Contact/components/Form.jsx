@@ -15,7 +15,6 @@ export default function Form() {
       .required("Please enter your email address"),
     message: yup.string().required("Please enter a message"),
   });
-
   const {
     control,
     handleSubmit,
