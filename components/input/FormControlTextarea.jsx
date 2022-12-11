@@ -13,16 +13,13 @@ export default function FormControlTextarea({
   name,
   placeholder,
   control,
+  error,
 }) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { onChange, value },
-        fieldState: { isDirty, error },
-        formState,
-      }) => (
+      render={({ field: { onChange, value = "" } }) => (
         <FormControl
           variant="standard"
           sx={{

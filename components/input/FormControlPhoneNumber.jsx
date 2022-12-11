@@ -1,6 +1,7 @@
 import { FormControl, FormLabel, Typography } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
 import Input from "react-phone-number-input/input";
 import InputBaseCustom from "./InputBaseCustom";
 
@@ -14,11 +15,10 @@ export default function FormControlPhoneNumber({
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { onChange, value },
-        fieldState: { isDirty, error },
-        formState,
-      }) => (
+      rules={{
+        validate: (value) => isPossiblePhoneNumber(String(value)),
+      }}
+      render={({ field: { onChange, value }, formState: { errors } }) => (
         <FormControl
           variant="standard"
           sx={{
@@ -48,16 +48,18 @@ export default function FormControlPhoneNumber({
             onChange={onChange}
             inputComponent={InputBaseCustom}
           />
-          <Typography
-            sx={{
-              mt: "10px",
-              fontSize: "12px",
-              lineHeight: "16px",
-              color: "red",
-            }}
-          >
-            {error}
-          </Typography>
+          {errors["phone"] && (
+            <Typography
+              sx={{
+                mt: "10px",
+                fontSize: "12px",
+                lineHeight: "16px",
+                color: "red",
+              }}
+            >
+              Invalid Phone
+            </Typography>
+          )}
         </FormControl>
       )}
     />

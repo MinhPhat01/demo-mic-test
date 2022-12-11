@@ -7,20 +7,18 @@ export default function FormControlInput({
   name,
   placeholder,
   control,
+  error,
 }) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { onChange, value },
-        fieldState: { isDirty, error },
-        formState,
-      }) => (
+      render={({ field: { onChange, value = "" } }) => (
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
+            mb: "10px",
             "& .Mui-focused": {
               color: "black !important",
             },

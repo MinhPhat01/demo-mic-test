@@ -13,7 +13,8 @@ export default function Form() {
       .string()
       .email("Please enter valid email address")
       .required("Please enter your email address"),
-    message: yup.string().required("Please enter a message"),
+    messageText: yup.string().required("Please enter a message"),
+    phone: yup.string().required(),
   });
   const {
     control,
@@ -26,6 +27,7 @@ export default function Form() {
   });
 
   const handleSubmitForm = (values) => {
+    console.log("🚀 ~ file: Form.jsx:24 ~ handleSubmitForm ~ values", values);
     reset({});
   };
   return (
@@ -35,6 +37,7 @@ export default function Form() {
         label="NAME"
         name="name"
         placeholder="Phat"
+        error={errors.name?.message}
       />
       <Grid container spacing={4}>
         <Grid item md={6}>
@@ -42,8 +45,8 @@ export default function Form() {
             control={control}
             label={"PHONE"}
             name={"phone"}
-            placeholder="02329329"
-          ></FormControlPhoneNumber>
+            placeholder="093292975"
+          />
         </Grid>
         <Grid item md={6}>
           <FormControlInput
@@ -51,14 +54,16 @@ export default function Form() {
             label="EMAIL"
             name="email"
             placeholder="phat@gmail.com"
+            error={errors.email?.message}
           />
         </Grid>
       </Grid>
       <FormControlTextarea
         control={control}
         label="MESSAGE"
-        name="message"
+        name="messageText"
         placeholder="I need some help..."
+        error={errors.messageText?.message}
       />
       <Box
         sx={{
