@@ -1,14 +1,10 @@
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  InputBase,
-  Typography,
-} from "@mui/material";
+import { FormControl, FormLabel, Typography } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
+import Input from "react-phone-number-input/input";
+import InputBaseCustom from "./InputBaseCustom";
 
-export default function FormControlTextarea({
+export default function FormControlPhoneNumber({
   label,
   name,
   placeholder,
@@ -26,7 +22,6 @@ export default function FormControlTextarea({
         <FormControl
           variant="standard"
           sx={{
-            mt: "10px",
             width: "100%",
             "& .Mui-focused": {
               color: "black !important",
@@ -46,28 +41,13 @@ export default function FormControlTextarea({
           >
             {label}
           </FormLabel>
-          <InputBase
-            autoComplete="off"
-            multiline={true}
-            minRows={11}
-            id={name}
-            onChange={onChange}
-            value={value}
+          <Input
+            defaultCountry="VN"
             placeholder={placeholder}
-            sx={{
-              border: "2px solid #E6E8EC",
-              borderRadius: "12px",
-              "& .MuiInputBase-input": {
-                px: "16px",
-                py: "12px",
-                fontSize: "14px",
-                lineHeight: "24px",
-                fontFamily: "Poppins",
-                fontWeight: "500",
-                color: "#777E91",
-              },
-            }}
-          ></InputBase>
+            value={value}
+            onChange={onChange}
+            inputComponent={InputBaseCustom}
+          />
           <Typography
             sx={{
               mt: "10px",
