@@ -66,13 +66,15 @@ export default function Form() {
           alignItems: "center",
           justifyContent: "end",
           mt: "20px",
+          "& .MuiButtonBase-root": {
+            backgroundColor: "white !important",
+          },
         }}
       >
         <Button
           type="submit"
           disableRipple={true}
           disableFocusRipple={true}
-         
           sx={{
             fontSize: "16px",
             lineHeight: "16px",
@@ -83,7 +85,7 @@ export default function Form() {
             border: "1px solid #00A859",
             borderRadius: "8px",
             textTransform: "none",
-            background: "white",
+            backgroundColor: "white !important",
             "&:hover": {
               backgroundColor: "#00A859 !important",
               color: "white",
