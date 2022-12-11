@@ -20,7 +20,7 @@ const Header = () => {
         }}
       >
         <Link href="/">
-          <Image src="/logo.png" alt="logo" width={115} height={80} />
+          <Image src="/logoo.png" alt="logo" width={115} height={80} />
         </Link>
         <Box sx={{ display: "flex", gap: "24px", cursor: "pointer" }}>
           <Link href="/">
