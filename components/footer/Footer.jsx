@@ -270,6 +270,7 @@ const Footer = () => {
             </Stack>
           </Grid>
           <Grid
+            item
             xs={12}
             sx={{
               [theme.breakpoints.up("md")]: {
