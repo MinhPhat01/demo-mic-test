@@ -2,14 +2,14 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const listBanner = [
   {
@@ -38,61 +38,62 @@ const listBanner = [
   },
 ];
 
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
+
 const Banner = () => {
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  // };
   const [ref, { width }] = useMeasure();
 
   return (
     <Box
-      // sx={{
-      //   maxWidth: "100%",
-
-      //   height: width / (1440 / 516),
-      //   "& .slick-arrow": {
-      //     display: "none !important",
-      //   },
-      //   "& .slick-dots li": {
-      //     width: "10px !important",
-      //   },
-      //   "& .slick-dots li button:before": {
-      //     margin: "0 !important",
-      //     fontSize: "12px !important",
-      //     color: "#B1B5C3 !important",
-      //   },
-      // }}
+      ref={ref}
       sx={{
-        "& .swiper-pagination-bullet": {
-          width: "12px",
-          height: "12px",
-          backgroundColor: "#E6E8EC",
-        },
+        width: "100%",
 
-        "& .swiper-pagination": {
-          position: "static",
-          mt: "20px",
+        height: width / (1440 / 516),
+        "& .slick-arrow": {
+          display: "none !important",
         },
-        "& .swiper-pagination-bullet-active": {
-          backgroundColor: "#B1B5C4",
+        "& .slick-dots li": {
+          width: "10px !important",
+        },
+        "& .slick-dots li button:before": {
+          margin: "0 !important",
+          fontSize: "12px !important",
+          color: "#B1B5C3 !important",
         },
       }}
+      // sx={{
+      //   "& .swiper-pagination-bullet": {
+      //     width: "12px",
+      //     height: "12px",
+      //     backgroundColor: "#E6E8EC",
+      //   },
+
+      //   "& .swiper-pagination": {
+      //     position: "static",
+      //     mt: "20px",
+      //   },
+      //   "& .swiper-pagination-bullet-active": {
+      //     backgroundColor: "#B1B5C4",
+      //   },
+      // }}
     >
-      {/* <Slider {...settings}>
+      <Slider {...settings}>
         {listBanner.length > 0 &&
           listBanner.map((item) => {
             return (
               <Box
                 key={item.id}
-                ref={ref}
                 sx={{
                   borderRadius: "8px",
                   width: "100%",
-                  height: width / (1440 / 516),
+                  // height: width / (1440 / 516),
                 }}
               >
                 <Image
@@ -109,8 +110,8 @@ const Banner = () => {
               </Box>
             );
           })}
-      </Slider> */}
-      <Swiper loop={true} pagination={true} modules={[Pagination]}>
+      </Slider>
+      {/* <Swiper loop={true} pagination={true} modules={[Pagination]}>
         {listBanner.length > 0 &&
           listBanner.map((item) => {
             return (
@@ -139,7 +140,7 @@ const Banner = () => {
               </SwiperSlide>
             );
           })}
-      </Swiper>
+      </Swiper> */}
     </Box>
   );
 };

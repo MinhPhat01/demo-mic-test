@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 import Title from "../../../components/title/Title";
 
 export default function Content({ title, widthTitle }) {
+  const theme = useTheme();
   const [ref, { width }] = useMeasure();
   return (
     <Box>
@@ -38,6 +39,11 @@ export default function Content({ title, widthTitle }) {
             fontFamily: "Poppins",
             fontWeight: "400",
             color: "#141416",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "16px",
+              fontWeight: "24px",
+              textAlign: "justify",
+            },
           }}
         >
           {`
@@ -73,6 +79,11 @@ export default function Content({ title, widthTitle }) {
             fontFamily: "Poppins",
             fontWeight: "400",
             color: "#141416",
+            [theme.breakpoints.down("md")]: {
+              fontSize: "16px",
+              fontWeight: "24px",
+              textAlign: "justify",
+            },
           }}
         >
           {`

@@ -7,7 +7,7 @@ import { useMeasure } from "react-use";
 export default function ProductItem({ pieces, id }) {
   const [ref, { width }] = useMeasure();
   return (
-    <Grid item md={3}>
+    <Grid item xs={6} md={3}>
       <Link href={`products/${id}`}>
         <Box sx={{ cursor: "pointer" }}>
           <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>

@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function OurValue() {
-  const [ref, { width }] = useMeasure();
+  const [ref, { width, height }] = useMeasure();
   const theme = useTheme();
 
   const settings = {
@@ -23,7 +23,7 @@ export default function OurValue() {
         breakpoint: 600,
         settings: {
           infinite: true,
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
         },
       },
@@ -39,13 +39,24 @@ export default function OurValue() {
   return (
     <Box sx={{ my: "40px" }}>
       <Title title={"Our Value"} widthText="120px" />
-      <Box ref={ref} sx={{ width: "100%", mt: "20px", position: "relative" }}>
+      <Box
+        ref={ref}
+        sx={{
+          width: "100%",
+          mt: "20px",
+          position: "relative",
+          height: (width * 9) / 16,
+          [theme.breakpoints.down("md")]: {
+            height: width / 622 / 311,
+          },
+        }}
+      >
         <Image
           src="/board.png"
           width={width}
           alt="board"
-          height={(width * 9) / 16}
-          style={{ objectFit: "cover" }}
+          height={height}
+          style={{ objectFit: "cover", height: height }}
         ></Image>
         <Box
           sx={{
@@ -96,7 +107,6 @@ export default function OurValue() {
                   color: "#FCFCFD",
                   mb: "40px",
                   textAlign: "center",
-                  [theme.breakpoints.down("md")]: {},
                 }}
               >
                 Value 2

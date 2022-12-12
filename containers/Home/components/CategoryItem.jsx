@@ -8,7 +8,7 @@ const CategoryItem = ({ imgSrc, imgName }) => {
   const [ref, { width }] = useMeasure();
 
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12} sm={6}>
       <Box
         sx={{
           padding: "12px",

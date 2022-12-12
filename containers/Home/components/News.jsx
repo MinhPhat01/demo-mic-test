@@ -26,7 +26,7 @@ const News = () => {
         {listNews.length > 0 &&
           listNews.map((item) => {
             return (
-              <Grid key={item.id} item xs={12} sm={6} md={4}>
+              <Grid key={item.id} item xs={12} md={4}>
                 <Post imgSrc={item.imgSrc} />
               </Grid>
             );

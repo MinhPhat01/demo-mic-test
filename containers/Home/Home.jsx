@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React, { Fragment } from "react";
 import Banner from "./components/Banner";
 import News from "./components/News";

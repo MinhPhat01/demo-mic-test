@@ -8,7 +8,12 @@ const ChangeLanguage = () => {
     setShow(!show);
   };
   return (
-    <Box sx={{ cursor: "pointer" }} onClick={handleChangeLang}>
+    <Box
+      sx={{
+        cursor: "pointer",
+      }}
+      onClick={handleChangeLang}
+    >
       {show ? (
         <Image alt="en" src="/en1.png" width={24} height={16}></Image>
       ) : (

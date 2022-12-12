@@ -1,4 +1,11 @@
-import { Box, Container, MenuItem, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  MenuItem,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Search from "../search/Search";
 import Image from "next/image";
@@ -6,23 +13,35 @@ import ChangeLanguage from "../changeLanguage/ChangeLanguage";
 import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindMenu } from "material-ui-popup-state";
 import Link from "next/link";
+import HeaderMobile from "./HeaderMobile";
 
 const Header = () => {
+  const theme = useTheme();
   return (
     <Container maxWidth="lg" sx={{ px: "0px", mb: "24px" }}>
       <Box
         sx={{
           display: "flex",
-          gap: "40px",
           alignItems: "center",
           justifyContent: "space-between",
           py: "24px",
+          [theme.breakpoints.down("md")]: {
+            display: "none",
+          },
         }}
       >
-        <Link href="/">
-          <Image src="/logo.png" alt="logo" width={115} height={80} />
-        </Link>
-        <Box sx={{ display: "flex", gap: "24px", cursor: "pointer" }}>
+        <Box>
+          <Link href="/">
+            <Image src="/logo.png" alt="logo" width={115} height={80} />
+          </Link>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            gap: "24px",
+            cursor: "pointer",
+          }}
+        >
           <Link href="/">
             <Typography
               sx={{
@@ -52,21 +71,27 @@ const Header = () => {
           <Link href="/products">
             <PopupState variant="popover" popupId="productList">
               {(popupState) => (
-                <Box>
-                  <Typography
-                    {...bindHover(popupState)}
+                <Box {...bindHover(popupState)} sx={{ pb: "10px" }}>
+                  <Box
                     sx={{
-                      fontFamily: "Lato",
-                      fontWeight: 700,
-                      color: "#141416",
-                      fontSize: "14px",
-                      lineHeight: "16px",
-                      pb: "10px",
+                      display: "flex",
+                      alignItems: "flex-start",
+                      columnGap: "2px",
                     }}
                   >
-                    Product
+                    <Typography
+                      sx={{
+                        fontFamily: "Lato",
+                        fontWeight: 700,
+                        color: "#141416",
+                        fontSize: "14px",
+                        lineHeight: "16px",
+                      }}
+                    >
+                      Product
+                    </Typography>
                     <KeyboardArrowDownIcon fontSize="sm"></KeyboardArrowDownIcon>
-                  </Typography>
+                  </Box>
                   <HoverPopover
                     sx={{
                       "& .MuiPaper-root": {
@@ -173,11 +198,13 @@ const Header = () => {
             </Typography>
           </Link>
         </Box>
+
         <Stack spacing="24px" direction="row" alignItems="center">
           <Search />
           <ChangeLanguage />
         </Stack>
       </Box>
+      <HeaderMobile />
     </Container>
   );
 };

@@ -1,4 +1,11 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import MapIcon from "@mui/icons-material/Map";
@@ -8,20 +15,46 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import Map from "../map/Map";
 
 const Footer = () => {
+  const theme = useTheme();
   return (
     <Box sx={{ background: "#00A859", width: "100%" }}>
       <Container sx={{ pt: "80px" }}>
-        <Stack
-          direction="row"
-          justifyContent="space-around"
-          sx={{ mb: "48px" }}
+        <Grid
+          container
+          sx={{
+            mb: "48px",
+            [theme.breakpoints.down("md")]: {
+              rowGap: "40px",
+            },
+          }}
         >
-          <Box>
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                pb: "32px",
+                borderBottom: "1px solid #F4F5F6",
+              },
+            }}
+          >
             <Image src="/logo.png" alt="logo" width={115} height={80}></Image>
-          </Box>
-          <Stack direction="column">
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                pb: "32px",
+                borderBottom: "1px solid #F4F5F6",
+              },
+            }}
+          >
             <Typography
               variant="h3"
               sx={{
@@ -35,7 +68,7 @@ const Footer = () => {
             >
               Menu
             </Typography>
-            <Stack direction={"column"} spacing={2}>
+            <Stack direction={"column"} rowGap={4}>
               <Typography
                 variant="p"
                 sx={{
@@ -73,8 +106,17 @@ const Footer = () => {
                 Gallery
               </Typography>
             </Stack>
-          </Stack>
-          <Stack direction="column">
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={3}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                display: "none",
+              },
+            }}
+          >
             <Typography
               variant="h3"
               sx={{
@@ -139,8 +181,19 @@ const Footer = () => {
                 Art Supplies
               </Typography>
             </Stack>
-          </Stack>
-          <Stack direction="column">
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={4}
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                pb: "32px",
+                borderBottom: "1px solid #F4F5F6",
+              },
+            }}
+          >
             <Typography
               variant="h3"
               sx={{
@@ -215,8 +268,18 @@ const Footer = () => {
                 <TwitterIcon sx={{ color: "white" }}></TwitterIcon>
               </Stack>
             </Stack>
-          </Stack>
-        </Stack>
+          </Grid>
+          <Grid
+            xs={12}
+            sx={{
+              [theme.breakpoints.up("md")]: {
+                display: "none",
+              },
+            }}
+          >
+            <Map />
+          </Grid>
+        </Grid>
         <Box
           sx={{
             width: "100%",
@@ -226,8 +289,30 @@ const Footer = () => {
             fontSize: "12px",
             lineHeight: "20px",
             fontFamily: "Poppins",
+            [theme.breakpoints.down("md")]: {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            },
           }}
         >
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing="12px"
+            sx={{
+              mb: "10px",
+              [theme.breakpoints.up("md")]: {
+                display: "none",
+              },
+            }}
+          >
+            <FacebookIcon sx={{ color: "white" }}></FacebookIcon>
+            <InstagramIcon sx={{ color: "white" }}></InstagramIcon>
+            <LinkedInIcon sx={{ color: "white" }}></LinkedInIcon>
+            <TwitterIcon sx={{ color: "white" }}></TwitterIcon>
+          </Stack>
           Copyright © 2022 MINH DUC. All rights reserved
         </Box>
       </Container>

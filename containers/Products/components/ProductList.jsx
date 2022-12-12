@@ -24,7 +24,6 @@ const ProductList = () => {
   return (
     <Box
       sx={{
-        // height: "900px",
         mt: "40px",
         "& .MuiTabPanel-root": {
           paddingLeft: "0 !important",
@@ -58,12 +57,18 @@ const ProductList = () => {
             },
           }}
         >
-          <TabList onChange={handleChange}>
-            {listTabs.length > 0 &&
-              listTabs.map((item) => (
-                <Tab key={item.id} label={item.name} value={String(item.id)} />
-              ))}
-          </TabList>
+          <Box sx={{ overflowX: "scroll" }}>
+            <TabList onChange={handleChange}>
+              {listTabs.length > 0 &&
+                listTabs.map((item) => (
+                  <Tab
+                    key={item.id}
+                    label={item.name}
+                    value={String(item.id)}
+                  />
+                ))}
+            </TabList>
+          </Box>
         </Box>
         {show ? (
           <Grid container spacing={4} mt={"8px"}>
