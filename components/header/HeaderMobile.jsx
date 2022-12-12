@@ -1,9 +1,10 @@
-import { Box, Link, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import Search from "../search/Search";
 import MenuMobile from "./MenuMobile";
+import Link from "next/link";
 
 export default function HeaderMobile() {
   const [show, setShow] = useState(true);

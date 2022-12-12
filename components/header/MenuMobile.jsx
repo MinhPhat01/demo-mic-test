@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import Image from "next/image";
+import ChangeLanguage from "../changeLanguage/ChangeLanguage";
 
 const listMenu = [
   { id: 1, name: "home", src: "/" },
@@ -16,6 +17,11 @@ const listMenu = [
 const MenuMobile = ({ setShow, show }) => {
   const theme = useTheme();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const handleClick = (index) => () => {
+    setSelectedIndex(index);
+    setShow(!show);
+  };
+
   return (
     <Box
       sx={{
@@ -51,7 +57,7 @@ const MenuMobile = ({ setShow, show }) => {
             return (
               <Link href={`${item.src}`} key={item.id}>
                 <Box
-                  onClick={() => setSelectedIndex(index)}
+                  onClick={handleClick(index)}
                   sx={{
                     fontSize: "14px",
                     lineHeight: "16px",
@@ -75,6 +81,7 @@ const MenuMobile = ({ setShow, show }) => {
             );
           })}
       </Box>
+      <ChangeLanguage />
     </Box>
   );
 };

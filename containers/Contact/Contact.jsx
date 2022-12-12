@@ -1,4 +1,11 @@
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import Title from "../../components/title/Title";
 import MapIcon from "@mui/icons-material/Map";
@@ -12,15 +19,24 @@ import Form from "./components/Form";
 import Map from "../../components/map/Map";
 
 export default function Contact() {
+  const theme = useTheme();
   return (
     <Container sx={{ mb: "38px" }}>
-      <Title title="CONTACT US" widthText="160px"></Title>
+      <Title title="CONTACT US" widthText="160px" heightProps={10}></Title>
       <Grid container sx={{ mt: "40px" }} columnSpacing={4}>
-        <Grid item md={6}>
+        <Grid
+          item
+          md={6}
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              display: "none",
+            },
+          }}
+        >
           <Map />
           <Box sx={{ mt: "28px" }}>
             <Stack direction={"column"} spacing={1}>
-              <Stack fontSize="small" direction={"row"} alignItems={"center"}>
+              <Stack fontSize="small" direction={"row"} alignItems={"center"} spacing={1}>
                 <MapIcon sx={{ color: "#23262F" }}></MapIcon>
                 <Typography
                   variant="p"
@@ -35,7 +51,7 @@ export default function Contact() {
                   373A Tran Phu St, Ward 8, District 5, HCM City
                 </Typography>
               </Stack>
-              <Stack direction={"row"} alignItems={"center"}>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <MailOutlineIcon
                   fontSize="small"
                   sx={{ color: "#23262F" }}
@@ -53,7 +69,7 @@ export default function Contact() {
                   vanphong@tbgdphanmic.vn
                 </Typography>
               </Stack>
-              <Stack direction={"row"} alignItems={"center"}>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <PhoneIcon
                   fontSize="small"
                   sx={{ color: "#23262F" }}
@@ -80,7 +96,7 @@ export default function Contact() {
             </Stack>
           </Box>
         </Grid>
-        <Grid item md={6}>
+        <Grid item xs={12} md={6}>
           <Typography
             sx={{
               fontSize: "16px",

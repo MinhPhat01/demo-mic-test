@@ -38,6 +38,7 @@ export default function FormControlInput({
             {label}
           </FormLabel>
           <InputBase
+            autoComplete="off"
             id={name}
             onChange={onChange}
             value={value}

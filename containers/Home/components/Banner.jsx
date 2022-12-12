@@ -91,6 +91,7 @@ const Banner = () => {
               <Box
                 key={item.id}
                 sx={{
+                  userSelect: "none",
                   borderRadius: "8px",
                   width: "100%",
                   // height: width / (1440 / 516),

@@ -1,4 +1,11 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -25,6 +32,7 @@ import useMeasure from "react-use-measure";
 import Image from "next/image";
 
 export default function ProductDetails() {
+  const theme = useTheme();
   const [ref, { width }] = useMeasure();
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
   const [nav1, setNav1] = useState();
@@ -37,6 +45,23 @@ export default function ProductDetails() {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          infinite: true,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   useEffect(() => {
     setNav1(slider1.current);
@@ -46,7 +71,7 @@ export default function ProductDetails() {
   return (
     <Container sx={{ mb: "108px" }}>
       <Grid container columnSpacing={4}>
-        <Grid item md={6}>
+        <Grid item xs={12} md={6}>
           <Box sx={{ cursor: "pointer" }}>
             <Slider asNavFor={nav2} ref={slider1}>
               {listImgLarge.length > 0 &&
@@ -72,7 +97,7 @@ export default function ProductDetails() {
             </Slider>
           </Box>
         </Grid>
-        <Grid item md={6}>
+        <Grid xs={12} item md={6}>
           <Typography
             variant="h5"
             sx={{
@@ -81,6 +106,11 @@ export default function ProductDetails() {
               fontWeight: "600",
               fontFamily: "Poppins",
               color: "#23262",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "32px",
+                lineHeight: "40px",
+                mt: "30px",
+              },
             }}
           >
             Chalkboard Chalk
@@ -94,6 +124,10 @@ export default function ProductDetails() {
               fontFamily: "Poppins",
               color: "#00A859",
               my: "16px",
+              [theme.breakpoints.down("md")]: {
+                fontSize: "16px",
+                lineHeight: "24px",
+              },
             }}
           >
             Specification: 10 pieces/box
@@ -170,16 +204,16 @@ export default function ProductDetails() {
             </Menu>
           </Box>
         </Grid>
-        <Grid item md={12} sx={{ mt: "88px" }}>
-          <Title title={"RELATED PRODUCT"} widthText="240px"></Title>
-          <Box mt={"24px"}>
-            <Slider {...settings}>
-              {listItem.length > 0 &&
-                listItem.map((item) => {
-                  return <ProductItemV2 key={item.id} pieces={item.pieces} />;
-                })}
-            </Slider>
+        <Grid item xs={12} sx={{ mt: "88px" }}>
+          <Box sx={{ mb: "24px" }}>
+            <Title title={"RELATED PRODUCT"} widthText="240px" heightProps={32}></Title>
           </Box>
+          <Slider {...settings}>
+            {listItem.length > 0 &&
+              listItem.map((item) => {
+                return <ProductItemV2 key={item.id} pieces={item.pieces} />;
+              })}
+          </Slider>
         </Grid>
       </Grid>
     </Container>

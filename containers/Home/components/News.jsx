@@ -21,7 +21,7 @@ const listNews = [
 const News = () => {
   return (
     <Box sx={{ mt: "24px", mb: "46px" }}>
-      <Title title="News" widthText="60px" />
+      <Title title="News" widthText="140px" heightProps={10} />
       <Grid container sx={{ my: "12px" }} spacing={4}>
         {listNews.length > 0 &&
           listNews.map((item) => {

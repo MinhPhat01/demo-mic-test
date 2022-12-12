@@ -4,6 +4,7 @@ import React, { forwardRef } from "react";
 const InputBaseCustom = (props, ref) => {
   return (
     <InputBase
+      autoComplete="off"
       inputRef={ref}
       {...props}
       sx={{

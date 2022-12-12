@@ -8,12 +8,12 @@ import Post from "../Home/components/Post";
 export default function News() {
   return (
     <Container sx={{ mb: "98px" }}>
-      <Title title={"OUR NEWS"} widthText="140px"></Title>
+      <Title title={"OUR NEWS"} widthText="140px" heightProps={10}></Title>
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {Array(6)
           .fill(0)
           .map((item, index) => (
-            <Grid key={index} item md={4}>
+            <Grid key={index} item xs={12} md={4}>
               <Link href={`/news/${index + 1}`}>
                 <Post />
               </Link>

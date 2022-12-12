@@ -28,7 +28,7 @@ const listCategories = [
 const OurCategories = () => {
   return (
     <Box sx={{ mt: "60px" }}>
-      <Title title="Our Categories" />
+      <Title title="Our Categories" widthText={"170px"} heightProps={20} />
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {listCategories.length > 0 &&
           listCategories.map((item) => {

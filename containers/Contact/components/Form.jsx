@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import FormControlInput from "../../../components/input/FormControlInput";
 import FormControlPhoneNumber from "../../../components/input/FormControlPhoneNumber";
@@ -6,16 +6,18 @@ import FormControlTextarea from "../../../components/input/FormControlTextarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+const schema = yup.object({
+  name: yup.string().required("Please enter your name"),
+  email: yup
+    .string()
+    .email("Please enter valid email address")
+    .required("Please enter your email address"),
+  messageText: yup.string().required("Please enter a message"),
+  phone: yup.string().required(),
+});
+
 export default function Form() {
-  const schema = yup.object({
-    name: yup.string().required("Please enter your name"),
-    email: yup
-      .string()
-      .email("Please enter valid email address")
-      .required("Please enter your email address"),
-    messageText: yup.string().required("Please enter a message"),
-    phone: yup.string().required(),
-  });
+  const theme = useTheme();
   const {
     control,
     handleSubmit,
@@ -40,7 +42,7 @@ export default function Form() {
         error={errors.name?.message}
       />
       <Grid container spacing={4}>
-        <Grid item md={6}>
+        <Grid item xs={6}>
           <FormControlPhoneNumber
             control={control}
             label={"PHONE"}
@@ -48,7 +50,7 @@ export default function Form() {
             placeholder="093292975"
           />
         </Grid>
-        <Grid item md={6}>
+        <Grid item xs={6}>
           <FormControlInput
             control={control}
             label="EMAIL"
@@ -73,6 +75,9 @@ export default function Form() {
           mt: "20px",
           "& .MuiButtonBase-root": {
             backgroundColor: "white !important",
+          },
+          [theme.breakpoints.down("md")]: {
+            justifyContent: "center",
           },
         }}
       >

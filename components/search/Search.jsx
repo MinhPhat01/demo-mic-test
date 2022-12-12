@@ -1,21 +1,22 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, useTheme } from "@mui/material";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { Box, InputBase, useTheme } from "@mui/material";
 
 const Search = () => {
   const theme = useTheme();
   return (
     <Box>
-      <OutlinedInput
+      <InputBase
         placeholder="Search..."
         type="text"
-        endAdornment={<SearchIcon sx={{ color: "#777E90" }} />}
+        endAdornment={<SearchIcon sx={{ color: "#777E90", cursor: 'pointer' }} />}
         sx={{
+          border: "2px solid #E6E8EC",
+          borderRadius: "8px",
+          px: "10px",
           width: 256,
           [theme.breakpoints.down("md")]: {
             width: "100%",
           },
-
           "& .MuiInputBase-input": {
             color: "#777E91",
             fontSize: "12px",
@@ -24,11 +25,8 @@ const Search = () => {
             fontFamily: "Poppins",
             padding: "12px 10px",
           },
-          "& .Mui-focused.MuiOutlinedInput-notchedOutline": {
-            // border: "red",
-          },
         }}
-      ></OutlinedInput>
+      ></InputBase>
     </Box>
   );
 };

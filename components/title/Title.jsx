@@ -3,10 +3,10 @@ import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-const Title = ({ title, widthText = "170px" }) => {
+const Title = ({ title, widthText , heightProps = 0 }) => {
   const [ref, { width, height }] = useMeasure();
   const widthImg = width + 80;
-  const heightImg = height + 80;
+  const heightImg = height + heightProps;
 
   return (
     <Box
@@ -21,7 +21,7 @@ const Title = ({ title, widthText = "170px" }) => {
         height={heightImg}
         alt="frame"
         src="/frame.png"
-        style={{ objectFit: "cover" }}
+        style={{ objectFit: "cover", height: heightImg }}
       ></Image>
       <Typography
         ref={ref}

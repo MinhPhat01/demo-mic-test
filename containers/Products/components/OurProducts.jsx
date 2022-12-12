@@ -7,7 +7,7 @@ import ProductList from "./ProductList";
 export default function OurProducts() {
   return (
     <Box sx={{ mb: "100px" }}>
-      <Title title={"OUR PRODUCT"} widthText="190px"></Title>
+      <Title title={"OUR PRODUCT"} widthText="190px" heightProps={24}></Title>
       <ProductList></ProductList>
       <BtnSeeMore>See More</BtnSeeMore>
     </Box>

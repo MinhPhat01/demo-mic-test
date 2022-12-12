@@ -1,36 +1,37 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { TabContext } from "@material-ui/lab";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import React, { useState } from "react";
-import { Box } from "@mui/material";
-import TabPanel from "../../components/tabs/TabPanel";
+import React from "react";
+import Typography from "@mui/material/Typography";
+import HoverPopover from "material-ui-popup-state/HoverPopover";
+import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
-export default function index() {
-  const [value, setValue] = useState(2);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+const HoverPopoverPopupState = ({  }) => (
+  <PopupState variant="popover" popupId="demoPopover">
+    {(popupState) => (
+      <div>
+        <Typography {...bindHover(popupState)}>
+          Hover with a Popover.
+        </Typography>
+        <HoverPopover
+          {...bindPopover(popupState)}
 
-  return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label="Item One" />
-          <Tab label="Item Two" />
-          <Tab label="Item Three" />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </Box>
-  );
-}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Typography>The content of the Popover.</Typography>
+          <Typography>The content of the Popover.</Typography>
+          <Typography>The content of the Popover.</Typography>
+        </HoverPopover>
+      </div>
+    )}
+  </PopupState>
+);
+
+
+
+export default HoverPopoverPopupState

@@ -67,7 +67,6 @@ const ProductList = () => {
               display: "none",
             },
           }}
-          className="sksjfkajgpksaga"
         >
           {listTabs.length > 0 &&
             listTabs.map((item) => <Tab key={item.id} label={item.name}></Tab>)}
