@@ -1,10 +1,5 @@
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import useSWR from "swr";
+import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
 import Search from "../search/Search";
 import Image from "next/image";
 import ChangeLanguage from "../changeLanguage/ChangeLanguage";
@@ -12,8 +7,13 @@ import Link from "next/link";
 import HeaderMobile from "./HeaderMobile";
 import MenuProduct from "./MenuProduct";
 
-const Header = () => {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export default function Header() {
   const theme = useTheme();
+  const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
+  if (!data) return null;
+
   return (
     <Container maxWidth="lg" sx={{ px: "0px", mb: "24px" }}>
       <Box
@@ -29,7 +29,7 @@ const Header = () => {
       >
         <Box>
           <Link href="/">
-            <Image src="/logo.png" alt="logo" width={115} height={80} />
+            <Image src={data.logo} alt="logo" width={115} height={80} />
           </Link>
         </Box>
         <Box
@@ -117,6 +117,4 @@ const Header = () => {
       <HeaderMobile />
     </Container>
   );
-};
-
-export default Header;
+}

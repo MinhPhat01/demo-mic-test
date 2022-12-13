@@ -1,3 +1,7 @@
+export const LIMIT = {
+  LIMIT_NEWS: 6,
+};
+
 export const listImgLarge = [
   {
     id: 1,

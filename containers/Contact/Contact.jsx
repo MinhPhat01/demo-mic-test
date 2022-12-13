@@ -36,7 +36,12 @@ export default function Contact() {
           <Map />
           <Box sx={{ mt: "28px" }}>
             <Stack direction={"column"} spacing={1}>
-              <Stack fontSize="small" direction={"row"} alignItems={"center"} spacing={1}>
+              <Stack
+                fontSize="small"
+                direction={"row"}
+                alignItems={"center"}
+                spacing={1}
+              >
                 <MapIcon sx={{ color: "#23262F" }}></MapIcon>
                 <Typography
                   variant="p"

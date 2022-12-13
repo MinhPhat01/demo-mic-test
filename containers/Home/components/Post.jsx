@@ -1,10 +1,15 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { format, parseISO } from "date-fns";
+import DOMPurify from "dompurify";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-const Post = ({ imgSrc }) => {
+const Post = ({ imgSrc, title, date, content }) => {
   const [ref, { width }] = useMeasure();
+  const filterContent = content?.filter(
+    (item) => item.block_type === "content"
+  );
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -26,9 +31,14 @@ const Post = ({ imgSrc }) => {
           fontWeight: "600",
           fontFamily: "Poppins",
           color: " #00A859",
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: 2,
+          overflow: "hidden",
+          minHeight: "64px",
         }}
       >
-        Awesome collection
+        {title}
       </Typography>
       <Box
         sx={{
@@ -48,23 +58,28 @@ const Post = ({ imgSrc }) => {
             fontWeight: "700",
           }}
         >
-          26/10/2022
+          {format(parseISO(date), "dd/mm/yyyy")}
         </Typography>
       </Box>
       <Typography
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(filterContent[0].value, {
+            USE_PROFILES: { p: true },
+          }),
+        }}
         sx={{
           color: "#777E91",
           fontSize: "16px",
           lineHeight: "24px",
           fontFamily: "Poppins",
           textAlign: "justify",
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: 4,
+          overflow: "hidden",
+          minHeight: "96px",
         }}
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry s standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book.
-      </Typography>
+      ></Typography>
     </Box>
   );
 };

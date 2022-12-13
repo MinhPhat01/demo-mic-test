@@ -5,6 +5,9 @@ import FormControlPhoneNumber from "../../../components/input/FormControlPhoneNu
 import FormControlTextarea from "../../../components/input/FormControlTextarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { isPossiblePhoneNumber } from "react-phone-number-input";
+import axios from "axios";
+import { useCallback } from "react";
 
 const schema = yup.object({
   name: yup.string().required("Please enter your name"),
@@ -12,41 +15,52 @@ const schema = yup.object({
     .string()
     .email("Please enter valid email address")
     .required("Please enter your email address"),
-  messageText: yup.string().required("Please enter a message"),
-  phone: yup.string().required(),
+  message: yup.string().required("Please enter a message"),
+  phone_number: yup.string().test({
+    test(value, ctx) {
+      if (!isPossiblePhoneNumber(String(value))) {
+        return ctx.createError({ message: "Phone Number is not valid" });
+      }
+      return true;
+    },
+  }),
 });
 
 export default function Form() {
   const theme = useTheme();
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
+  const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+      phone_number: "",
+    },
   });
 
-  const handleSubmitForm = (values) => {
-    console.log("🚀 ~ file: Form.jsx:24 ~ handleSubmitForm ~ values", values);
-    reset({});
-  };
+  const onSubmit = useCallback(async (values) => {
+    const headers = {
+      Authorization: process.env.NEXT_PUBLIC_API_KEY,
+    };
+    await axios.post("https://mic.t-solution.vn/api/v2/submissions/", values, {
+      headers,
+    });
+    reset();
+  }, []);
   return (
-    <Box component="form" onSubmit={handleSubmit(handleSubmitForm)}>
+    <Box component="form">
       <FormControlInput
         control={control}
         label="NAME"
         name="name"
         placeholder="Phat"
-        error={errors.name?.message}
       />
       <Grid container spacing={4}>
         <Grid item xs={6}>
           <FormControlPhoneNumber
             control={control}
             label={"PHONE"}
-            name={"phone"}
+            name={"phone_number"}
             placeholder="093292975"
           />
         </Grid>
@@ -56,16 +70,14 @@ export default function Form() {
             label="EMAIL"
             name="email"
             placeholder="phat@gmail.com"
-            error={errors.email?.message}
           />
         </Grid>
       </Grid>
       <FormControlTextarea
         control={control}
         label="MESSAGE"
-        name="messageText"
+        name="message"
         placeholder="I need some help..."
-        error={errors.messageText?.message}
       />
       <Box
         sx={{
@@ -83,6 +95,7 @@ export default function Form() {
       >
         <Button
           type="submit"
+          onClick={handleSubmit(onSubmit)}
           disableRipple={true}
           disableFocusRipple={true}
           sx={{

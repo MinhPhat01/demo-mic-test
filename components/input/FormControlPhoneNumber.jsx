@@ -15,10 +15,10 @@ export default function FormControlPhoneNumber({
     <Controller
       control={control}
       name={name}
-      rules={{
-        validate: (value) => isPossiblePhoneNumber(String(value)),
-      }}
-      render={({ field: { onChange, value }, formState: { errors } }) => (
+      // rules={{
+      //   validate: (value) => isPossiblePhoneNumber(String(value)),
+      // }}
+      render={({ field: { onChange, value }, fieldState: { error}}) => (
         <FormControl
           variant="standard"
           sx={{
@@ -48,18 +48,17 @@ export default function FormControlPhoneNumber({
             onChange={onChange}
             inputComponent={InputBaseCustom}
           />
-          {errors["phone"] && (
-            <Typography
-              sx={{
-                mt: "10px",
-                fontSize: "12px",
-                lineHeight: "16px",
-                color: "red",
-              }}
-            >
-              Invalid Phone
-            </Typography>
-          )}
+
+          <Typography
+            sx={{
+              mt: "10px",
+              fontSize: "12px",
+              lineHeight: "16px",
+              color: "red",
+            }}
+          >
+            {error?.message}
+          </Typography>
         </FormControl>
       )}
     />

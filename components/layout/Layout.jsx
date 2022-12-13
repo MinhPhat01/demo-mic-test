@@ -28,9 +28,9 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <div>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      {children}
+      <Box sx={{ flex: 1 }}>{children}</Box>
 
       <Footer />
       <Box
@@ -52,7 +52,7 @@ const Layout = ({ children }) => {
           sx={{ color: "white" }}
         ></KeyboardArrowUpIcon>
       </Box>
-    </div>
+    </Box>
   );
 };
 

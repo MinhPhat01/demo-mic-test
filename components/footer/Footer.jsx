@@ -16,9 +16,15 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Map from "../map/Map";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Footer = () => {
   const theme = useTheme();
+  const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
+  if (!data) return null;
+
   return (
     <Box sx={{ background: "#00A859", width: "100%" }}>
       <Container sx={{ pt: "80px" }}>
@@ -42,7 +48,7 @@ const Footer = () => {
               },
             }}
           >
-            <Image src="/logo.png" alt="logo" width={115} height={80}></Image>
+            <Image src={data.logo} alt="logo" width={115} height={80}></Image>
           </Grid>
           <Grid
             item
@@ -225,7 +231,7 @@ const Footer = () => {
                     fontFamily: "Poppins",
                   }}
                 >
-                  373A Tran Phu St, Ward 8, District 5, HCM City
+                  {data.address}
                 </Typography>
               </Stack>
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
@@ -243,7 +249,7 @@ const Footer = () => {
                     fontFamily: "Poppins",
                   }}
                 >
-                  vanphong@tbgdphanmic.vn
+                  {data.email}
                 </Typography>
               </Stack>
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
@@ -258,14 +264,21 @@ const Footer = () => {
                     fontFamily: "Poppins",
                   }}
                 >
-                  +(84) 28 3924 1814
+                  {data.hotline}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
-                <FacebookIcon sx={{ color: "white" }}></FacebookIcon>
-                <InstagramIcon sx={{ color: "white" }}></InstagramIcon>
-                <LinkedInIcon sx={{ color: "white" }}></LinkedInIcon>
-                <TwitterIcon sx={{ color: "white" }}></TwitterIcon>
+                {data.social_icons.map((item, index) => {
+                  return (
+                    <Image
+                      alt={"social"}
+                      key={index}
+                      src={item.value.icon}
+                      width={20}
+                      height={20}
+                    ></Image>
+                  );
+                })}
               </Stack>
             </Stack>
           </Grid>

@@ -4,7 +4,7 @@ import OurProducts from "./components/OurProducts";
 
 export default function Products() {
   return (
-    <Container sx={{ minHeight: "1000px" }}>
+    <Container>
       <OurProducts></OurProducts>
     </Container>
   );

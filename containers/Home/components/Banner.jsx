@@ -2,41 +2,10 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import { Pagination } from "swiper";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-const listBanner = [
-  {
-    id: 1,
-    srcImg: "/banner1.png",
-  },
-  {
-    id: 2,
-    srcImg: "/banner1.png",
-  },
-  {
-    id: 3,
-    srcImg: "/banner1.png",
-  },
-  {
-    id: 4,
-    srcImg: "/banner1.png",
-  },
-  {
-    id: 5,
-    srcImg: "/banner1.png",
-  },
-  {
-    id: 6,
-    srcImg: "/banner1.png",
-  },
-];
+import useSWR from "swr";
 
 const settings = {
   dots: true,
@@ -46,15 +15,22 @@ const settings = {
   slidesToScroll: 1,
 };
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 const Banner = () => {
   const [ref, { width }] = useMeasure();
+  const { data, error } = useSWR(
+    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=home.HomePage&locale=en",
+    fetcher
+  );
+  if (!data) return null;
+  const { banners } = data.items[0];
 
   return (
     <Box
       ref={ref}
       sx={{
         width: "100%",
-
         height: width / (1440 / 516),
         "& .slick-arrow": {
           display: "none !important",
@@ -68,80 +44,34 @@ const Banner = () => {
           color: "#B1B5C3 !important",
         },
       }}
-      // sx={{
-      //   "& .swiper-pagination-bullet": {
-      //     width: "12px",
-      //     height: "12px",
-      //     backgroundColor: "#E6E8EC",
-      //   },
-
-      //   "& .swiper-pagination": {
-      //     position: "static",
-      //     mt: "20px",
-      //   },
-      //   "& .swiper-pagination-bullet-active": {
-      //     backgroundColor: "#B1B5C4",
-      //   },
-      // }}
     >
       <Slider {...settings}>
-        {listBanner.length > 0 &&
-          listBanner.map((item) => {
-            return (
-              <Box
-                key={item.id}
-                sx={{
-                  userSelect: "none",
-                  borderRadius: "8px",
-                  width: "100%",
-                  // height: width / (1440 / 516),
+        {banners.map((item, index) => {
+          return (
+            <Box
+              key={index}
+              sx={{
+                userSelect: "none",
+                borderRadius: "8px",
+                width: "100%",
+                // height: width / (1440 / 516),
+              }}
+            >
+              <Image
+                style={{
+                  objectFit: "cover",
+                  height: width / (1440 / 516),
+                  width: width,
                 }}
-              >
-                <Image
-                  style={{
-                    objectFit: "cover",
-                    height: width / (1440 / 516),
-                    width: width,
-                  }}
-                  src={item.srcImg}
-                  alt="banner1"
-                  width={width}
-                  height={width / (1440 / 516)}
-                />
-              </Box>
-            );
-          })}
+                src={item.value.icon}
+                alt="banner"
+                width={width}
+                height={width / (1440 / 516)}
+              />
+            </Box>
+          );
+        })}
       </Slider>
-      {/* <Swiper loop={true} pagination={true} modules={[Pagination]}>
-        {listBanner.length > 0 &&
-          listBanner.map((item) => {
-            return (
-              <SwiperSlide key={item.id}>
-                <Box
-                  key={item.id}
-                  ref={ref}
-                  sx={{
-                    borderRadius: "8px",
-                    width: "100%",
-                    height: width / (1440 / 516),
-                  }}
-                >
-                  <Image
-                    style={{
-                      objectFit: "cover",
-                      height: width / (1440 / 516),
-                      width: width,
-                    }}
-                    src={item.srcImg}
-                    alt="banner1"
-                    width={width}
-                    height={width / (1440 / 516)}
-                  />
-                </Box>
-              </SwiperSlide>
-            );
-          })}
-      </Swiper> */}
     </Box>
   );
 };

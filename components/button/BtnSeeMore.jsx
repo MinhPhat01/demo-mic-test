@@ -1,9 +1,11 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-export default function BtnSeeMore({ children }) {
+export default function BtnSeeMore({ children, onClick, disable }) {
   return (
     <Button
+      disabled={disable}
+      onClick={onClick}
       disableRipple={true}
       variant="contained"
       sx={{

@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-const CategoryItem = ({ imgSrc, imgName }) => {
+const CategoryItem = ({ imgSrc, title }) => {
   const [ref, { width }] = useMeasure();
 
   return (
@@ -24,7 +24,7 @@ const CategoryItem = ({ imgSrc, imgName }) => {
         <Box ref={ref} sx={{ width: "100%" }}>
           <Image
             src={imgSrc}
-            alt={imgName}
+            alt={title}
             width={width}
             height={(width * 4) / 6}
             style={{ objectFit: "cover", borderRadius: "16px" }}
@@ -40,7 +40,7 @@ const CategoryItem = ({ imgSrc, imgName }) => {
             fontFamily: "Poppins",
           }}
         >
-          {imgName}
+          {title}
         </Typography>
       </Box>
     </Grid>

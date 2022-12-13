@@ -19,7 +19,7 @@ export default function FormControlTextarea({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value = "" } }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl
           variant="standard"
           sx={{
@@ -73,7 +73,7 @@ export default function FormControlTextarea({
               color: "red",
             }}
           >
-            {error}
+            {error?.message}
           </Typography>
         </FormControl>
       )}

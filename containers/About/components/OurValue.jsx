@@ -6,18 +6,28 @@ import Title from "../../../components/title/Title";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import useSWR from "swr";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function OurValue() {
   const [ref, { width, height }] = useMeasure();
   const theme = useTheme();
+  const { data } = useSWR(
+    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=about.AboutPage&locale=en",
+    fetcher
+  );
+  if (!data) return null;
+
+  const { value_content } = data.items[0];
 
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 3,
-    
+
     responsive: [
       {
         breakpoint: 600,
@@ -45,18 +55,14 @@ export default function OurValue() {
           width: "100%",
           mt: "20px",
           position: "relative",
-          height: (width * 9) / 16,
-          [theme.breakpoints.down("md")]: {
-            height: width / 622 / 311,
-          },
         }}
       >
         <Image
           src="/board.png"
           width={width}
           alt="board"
-          height={height}
-          style={{ objectFit: "cover", height: height }}
+          height={(width * 9) / 16}
+          style={{ objectFit: "cover" }}
         ></Image>
         <Box
           sx={{
@@ -71,90 +77,33 @@ export default function OurValue() {
           }}
         >
           <Slider {...settings} style={{ width: "100%" }}>
-            <Box sx={{ padding: "0px 20px" }}>
-              <Typography
-                sx={{
-                  fontSize: "24px",
-                  lineHeight: "32px",
-                  color: "#FCFCFD",
-                  mb: "40px",
-                  textAlign: "center",
-                }}
-              >
-                Value 1
-              </Typography>
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "#FCFCFD",
-                }}
-              >
-                {`
-             Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-              `}
-              </Typography>
-            </Box>
-            <Box sx={{ padding: "0px 20px" }}>
-              <Typography
-                sx={{
-                  fontSize: "24px",
-                  lineHeight: "32px",
-                  color: "#FCFCFD",
-                  mb: "40px",
-                  textAlign: "center",
-                }}
-              >
-                Value 2
-              </Typography>
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "#FCFCFD",
-                }}
-              >
-                {`
-             Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-              `}
-              </Typography>
-            </Box>
-            <Box sx={{ padding: "0px 20px" }}>
-              <Typography
-                sx={{
-                  fontSize: "24px",
-                  lineHeight: "32px",
-                  color: "#FCFCFD",
-                  mb: "40px",
-                  textAlign: "center",
-                }}
-              >
-                Value 3
-              </Typography>
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  color: "#FCFCFD",
-                }}
-              >
-                {`
-             Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-              `}
-              </Typography>
-            </Box>
+            {value_content.map((item, index) => {
+              return (
+                <Box key={index} sx={{ padding: "0px 20px" }}>
+                  <Typography
+                    sx={{
+                      fontSize: "24px",
+                      lineHeight: "32px",
+                      color: "#FCFCFD",
+                      mb: "40px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {item.value.title}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      color: "#FCFCFD",
+                    }}
+                  >
+                    {item.value.description}
+                  </Typography>
+                </Box>
+              );
+            })}
           </Slider>
         </Box>
       </Box>
