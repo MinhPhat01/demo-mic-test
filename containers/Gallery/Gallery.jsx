@@ -9,7 +9,7 @@ export default function Gallery() {
   return (
     <Container sx={{ mb: "98px" }}>
       <Title title={"OUR GALLERY"} widthText="180px" heightProps={20}></Title>
-      <Grid container spacing={4} sx={{ mt: "8px" }}>
+      {/* <Grid container spacing={4} sx={{ mt: "8px" }}>
         {Array(6)
           .fill(0)
           .map((item, index) => (
@@ -19,7 +19,7 @@ export default function Gallery() {
               </Link>
             </Grid>
           ))}
-      </Grid>
+      </Grid> */}
       <BtnSeeMore>See More</BtnSeeMore>
     </Container>
   );
