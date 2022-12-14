@@ -8,22 +8,23 @@ import * as yup from "yup";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import axios from "axios";
 import { useCallback } from "react";
+import { useNotify } from "../../../hooks/useNotify";
 
 const schema = yup.object({
-  name: yup.string().required("Please enter your name"),
-  email: yup
-    .string()
-    .email("Please enter valid email address")
-    .required("Please enter your email address"),
-  message: yup.string().required("Please enter a message"),
-  phone_number: yup.string().test({
-    test(value, ctx) {
-      if (!isPossiblePhoneNumber(String(value))) {
-        return ctx.createError({ message: "Phone Number is not valid" });
-      }
-      return true;
-    },
-  }),
+  // name: yup.string().required("Please enter your name"),
+  // email: yup
+  //   .string()
+  //   .email("Please enter valid email address")
+  //   .required("Please enter your email address"),
+  // message: yup.string().required("Please enter a message"),
+  // phone_number: yup.string().test({
+  //   test(value, ctx) {
+  //     if (!isPossiblePhoneNumber(String(value))) {
+  //       return ctx.createError({ message: "Phone Number is not valid" });
+  //     }
+  //     return true;
+  //   },
+  // }),
 });
 
 export default function Form() {
@@ -37,15 +38,25 @@ export default function Form() {
       phone_number: "",
     },
   });
+  const { snackbarSuccess, snackbarError } = useNotify();
 
   const onSubmit = useCallback(async (values) => {
-    const headers = {
-      Authorization: process.env.NEXT_PUBLIC_API_KEY,
-    };
-    await axios.post("https://mic.t-solution.vn/api/v2/submissions/", values, {
-      headers,
-    });
-    reset();
+    try {
+      const headers = {
+        Authorization: process.env.NEXT_PUBLIC_API_KEY,
+      };
+      await axios.post(
+        "https://mic.t-solution.vn/api/v2/submissions/",
+        values,
+        {
+          headers,
+        }
+      );
+      snackbarSuccess("Submit form successfully");
+      reset();
+    } catch (error) {
+      snackbarError(error.response.data.message);
+    }
   }, []);
   return (
     <Box component="form">

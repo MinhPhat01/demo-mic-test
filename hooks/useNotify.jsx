@@ -4,22 +4,24 @@ import { useCallback } from "react";
 export function useNotify() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const snackbarSuccess = useCallback(
-    (message) => () => {
-      enqueueSnackbar(message, {
-        variant: "success",
-      });
-    },
-    []
-  );
+  const snackbarSuccess = useCallback((message) => {
+    enqueueSnackbar(message, {
+      variant: "success",
+      anchorOrigin: { horizontal: "right", vertical: "top" },
+      autoHideDuration: 1000,
+    });
+  }, []);
 
-  // const snackbarSuccess = (message) => () => {
-  //   enqueueSnackbar(message, {
-  //     variant: "success",
-  //   });
-  // };
+  const snackbarError = useCallback((message) => {
+    enqueueSnackbar(message, {
+      variant: "error",
+      anchorOrigin: { horizontal: "right", vertical: "top" },
+      autoHideDuration: 1000,
+    });
+  }, []);
 
   return {
     snackbarSuccess,
+    snackbarError,
   };
 }

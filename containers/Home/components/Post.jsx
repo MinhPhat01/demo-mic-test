@@ -12,6 +12,7 @@ const Post = ({ imgSrc, title, date, content }) => {
   );
 
   return (
+  
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box ref={ref} sx={{ width: "100%" }}>
         <Image
