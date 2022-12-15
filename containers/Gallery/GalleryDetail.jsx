@@ -5,7 +5,7 @@ import Content from "./components/Content";
 export default function GalleryDetail() {
   const theme = useTheme();
   return (
-    <Container sx={{ mb: "67px" }}>
+    <Container sx={{ mb: "67px", mt: "40px" }}>
       <Typography
         variant="h3"
         sx={{

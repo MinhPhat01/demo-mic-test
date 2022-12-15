@@ -67,7 +67,7 @@ export default function ProductDetails() {
 
   if (!data) return null;
   return (
-    <Container sx={{ mb: "108px" }}>
+    <Container sx={{ mb: "108px", mt: "40px" }}>
       <Grid container columnSpacing={4}>
         <Grid item xs={12} md={6}>
           <Box sx={{ cursor: "pointer" }}>
@@ -170,6 +170,7 @@ export default function ProductDetails() {
                 },
               }}
               {...bindMenu(popupState)}
+              disableScrollLock={true}
             >
               {imgECommerce.length > 0 &&
                 imgECommerce.map((item) => {

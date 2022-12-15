@@ -5,7 +5,15 @@ import { useMeasure } from "react-use";
 export default function ProductItemV2({ pieces, imgSrc, title }) {
   const [ref, { width }] = useMeasure();
   return (
-    <Box sx={{ cursor: "pointer", px: "20px" }}>
+    <Box
+      sx={{
+        cursor: "pointer",
+        mx: "20px",
+        padding: "10px",
+        boxShadow: 2,
+        borderRadius: "16px",
+      }}
+    >
       <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>
         <Image
           src={imgSrc}

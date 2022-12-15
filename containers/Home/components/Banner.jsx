@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
@@ -18,6 +18,7 @@ const settings = {
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Banner = () => {
+  const theme = useTheme();
   const [ref, { width }] = useMeasure();
   const { data, error } = useSWR(
     "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=home.HomePage&locale=en",
@@ -45,7 +46,7 @@ const Banner = () => {
         },
       }}
     >
-      <Slider {...settings}>
+      <Slider {...settings} >
         {banners.map((item, index) => {
           return (
             <Box

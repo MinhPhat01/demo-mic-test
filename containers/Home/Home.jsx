@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import React, { Fragment } from "react";
 import Banner from "./components/Banner";
 import HomePageNews from "./components/HomePageNews";
@@ -9,8 +9,14 @@ const Home = () => {
     <Fragment>
       <Banner />
       <Container>
-        <OurCategories />
-        <HomePageNews />
+        <Grid container>
+          <Grid item xs={12}>
+            <OurCategories />
+          </Grid>
+          <Grid item xs={12}>
+            <HomePageNews />
+          </Grid>
+        </Grid>
       </Container>
     </Fragment>
   );

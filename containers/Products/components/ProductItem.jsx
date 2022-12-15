@@ -9,7 +9,7 @@ export default function ProductItem({ title, id, imgSrc, pieces }) {
   return (
     <Grid item xs={6} md={3}>
       <Link href={`products/${id}`}>
-        <Box sx={{ cursor: "pointer" }}>
+        <Box sx={{ cursor: "pointer", padding: "10px", boxShadow: 2, borderRadius: "16px" }}>
           <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>
             <Image
               src={imgSrc}

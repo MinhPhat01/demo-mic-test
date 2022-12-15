@@ -57,7 +57,7 @@ const RelatedProduct = ({ parentId, id }) => {
   };
   if (!data) return null;
   return (
-    <Grid item xs={12} sx={{ mt: "88px" }}>
+    <Grid item xs={12} sx={{ mt: "88px", mb: "20px" }}>
       <Box sx={{ mb: "24px" }}>
         <Title title={"RELATED PRODUCT"} widthText="240px" heightProps={32} />
       </Box>

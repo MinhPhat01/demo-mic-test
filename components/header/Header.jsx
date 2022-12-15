@@ -7,41 +7,9 @@ import Link from "next/link";
 import HeaderMobile from "./HeaderMobile";
 import MenuProduct from "./MenuProduct";
 import { useMemo } from "react";
+import { listMenuHeader } from "../../constant";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
-const listMenuHeader = [
-  {
-    id: 1,
-    name: "Home",
-    href: "/",
-  },
-  {
-    id: 2,
-    name: "About",
-    href: "/about",
-  },
-  {
-    id: 3,
-    href: "/products",
-    component: true,
-  },
-  {
-    id: 4,
-    name: "News",
-    href: "/news",
-  },
-  {
-    id: 5,
-    name: "Gallery",
-    href: "/gallery",
-  },
-  {
-    id: 6,
-    name: "Contact",
-    href: "/contact",
-  },
-];
 
 export default function Header() {
   const theme = useTheme();
@@ -80,38 +48,51 @@ export default function Header() {
   if (!data) return null;
 
   return (
-    <Container maxWidth="lg" sx={{ px: "0px", mb: "24px" }}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          py: "24px",
-          [theme.breakpoints.down("md")]: {
-            display: "none",
-          },
-        }}
-      >
-        <Box>
-          <Link href="/">
-            <Image src={data.logo} alt="logo" width={115} height={80} />
-          </Link>
-        </Box>
+    <Box
+      sx={{
+        px: "0px",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "white",
+        zIndex: "999",
+        boxShadow: 3,
+      }}
+    >
+      <Container maxWidth="lg" sx={{ mb: "18px" }}>
         <Box
           sx={{
             display: "flex",
-            gap: "24px",
-            cursor: "pointer",
+            alignItems: "center",
+            justifyContent: "space-between",
+            pt: "24px",
+            [theme.breakpoints.down("md")]: {
+              display: "none",
+            },
           }}
         >
-          {renderList}
+          <Box>
+            <Link href="/">
+              <Image src={data.logo} alt="logo" width={115} height={80} />
+            </Link>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "24px",
+              cursor: "pointer",
+            }}
+          >
+            {renderList}
+          </Box>
+          <Stack spacing="24px" direction="row" alignItems="center">
+            <Search />
+            <ChangeLanguage />
+          </Stack>
         </Box>
-        <Stack spacing="24px" direction="row" alignItems="center">
-          <Search />
-          <ChangeLanguage />
-        </Stack>
-      </Box>
-      <HeaderMobile />
-    </Container>
+        <HeaderMobile />
+      </Container>
+    </Box>
   );
 }

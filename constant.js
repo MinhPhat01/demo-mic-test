@@ -3,83 +3,36 @@ export const LIMIT = {
   LIMIT_GALLERY: 6,
 };
 
-export const listImgLarge = [
+export const listMenuHeader = [
   {
     id: 1,
-    imgSrc: "/image1.png",
+    name: "Home",
+    href: "/",
   },
   {
     id: 2,
-    imgSrc: "/image2.png",
+    name: "About",
+    href: "/about",
   },
   {
     id: 3,
-    imgSrc: "/image3.png",
-  },
-];
-
-export const listImgSmall = [
-  {
-    id: 1,
-    imgSrc: "/image1.png",
-  },
-  {
-    id: 2,
-    imgSrc: "/image2.png",
-  },
-  {
-    id: 3,
-    imgSrc: "/image3.png",
+    href: "/products",
+    component: true,
   },
   {
     id: 4,
-    imgSrc: "/image1.png",
+    name: "News",
+    href: "/news",
   },
   {
     id: 5,
-    imgSrc: "/image2.png",
+    name: "Gallery",
+    href: "/gallery",
   },
   {
     id: 6,
-    imgSrc: "/image3.png",
-  },
-];
-
-export const listItem = [
-  { id: 1, pieces: 100 },
-  { id: 2, pieces: 20 },
-  { id: 3, pieces: 30 },
-  { id: 4, pieces: 40 },
-  { id: 5, pieces: 66 },
-  { id: 6, pieces: 50 },
-  { id: 7, pieces: 30 },
-  { id: 8, pieces: 120 },
-];
-
-export const listTabs = [
-  {
-    id: 1,
-    name: "All items",
-  },
-  {
-    id: 2,
-    name: "Chalkboard Chalk",
-  },
-  {
-    id: 3,
-    name: "School Supplies and Student Tools",
-  },
-  {
-    id: 4,
-    name: "Art Supplies",
-  },
-  {
-    id: 5,
-    name: "School Supplies and Student Tools",
-  },
-  {
-    id: 6,
-    name: "School Supplies and Student Tools",
+    name: "Contact",
+    href: "/contact",
   },
 ];
 
@@ -105,3 +58,23 @@ export const imgECommerce = [
     imgSrc: "/shopee.png",
   },
 ];
+
+export const menuOfFooter = [
+  {
+    id: 1,
+    name: "About",
+    href: "/about",
+  },
+  {
+    id: 2,
+    name: "News",
+    href: "/news",
+  },
+  {
+    id: 3,
+    name: "Gallery",
+    href: "/gallery",
+  },
+];
+
+

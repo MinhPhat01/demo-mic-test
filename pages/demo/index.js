@@ -1,19 +1,31 @@
 import React from "react";
+import Typography from "@mui/material/Typography";
+import HoverPopover from "material-ui-popup-state/HoverPopover";
+import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 
-function index({data}) {
-  console.log("🚀 ~ file: index.js:4 ~ index ~ data", data)
-  return <div>index</div>;
-}
+const HoverPopoverPopupState = ({}) => (
+  <PopupState variant="popover" popupId="demoPopover">
+    {(popupState) => (
+      <div>
+        <Typography sx={{ mt: "500px" }} {...bindHover(popupState)}>
+          Hover with a Popover.
+        </Typography>
+        <HoverPopover
+          {...bindPopover(popupState)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <Typography>The content of the Popover.</Typography>
+        </HoverPopover>
+      </div>
+    )}
+  </PopupState>
+);
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(
-    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductCategoryPage&locale=en"
-  );
-  const data = await res.json();
-
-  // Pass data to the page via props
-  return { props: { data } };
-}
-
-export default index;
+export default HoverPopoverPopupState;

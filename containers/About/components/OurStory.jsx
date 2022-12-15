@@ -1,5 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import Image from "next/image";
+import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { useMeasure } from "react-use";
 import Title from "../../../components/title/Title";
@@ -23,7 +22,7 @@ export default function OurStory() {
 
   return (
     <Box>
-      <Title title={"Our Mission"} widthText={"140px"}></Title>
+      <Title title={"Our Story"} widthText={"140px"}></Title>
       <Box>
         {filterStory.map((item, index) => {
           return (

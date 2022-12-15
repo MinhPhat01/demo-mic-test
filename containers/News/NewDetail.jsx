@@ -18,7 +18,7 @@ export default function NewDetail() {
   const [ref, { width }] = useMeasure();
   if (!data) return null;
   return (
-    <Container sx={{ mb: "67px" }}>
+    <Container sx={{ mb: "67px", mt: '40px' }}>
       <Box
         sx={{
           "& img": {

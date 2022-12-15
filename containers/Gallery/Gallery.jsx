@@ -13,10 +13,9 @@ export default function Gallery() {
   const [urlApi, setUrlApi] = useState(
     `https://mic.t-solution.vn/api/v2/pages/?fields=*&type=gallery.GalleryDetailPage&limit=${LIMIT.LIMIT_GALLERY}`
   );
-  const { data: resData, error } = useSWR(urlApi, fetcher);
+  const { data: resData } = useSWR(urlApi, fetcher);
   const [isFetch, setIsFetch] = useState(true);
   const [data, setData] = useState([]);
-  console.log("🚀 ~ file: Gallery.jsx:19 ~ Gallery ~ data", data);
 
   useEffect(() => {
     if (isFetch) {
@@ -53,7 +52,7 @@ export default function Gallery() {
 
   if (!data) return;
   return (
-    <Container sx={{ mb: "98px" }}>
+    <Container sx={{ mb: "98px", mt: "40px" }}>
       <Title title={"OUR GALLERY"} widthText="180px" heightProps={20}></Title>
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}

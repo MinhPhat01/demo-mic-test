@@ -11,20 +11,20 @@ import { useCallback } from "react";
 import { useNotify } from "../../../hooks/useNotify";
 
 const schema = yup.object({
-  // name: yup.string().required("Please enter your name"),
-  // email: yup
-  //   .string()
-  //   .email("Please enter valid email address")
-  //   .required("Please enter your email address"),
-  // message: yup.string().required("Please enter a message"),
-  // phone_number: yup.string().test({
-  //   test(value, ctx) {
-  //     if (!isPossiblePhoneNumber(String(value))) {
-  //       return ctx.createError({ message: "Phone Number is not valid" });
-  //     }
-  //     return true;
-  //   },
-  // }),
+  name: yup.string().required("Please enter your name"),
+  email: yup
+    .string()
+    .email("Please enter valid email address")
+    .required("Please enter your email address"),
+  message: yup.string().required("Please enter a message"),
+  phone_number: yup.string().test({
+    test(value, ctx) {
+      if (!isPossiblePhoneNumber(String(value))) {
+        return ctx.createError({ message: "Phone Number is not valid" });
+      }
+      return true;
+    },
+  }),
 });
 
 export default function Form() {

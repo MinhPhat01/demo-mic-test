@@ -38,7 +38,7 @@ export default function News() {
   const renderList = useMemo(() => {
     return data.map((item) => {
       return (
-        <Grid key={item.id} item xs={12} md={4}>
+        <Grid key={item.id} item xs={12} md={4} >
           <Link href={`/news/${item.id}`}>
             <Post
               imgSrc={item.thumbnail}
@@ -55,7 +55,7 @@ export default function News() {
   if (!data) return null;
 
   return (
-    <Container sx={{ mb: "98px" }}>
+    <Container sx={{ mb: "98px", mt: "40px" }}>
       <Title title={"OUR NEWS"} widthText="140px" heightProps={10}></Title>
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}

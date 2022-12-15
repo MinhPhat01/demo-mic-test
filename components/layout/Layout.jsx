@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
@@ -6,7 +6,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const Layout = ({ children }) => {
   const [visible, setVisible] = useState(false);
-
+  const theme = useTheme();
   useEffect(() => {
     const toggleVisible = () => {
       const scrolled = document.documentElement.scrollTop;
@@ -30,7 +30,17 @@ const Layout = ({ children }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <Box sx={{ flex: 1 }}>{children}</Box>
+      <Box
+        sx={{
+          flex: 1,
+          mt: "128px",
+          [theme.breakpoints.down("md")]: {
+            mt: "152px",
+          },
+        }}
+      >
+        {children}
+      </Box>
       <Footer />
       <Box
         onClick={scrollToTop}

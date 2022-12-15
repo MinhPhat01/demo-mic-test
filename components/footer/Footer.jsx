@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -17,16 +17,69 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Map from "../map/Map";
 import useSWR from "swr";
+import { menuOfFooter } from "../../constant";
+import Link from "next/link";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Footer = () => {
   const theme = useTheme();
   const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
-  if (!data) return null;
+  const { data: dataProduct } = useSWR(
+    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductCategoryPage&locale=en",
+    fetcher
+  );
+  const categoryList = dataProduct?.items;
 
+  const renderProduct = useMemo(() => {
+    if (!categoryList) return null;
+    return categoryList.map((item) => {
+      return (
+        <Link key={item.id} href={`/products?child_of=${item.id}`}>
+          <Typography
+            variant="p"
+            sx={{
+              color: "#FCFCFD",
+              fontSize: "14px",
+              lineHeight: "16px",
+              fontWeight: "400",
+              fontFamily: "Poppins",
+            }}
+          >
+            {item.title}
+          </Typography>
+        </Link>
+      );
+    });
+  }, [categoryList]);
+
+  const renderMenu = useMemo(() => {
+    return (
+      menuOfFooter.length > 0 &&
+      menuOfFooter.map((item) => {
+        return (
+          <Link key={item.id} href={item.href}>
+            <Typography
+              variant="p"
+              sx={{
+                color: "#FCFCFD",
+                fontSize: "14px",
+                lineHeight: "16px",
+                fontWeight: "400",
+                fontFamily: "Poppins",
+              }}
+            >
+              {item.name}
+            </Typography>
+          </Link>
+        );
+      })
+    );
+  }, []);
+
+  if (!data) return null;
   return (
-    <Box sx={{ background: "#00A859", width: "100%" }}>
+    <Box sx={{ background: "#00A859" }}>
       <Container sx={{ pt: "80px" }}>
         <Grid
           container
@@ -75,42 +128,7 @@ const Footer = () => {
               Menu
             </Typography>
             <Stack direction={"column"} rowGap={4}>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                About
-              </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                News
-              </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                Gallery
-              </Typography>
+              {renderMenu}
             </Stack>
           </Grid>
           <Grid
@@ -137,55 +155,7 @@ const Footer = () => {
               Products
             </Typography>
             <Stack direction={"column"} spacing={2}>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                Chalkboard Chalk
-              </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  width: "142px",
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                School Supplies and Student Tools
-              </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                Office Supplies
-              </Typography>
-              <Typography
-                variant="p"
-                sx={{
-                  color: "#FCFCFD",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                  fontWeight: "400",
-                  fontFamily: "Poppins",
-                }}
-              >
-                Art Supplies
-              </Typography>
+              {renderProduct}
             </Stack>
           </Grid>
 

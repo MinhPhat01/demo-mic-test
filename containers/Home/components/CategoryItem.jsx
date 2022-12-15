@@ -3,25 +3,24 @@ import { Box } from "@mui/system";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
+import Link from "next/link";
 
-const CategoryItem = ({ imgSrc, title }) => {
+const CategoryItem = ({ imgSrc, title, id }) => {
   const [ref, { width }] = useMeasure();
 
   return (
-    <Grid item xs={12} sm={6}>
-      <Box
-        sx={{
-          padding: "12px",
-          background: "#FCFCFD",
-          borderRadius: "20px",
-          boxShadow: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box ref={ref} sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        padding: "10px",
+        boxShadow:
+          "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+        borderRadius: "20px",
+        background: "#FCFCFD",
+        textAlign: "center",
+      }}
+    >
+      <Link href={`/products?child_of=${id}`}>
+        <Box ref={ref}>
           <Image
             src={imgSrc}
             alt={title}
@@ -42,8 +41,8 @@ const CategoryItem = ({ imgSrc, title }) => {
         >
           {title}
         </Typography>
-      </Box>
-    </Grid>
+      </Link>
+    </Box>
   );
 };
 

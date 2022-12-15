@@ -21,7 +21,7 @@ import Map from "../../components/map/Map";
 export default function Contact() {
   const theme = useTheme();
   return (
-    <Container sx={{ mb: "38px" }}>
+    <Container sx={{ mb: "38px", mt: "40px" }}>
       <Title title="CONTACT US" widthText="160px" heightProps={10}></Title>
       <Grid container sx={{ mt: "40px" }} columnSpacing={4}>
         <Grid

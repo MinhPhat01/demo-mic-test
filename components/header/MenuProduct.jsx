@@ -1,13 +1,16 @@
 import Typography from "@mui/material/Typography";
 import HoverPopover from "material-ui-popup-state/HoverPopover";
-import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
+import PopupState, {
+  bindHover,
+  bindPopover,
+  bindMenu,
+  bindTrigger,
+} from "material-ui-popup-state";
 import { Box, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
-import useSWR from "swr";
 import { useMemo } from "react";
-import { useParams } from "../../hooks/useParams";
-import { useRouter } from "next/router";
+import useSWR from "swr";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -41,7 +44,12 @@ export default function MenuProduct({ href }) {
   return (
     <PopupState variant="popover" popupId="productList">
       {(popupState) => (
-        <Box {...bindHover(popupState)} sx={{ pb: "10px" }}>
+        <Box
+          {...bindHover(popupState)}
+          sx={{
+            pb: "10px",
+          }}
+        >
           <Link href={href}>
             <Box
               sx={{
@@ -80,6 +88,7 @@ export default function MenuProduct({ href }) {
               vertical: "top",
               horizontal: "left",
             }}
+            disableScrollLock={true}
           >
             {renderList}
           </HoverPopover>
