@@ -1,9 +1,10 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-export default function BtnSeeMore({ children, onClick, disable }) {
+export default function BtnSeeMore({ children, onClick, disable, style }) {
   return (
     <Button
+      style={{ display: style }}
       disabled={disable}
       onClick={onClick}
       disableRipple={true}

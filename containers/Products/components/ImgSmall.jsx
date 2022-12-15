@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
@@ -7,7 +7,7 @@ export default function ImgSmall({ imgSrc }) {
   const [ref, { width }] = useMeasure();
 
   return (
-    <Box  ref={ref} sx={{ borderRadius: "8px", mx: "10px" }}>
+    <Box ref={ref} sx={{ borderRadius: "8px", mx: "10px" }}>
       <Image
         alt="image"
         src={imgSrc}

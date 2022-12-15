@@ -1,5 +1,6 @@
 export const LIMIT = {
-  LIMIT_NEWS: 1,
+  LIMIT_NEWS: 6,
+  LIMIT_GALLERY: 6,
 };
 
 export const listImgLarge = [

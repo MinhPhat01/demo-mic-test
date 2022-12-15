@@ -10,7 +10,7 @@ export default function ImgLarge({ imgSrc }) {
     <Box ref={ref} sx={{ borderRadius: "8px" }}>
       <Image
         alt="image"
-        src={imgSrc}
+        src={imgSrc || "/bgEmpty.png"}
         width={width}
         height={width}
         style={{ borderRadius: "8px", objectFit: "cover" }}

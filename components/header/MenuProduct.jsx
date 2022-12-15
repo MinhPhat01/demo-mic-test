@@ -3,32 +3,67 @@ import HoverPopover from "material-ui-popup-state/HoverPopover";
 import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
 import { Box, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Link from "next/link";
+import useSWR from "swr";
+import { useMemo } from "react";
+import { useParams } from "../../hooks/useParams";
+import { useRouter } from "next/router";
 
-export default function MenuProduct() {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export default function MenuProduct({ href }) {
+  const { data } = useSWR(
+    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductCategoryPage&locale=en",
+    fetcher
+  );
+
+  const categoryList = data?.items;
+  const renderList = useMemo(() => {
+    if (!categoryList) return null;
+    return categoryList.map((item) => {
+      return (
+        <Link key={item.id} href={`/products?child_of=${item.id}`}>
+          <MenuItem
+            sx={{
+              color: "#B1B5C3",
+              fontSize: "12px",
+              lineHeight: "20px",
+              fontFamily: "Poppins",
+            }}
+          >
+            {item.title}
+          </MenuItem>
+        </Link>
+      );
+    });
+  }, [categoryList]);
+  if (!data) return null;
   return (
     <PopupState variant="popover" popupId="productList">
       {(popupState) => (
         <Box {...bindHover(popupState)} sx={{ pb: "10px" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              columnGap: "2px",
-            }}
-          >
-            <Typography
+          <Link href={href}>
+            <Box
               sx={{
-                fontFamily: "Lato",
-                fontWeight: 700,
-                color: "#141416",
-                fontSize: "14px",
-                lineHeight: "16px",
+                display: "flex",
+                alignItems: "flex-start",
+                columnGap: "2px",
               }}
             >
-              Product
-            </Typography>
-            <KeyboardArrowDownIcon fontSize="sm"></KeyboardArrowDownIcon>
-          </Box>
+              <Typography
+                sx={{
+                  fontFamily: "Lato",
+                  fontWeight: 700,
+                  color: "#141416",
+                  fontSize: "14px",
+                  lineHeight: "16px",
+                }}
+              >
+                Product
+              </Typography>
+              <KeyboardArrowDownIcon fontSize="sm"></KeyboardArrowDownIcon>
+            </Box>
+          </Link>
           <HoverPopover
             sx={{
               "& .MuiPaper-root": {
@@ -46,46 +81,7 @@ export default function MenuProduct() {
               horizontal: "left",
             }}
           >
-            <MenuItem
-              sx={{
-                color: "#B1B5C3",
-                fontSize: "12px",
-                lineHeight: "20px",
-                fontFamily: "Poppins",
-              }}
-            >
-              Chalkboard Chalk
-            </MenuItem>
-            <MenuItem
-              sx={{
-                color: "#B1B5C3",
-                fontSize: "12px",
-                lineHeight: "20px",
-                fontFamily: "Poppins",
-              }}
-            >
-              School Supplies and Student Tools
-            </MenuItem>
-            <MenuItem
-              sx={{
-                color: "#B1B5C3",
-                fontSize: "12px",
-                lineHeight: "20px",
-                fontFamily: "Poppins",
-              }}
-            >
-              Office Supplies
-            </MenuItem>
-            <MenuItem
-              sx={{
-                color: "#B1B5C3",
-                fontSize: "12px",
-                lineHeight: "20px",
-                fontFamily: "Poppins",
-              }}
-            >
-              Art Supplies
-            </MenuItem>
+            {renderList}
           </HoverPopover>
         </Box>
       )}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useMeasure } from "react-use";
 
-export default function ProductItem({ pieces, id }) {
+export default function ProductItem({ title, id, imgSrc, pieces }) {
   const [ref, { width }] = useMeasure();
   return (
     <Grid item xs={6} md={3}>
@@ -12,11 +12,15 @@ export default function ProductItem({ pieces, id }) {
         <Box sx={{ cursor: "pointer" }}>
           <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>
             <Image
-              src={"/bgEmpty.png"}
-              alt={"bgEmpty"}
+              src={imgSrc}
+              alt={title}
               width={width}
               height={width}
-              style={{ objectFit: "cover", height: width, borderRadius: "4px" }}
+              style={{
+                objectFit: "cover",
+                height: width,
+                borderRadius: "4px",
+              }}
             ></Image>
           </Box>
           <Typography
@@ -27,9 +31,14 @@ export default function ProductItem({ pieces, id }) {
               fontWeight: "500",
               color: "#23262F",
               my: "16px",
+              display: "-webkit-box",
+              overflow: "hidden",
+              minHeight: "48px",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
             }}
           >
-            Chalkboard Chalk
+            {title}
           </Typography>
           <Box
             sx={{
@@ -44,7 +53,7 @@ export default function ProductItem({ pieces, id }) {
               fontWeight: "700",
             }}
           >
-            {`${pieces} pieces`}
+            {pieces || "pieces"}
           </Box>
         </Box>
       </Link>

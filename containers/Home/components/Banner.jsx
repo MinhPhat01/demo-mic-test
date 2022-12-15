@@ -30,7 +30,7 @@ const Banner = () => {
     <Box
       ref={ref}
       sx={{
-        width: "100%",
+        mb: "48px",
         height: width / (1440 / 516),
         "& .slick-arrow": {
           display: "none !important",
@@ -53,15 +53,12 @@ const Banner = () => {
               sx={{
                 userSelect: "none",
                 borderRadius: "8px",
-                width: "100%",
-                // height: width / (1440 / 516),
+                height: width / (1440 / 516),
               }}
             >
               <Image
                 style={{
                   objectFit: "cover",
-                  height: width / (1440 / 516),
-                  width: width,
                 }}
                 src={item.value.icon}
                 alt="banner"

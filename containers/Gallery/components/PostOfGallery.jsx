@@ -1,16 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { format, parseISO } from "date-fns";
-import DOMPurify from "dompurify";
 import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-const Post = ({ imgSrc, title, date, content }) => {
+const PostOfGallery = ({ imgSrc, title, date }) => {
   const [ref, { width }] = useMeasure();
-  const filterContent = content?.filter(
-    (item) => item.block_type === "content"
-  );
-
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Box ref={ref} sx={{ width: "100%" }}>
@@ -61,27 +56,8 @@ const Post = ({ imgSrc, title, date, content }) => {
           {format(parseISO(date), "dd/mm/yyyy")}
         </Typography>
       </Box>
-      <Typography
-        dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(filterContent[0].value, {
-            USE_PROFILES: { p: true },
-          }),
-        }}
-        sx={{
-          color: "#777E91",
-          fontSize: "16px",
-          lineHeight: "24px",
-          fontFamily: "Poppins",
-          textAlign: "justify",
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
-          WebkitLineClamp: 4,
-          overflow: "hidden",
-          minHeight: "96px",
-        }}
-      ></Typography>
     </Box>
   );
 };
 
-export default Post;
+export default PostOfGallery;

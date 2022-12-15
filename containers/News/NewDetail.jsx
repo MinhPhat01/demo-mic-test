@@ -1,7 +1,6 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
-import Content from "./components/Content";
 import useSWR from "swr";
 import DOMPurify from "dompurify";
 import { useMeasure } from "react-use";
@@ -53,22 +52,6 @@ export default function NewDetail() {
           __html: DOMPurify.sanitize(data.content[0].value, {}),
         }}
       ></Box>
-      {/* <Typography
-        variant="h3"
-        sx={{
-          fontSize: "40px",
-          lineHeight: "48px",
-          fontFamily: "Poppins",
-          fontWeight: "600",
-          [theme.breakpoints.down("md")]: {
-            textAlign: "center",
-          },
-        }}
-      >
-        Lorem Ipsum
-      </Typography>
-      <Content></Content>
-      <Content></Content> */}
     </Container>
   );
 }

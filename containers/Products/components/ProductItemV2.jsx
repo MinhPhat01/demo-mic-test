@@ -2,13 +2,13 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useMeasure } from "react-use";
 
-export default function ProductItemV2({ pieces }) {
+export default function ProductItemV2({ pieces, imgSrc, title }) {
   const [ref, { width }] = useMeasure();
   return (
     <Box sx={{ cursor: "pointer", px: "20px" }}>
       <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>
         <Image
-          src={"/bgEmpty.png"}
+          src={imgSrc}
           alt={"bgEmpty"}
           width={width}
           height={width}
@@ -23,9 +23,14 @@ export default function ProductItemV2({ pieces }) {
           fontWeight: "500",
           color: "#23262F",
           my: "16px",
+          display: "-webkit-box",
+          overflow: "hidden",
+          minHeight: "48px",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: 2,
         }}
       >
-        Chalkboard Chalk
+        {title}
       </Typography>
       <Box
         sx={{
@@ -40,7 +45,7 @@ export default function ProductItemV2({ pieces }) {
           fontWeight: "700",
         }}
       >
-        {`${pieces} pieces`}
+        {pieces || "pieces"}
       </Box>
     </Box>
   );

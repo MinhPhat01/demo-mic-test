@@ -21,7 +21,6 @@ export default function GalleryDetail() {
         Lorem Ipsum
       </Typography>
       <Content></Content>
-      <Content></Content>
     </Container>
   );
 }

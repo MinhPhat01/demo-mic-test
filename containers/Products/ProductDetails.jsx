@@ -6,21 +6,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ImgLarge from "./components/ImgLarge";
 import ImgSmall from "./components/ImgSmall";
-import Title from "../../components/title/Title";
-import {
-  imgECommerce,
-  listImgLarge,
-  listImgSmall,
-  listItem,
-} from "../../constant";
-import ProductItemV2 from "./components/ProductItemV2";
-
+import { imgECommerce } from "../../constant";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import {
@@ -30,8 +22,22 @@ import {
 } from "material-ui-popup-state/hooks";
 import useMeasure from "react-use-measure";
 import Image from "next/image";
+import useSWR from "swr";
+import { useRouter } from "next/router";
+import RelatedProduct from "./components/RelatedProduct";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function ProductDetails() {
+  const router = useRouter();
+  const { id } = router.query;
+  const { data } = useSWR(
+    `https://mic.t-solution.vn/api/v2/pages/${id}`,
+    fetcher
+  );
+  const parentId = data?.meta.parent.id;
+  const listImg = data?.images;
+
   const theme = useTheme();
   const [ref, { width }] = useMeasure();
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
@@ -39,61 +45,49 @@ export default function ProductDetails() {
   const [nav2, setNav2] = useState();
   const slider1 = useRef(null);
   const slider2 = useRef(null);
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    responsive: [
-      {
-        breakpoint: 600,
-        settings: {
-          infinite: true,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+
   useEffect(() => {
     setNav1(slider1.current);
     setNav2(slider2.current);
   }, []);
 
+  const renderListImgLarge = useMemo(() => {
+    if (!listImg) return null;
+    return listImg.map((item, index) => {
+      return <ImgLarge key={index} imgSrc={item.value} />;
+    });
+  }, [listImg]);
+
+  const renderListImgSmall = useMemo(() => {
+    if (!listImg) return null;
+    return listImg.map((item, index) => {
+      return <ImgSmall key={index} imgSrc={item.value} />;
+    });
+  }, [listImg]);
+
+  if (!data) return null;
   return (
     <Container sx={{ mb: "108px" }}>
       <Grid container columnSpacing={4}>
         <Grid item xs={12} md={6}>
           <Box sx={{ cursor: "pointer" }}>
             <Slider asNavFor={nav2} ref={slider1}>
-              {listImgLarge.length > 0 &&
-                listImgLarge.map((item) => {
-                  return (
-                    <ImgLarge key={item.id} imgSrc={item.imgSrc}></ImgLarge>
-                  );
-                })}
+              {renderListImgLarge}
             </Slider>
           </Box>
-          <Box sx={{ cursor: "pointer", mt: "20px" }}>
+          <Box
+            sx={{ cursor: "pointer", mt: "20px", width: "100%", height: "259" }}
+          >
             <Slider
               asNavFor={nav1}
               ref={slider2}
               slidesToShow={3}
               swipeToSlide={true}
               focusOnSelect={true}
+              slidesToScroll={1}
+              infinite={listImg.length > 3 ? true : false}
             >
-              {listImgSmall.length > 0 &&
-                listImgSmall.map((item) => {
-                  return <ImgSmall key={item.id} imgSrc={item.imgSrc} />;
-                })}
+              {renderListImgSmall}
             </Slider>
           </Box>
         </Grid>
@@ -113,7 +107,7 @@ export default function ProductDetails() {
               },
             }}
           >
-            Chalkboard Chalk
+            {data?.title}
           </Typography>
           <Typography
             variant="h6"
@@ -130,7 +124,7 @@ export default function ProductDetails() {
               },
             }}
           >
-            Specification: 10 pieces/box
+            Specification: {data?.description}
           </Typography>
           <Typography
             sx={{
@@ -141,10 +135,7 @@ export default function ProductDetails() {
               mb: "16px",
             }}
           >
-            {`Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.`}
+            {data?.specification}
           </Typography>
           <Box
             sx={{
@@ -204,17 +195,7 @@ export default function ProductDetails() {
             </Menu>
           </Box>
         </Grid>
-        <Grid item xs={12} sx={{ mt: "88px" }}>
-          <Box sx={{ mb: "24px" }}>
-            <Title title={"RELATED PRODUCT"} widthText="240px" heightProps={32}></Title>
-          </Box>
-          <Slider {...settings}>
-            {listItem.length > 0 &&
-              listItem.map((item) => {
-                return <ProductItemV2 key={item.id} pieces={item.pieces} />;
-              })}
-          </Slider>
-        </Grid>
+        <RelatedProduct parentId={parentId} id={id} />
       </Grid>
     </Container>
   );
