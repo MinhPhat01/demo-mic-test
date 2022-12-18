@@ -1,21 +1,27 @@
 import useSWR from "swr";
 import { Box, Container, Stack, useTheme } from "@mui/material";
-import Search from "../search/Search";
 import Image from "next/image";
 import ChangeLanguage from "../changeLanguage/ChangeLanguage";
 import Link from "next/link";
 import HeaderMobile from "./HeaderMobile";
 import MenuProduct from "./MenuProduct";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { listMenuHeader } from "../../constant";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import Search from "../Search";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Header() {
- 
+  const router = useRouter();
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      search: "",
+    },
+  });
   const theme = useTheme();
   const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
-
   const renderList = useMemo(() => {
     return listMenuHeader.map((item) => {
       return (
@@ -46,8 +52,11 @@ export default function Header() {
     });
   }, []);
 
-  if (!data) return null;
+  const handleSearch = useCallback((values) => {
+    router.push(`/products?search=${values.search}`);
+  }, []);
 
+  if (!data) return null;
   return (
     <Box
       sx={{
@@ -88,7 +97,10 @@ export default function Header() {
             {renderList}
           </Box>
           <Stack spacing="24px" direction="row" alignItems="center">
-            <Search />
+            <Box component="form" onSubmit={handleSubmit(handleSearch)}>
+              <Search control={control} name={"search"} />
+            </Box>
+
             <ChangeLanguage />
           </Stack>
         </Box>

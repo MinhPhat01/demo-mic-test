@@ -1,14 +1,25 @@
 import { Box, useTheme } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import Search from "../search/Search";
 import MenuMobile from "./MenuMobile";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import Search from "../Search";
 
 export default function HeaderMobile() {
+  const router = useRouter();
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      search: "",
+    },
+  });
   const [show, setShow] = useState(true);
   const theme = useTheme();
+  const handleSearch = useCallback((values) => {
+    router.push(`/products?search=${values.search}`);
+  }, []);
   return (
     <Box
       sx={{
@@ -41,7 +52,9 @@ export default function HeaderMobile() {
               <MenuIcon />
             </Box>
           </Box>
-          <Search />
+          <Box component="form" onSubmit={handleSubmit(handleSearch)}>
+            <Search control={control} name={"search"} />
+          </Box>
         </Box>
       ) : (
         <MenuMobile setShow={setShow} show={show}></MenuMobile>

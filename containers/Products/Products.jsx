@@ -22,6 +22,7 @@ export default function Products(props) {
   const dataCategories = initData.items;
 
   const router = useRouter();
+  console.log("🚀 ~ file: Products.jsx:25 ~ Products ~ router", router);
 
   const [currentTab, setCurrentTab] = useState(0);
   const [dataTabPanel, setDataTabPanel] = useState([]);
@@ -36,6 +37,7 @@ export default function Products(props) {
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
+  console.log(params);
   // const urlApi = transformUrl(PAGES_API, params);
   // console.log("🚀 ~ file: Products.jsx:36 ~ Products ~ urlApi", urlApi)
 
@@ -43,14 +45,24 @@ export default function Products(props) {
     // transformUrl(PAGES_API, params)
     `https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en${childOf}`,
     fetcher
-    );
-   
+  );
 
   // useEffect just setData
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
   }, [data]);
+
+  // useEffect(() => {
+  //   if (router.query.search == undefined) {
+  //     return;
+  //   } else {
+  //     setParams({
+  //       child_of: undefined,
+  //       search: router.query.search,
+  //     });
+  //   }
+  // }, [router]);
 
   // useEffect setData by child of
   useEffect(() => {
@@ -66,6 +78,7 @@ export default function Products(props) {
       setChildOf(`&child_of=${convertChildOf}`);
       setParams({
         child_of: router.query.child_of,
+        // search: undefined,
       });
     }
   }, [router]);
