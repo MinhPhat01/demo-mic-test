@@ -18,13 +18,13 @@ export default function FormControlPhoneNumber({
       // rules={{
       //   validate: (value) => isPossiblePhoneNumber(String(value)),
       // }}
-      render={({ field: { onChange, value }, fieldState: { error}}) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl
           variant="standard"
           sx={{
             width: "100%",
             "& .Mui-focused": {
-              color: "black !important",
+              color: "#00a859 !important",
             },
           }}
         >
@@ -34,7 +34,7 @@ export default function FormControlPhoneNumber({
               lineHeight: "12px",
               fontFamily: "Poppins",
               fontWeight: "700",
-              color: "#B1B5C3",
+              color: "#23262f",
               mb: "12px",
             }}
             htmlFor={name}

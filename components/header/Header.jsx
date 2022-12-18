@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Box, Container, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import Search from "../search/Search";
 import Image from "next/image";
 import ChangeLanguage from "../changeLanguage/ChangeLanguage";
@@ -12,6 +12,7 @@ import { listMenuHeader } from "../../constant";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Header() {
+ 
   const theme = useTheme();
   const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
 
@@ -60,7 +61,7 @@ export default function Header() {
         boxShadow: 3,
       }}
     >
-      <Container maxWidth="lg" sx={{ mb: "18px" }}>
+      <Container sx={{ mb: "18px" }}>
         <Box
           sx={{
             display: "flex",

@@ -26,7 +26,7 @@ export default function FormControlTextarea({
             mt: "10px",
             width: "100%",
             "& .Mui-focused": {
-              color: "black !important",
+              color: "#00a859 !important",
             },
           }}
         >
@@ -36,7 +36,7 @@ export default function FormControlTextarea({
               lineHeight: "12px",
               fontFamily: "Poppins",
               fontWeight: "700",
-              color: "#B1B5C3",
+              color: "#23262f",
               mb: "12px",
             }}
             htmlFor={name}

@@ -19,7 +19,7 @@ const Post = ({ imgSrc, title, date, content }) => {
           src={imgSrc || "/bgEmpty.png"}
           alt={"img"}
           height={(width * 4) / 6}
-          style={{ objectFit: "cover", borderRadius: "8px" }}
+          style={{ objectFit: "contain", borderRadius: "8px" }}
         ></Image>
       </Box>
       <Typography

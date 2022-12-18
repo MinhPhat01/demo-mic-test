@@ -7,7 +7,6 @@ import omit from "lodash/omit";
 import isEqual from "lodash/isEqual";
 import { transformUrl } from "../libs/transformUrl";
 
-
 export const useParams = (props) => {
   const {
     initState = {},
@@ -84,6 +83,5 @@ export const useParams = (props) => {
     setParams({ ...defaultParams, ...pick(params, whiteList) });
   }, [params]);
 
-  return [params, paramsHandler, isReady, resetParams] 
-  
+  return [params, paramsHandler, isReady, resetParams];
 };

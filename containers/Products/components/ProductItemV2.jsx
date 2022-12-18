@@ -9,9 +9,6 @@ export default function ProductItemV2({ pieces, imgSrc, title }) {
       sx={{
         cursor: "pointer",
         mx: "20px",
-        padding: "10px",
-        boxShadow: 2,
-        borderRadius: "16px",
       }}
     >
       <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>

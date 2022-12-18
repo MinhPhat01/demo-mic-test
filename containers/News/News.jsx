@@ -6,6 +6,7 @@ import Title from "../../components/title/Title";
 import Post from "../Home/components/Post";
 import useSWR from "swr";
 import { LIMIT } from "../../constant";
+import SkeletonCard from "../../components/skeletonCard/SkeletonCard";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,7 +17,7 @@ export default function News() {
 
   const [data, setData] = useState([]);
   const [isFetch, setIsFetch] = useState(true);
-  const { data: resData } = useSWR(urlApi, fetcher);
+  const { data: resData, isLoading } = useSWR(urlApi, fetcher);
 
   useEffect(() => {
     if (isFetch) {
@@ -38,7 +39,7 @@ export default function News() {
   const renderList = useMemo(() => {
     return data.map((item) => {
       return (
-        <Grid key={item.id} item xs={12} md={4} >
+        <Grid key={item.id} item xs={12} md={4}>
           <Link href={`/news/${item.id}`}>
             <Post
               imgSrc={item.thumbnail}
@@ -52,6 +53,18 @@ export default function News() {
     });
   }, [data]);
 
+  if (isLoading)
+    return (
+      <Container sx={{ mb: "98px", mt: "40px" }}>
+        <Grid container spacing={4} sx={{ mt: "20px" }}>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+        </Grid>
+      </Container>
+    );
+
   if (!data) return null;
 
   return (
@@ -61,7 +74,7 @@ export default function News() {
         {renderList}
       </Grid>
       <BtnSeeMore
-        disable={urlApi === null ? true : false}
+        style={resData === undefined ? "none" : "block"}
         onClick={handleSeeMore}
       >
         See More

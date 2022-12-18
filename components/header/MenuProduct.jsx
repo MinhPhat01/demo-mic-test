@@ -9,8 +9,9 @@ import PopupState, {
 import { Box, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
+import { useParams } from "../../hooks/useParams";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -19,6 +20,8 @@ export default function MenuProduct({ href }) {
     "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductCategoryPage&locale=en",
     fetcher
   );
+
+  const [urlChildOf, setUrlChildOf] = useState("");
 
   const categoryList = data?.items;
   const renderList = useMemo(() => {

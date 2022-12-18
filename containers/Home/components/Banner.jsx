@@ -59,7 +59,7 @@ const Banner = () => {
             >
               <Image
                 style={{
-                  objectFit: "cover",
+                  objectFit: "fill",
                 }}
                 src={item.value.icon}
                 alt="banner"

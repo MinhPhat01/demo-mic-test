@@ -1,31 +1,27 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import HoverPopover from "material-ui-popup-state/HoverPopover";
-import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { PAGES_API } from "../../apis";
+import { useParams } from "../../hooks/useParams";
+import { transformUrl } from "../../libs/transformUrl";
 
-const HoverPopoverPopupState = ({}) => (
-  <PopupState variant="popover" popupId="demoPopover">
-    {(popupState) => (
-      <div>
-        <Typography sx={{ mt: "500px" }} {...bindHover(popupState)}>
-          Hover with a Popover.
-        </Typography>
-        <HoverPopover
-          {...bindPopover(popupState)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-        >
-          <Typography>The content of the Popover.</Typography>
-        </HoverPopover>
-      </div>
-    )}
-  </PopupState>
-);
+export default function Demo() {
+  const [data, setData] = useState([]);
+  const [params, setParams] = useParams({
+    initState: {
+      fields: "*",
+      locale: "en",
+      limit: 8,
+      type: "product.ProductDetailPage",
+    },
+    excludeKeys: ["limit", "offset", "type", "search"],
+  });
+  const urlApi = transformUrl(PAGES_API, params);
 
-export default HoverPopoverPopupState;
+  useEffect(() => {
+    const result = axios
+      .get("https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en")
+      .then((res) => console.log(res));
+  }, []);
+
+  return <div>index</div>;
+}

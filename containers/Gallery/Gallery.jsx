@@ -6,6 +6,7 @@ import Title from "../../components/title/Title";
 import { LIMIT } from "../../constant";
 import useSWR from "swr";
 import PostOfGallery from "./components/PostOfGallery";
+import SkeletonCard from "../../components/skeletonCard/SkeletonCard";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -13,7 +14,7 @@ export default function Gallery() {
   const [urlApi, setUrlApi] = useState(
     `https://mic.t-solution.vn/api/v2/pages/?fields=*&type=gallery.GalleryDetailPage&limit=${LIMIT.LIMIT_GALLERY}`
   );
-  const { data: resData } = useSWR(urlApi, fetcher);
+  const { data: resData, isLoading } = useSWR(urlApi, fetcher);
   const [isFetch, setIsFetch] = useState(true);
   const [data, setData] = useState([]);
 
@@ -49,6 +50,17 @@ export default function Gallery() {
   const handleSeeMore = useCallback(() => {
     setIsFetch(true);
   }, [isFetch]);
+  if (isLoading)
+    return (
+      <Container sx={{ mb: "98px", mt: "40px" }}>
+        <Grid container spacing={4} sx={{ mt: "20px" }}>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+          <SkeletonCard></SkeletonCard>
+        </Grid>
+      </Container>
+    );
 
   if (!data) return;
   return (
@@ -58,7 +70,7 @@ export default function Gallery() {
         {renderList}
       </Grid>
       <BtnSeeMore
-        disable={urlApi === null ? true : false}
+        style={resData === undefined ? "none" : "block"}
         onClick={handleSeeMore}
       >
         See More

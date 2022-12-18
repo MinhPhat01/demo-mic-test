@@ -1,16 +1,16 @@
 import queryString from "query-string";
 
-export const transformUrl = (originalUrl, addtionalParams) => {
+export const transformUrl = (originalUrl, additionalParams) => {
   if (originalUrl == undefined) {
     return "";
   }
 
   const { url, query: params } = queryString.parseUrl(originalUrl);
 
-  const mergepParams = {
+  const mergeParams = {
     ...params,
-    ...addtionalParams,
+    ...additionalParams,
   };
 
-  return `${url}?${queryString.stringify(mergepParams)}`;
+  return `${url}?${queryString.stringify(mergeParams)}`;
 };
