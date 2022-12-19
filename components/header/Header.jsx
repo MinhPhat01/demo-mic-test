@@ -10,12 +10,13 @@ import { listMenuHeader } from "../../constant";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import Search from "../Search";
+import { rest } from "lodash";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Header() {
   const router = useRouter();
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       search: "",
     },
@@ -54,6 +55,7 @@ export default function Header() {
 
   const handleSearch = useCallback((values) => {
     router.push(`/products?search=${values.search}`);
+    reset();
   }, []);
 
   if (!data) return null;

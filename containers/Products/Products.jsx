@@ -22,11 +22,20 @@ export default function Products(props) {
   const dataCategories = initData.items;
 
   const router = useRouter();
-  console.log("🚀 ~ file: Products.jsx:25 ~ Products ~ router", router);
 
+  const [urlApi, setUrlApi] = useState(
+    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
+  );
   const [currentTab, setCurrentTab] = useState(0);
   const [dataTabPanel, setDataTabPanel] = useState([]);
-  const [childOf, setChildOf] = useState();
+  console.log(
+    "🚀 ~ file: Products.jsx:31 ~ Products ~ dataTabPanel",
+    dataTabPanel
+  );
+
+  const [childOf, setChildOf] = useState("");
+  const [search, setSearch] = useState("");
+  const [isFetch, setIsFetch] = useState(false);
 
   const [params, setParams] = useParams({
     initState: {
@@ -37,13 +46,10 @@ export default function Products(props) {
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
-  console.log(params);
-  // const urlApi = transformUrl(PAGES_API, params);
-  // console.log("🚀 ~ file: Products.jsx:36 ~ Products ~ urlApi", urlApi)
 
   const { data } = useSWR(
     // transformUrl(PAGES_API, params)
-    `https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en${childOf}`,
+    `${urlApi}${childOf}${search}`,
     fetcher
   );
 
@@ -53,16 +59,18 @@ export default function Products(props) {
     setDataTabPanel(data.items);
   }, [data]);
 
-  // useEffect(() => {
-  //   if (router.query.search == undefined) {
-  //     return;
-  //   } else {
-  //     setParams({
-  //       child_of: undefined,
-  //       search: router.query.search,
-  //     });
-  //   }
-  // }, [router]);
+  // Search
+  useEffect(() => {
+    if (router.query.search == undefined) {
+      return;
+    } else {
+      setParams({
+        child_of: undefined,
+        // search: router.query.search,
+      });
+      setSearch(`&search=${router.query.search}`);
+    }
+  }, [router]);
 
   // useEffect setData by child of
   useEffect(() => {
@@ -73,15 +81,27 @@ export default function Products(props) {
       setParams({
         child_of: undefined,
       });
+
+      if (isFetch) {
+        setUrlApi(data.next);
+        setIsFetch(false);
+      }
     } else {
+      if (router.query.search == undefined) {
+        setSearch("");
+      }
       setCurrentTab(Number(router.query.child_of));
       setChildOf(`&child_of=${convertChildOf}`);
       setParams({
         child_of: router.query.child_of,
         // search: undefined,
       });
+      if (isFetch) {
+        setUrlApi(data.next);
+        setIsFetch(false);
+      }
     }
-  }, [router]);
+  }, [router, isFetch, urlApi]);
 
   // Render Categories
   const renderCategories = useMemo(() => {
@@ -133,11 +153,13 @@ export default function Products(props) {
     (event, newValue) => {
       if (newValue == 0) {
         setChildOf("");
+        setSearch("");
         setParams({
           child_of: undefined,
         });
       } else {
         setChildOf(`&child_of=${newValue}`);
+        setSearch("");
         setParams({
           child_of: newValue,
         });
@@ -146,69 +168,72 @@ export default function Products(props) {
     [currentTab]
   );
 
+  const handleSeeMore = useCallback(() => {
+    setIsFetch(true);
+  }, []);
+
   return (
     <Container sx={{ mt: "40px" }}>
-      <Box sx={{ mb: "100px" }}>
+      <Box
+        sx={{
+          mb: "100px",
+          mt: "40px",
+          "& .MuiTabPanel-root": {
+            paddingLeft: "0 !important",
+            paddingRight: "0 !important",
+          },
+        }}
+      >
         <Title title={"OUR PRODUCT"} widthText="190px" heightProps={24}></Title>
+
         <Box
           sx={{
-            mt: "40px",
-            "& .MuiTabPanel-root": {
-              paddingLeft: "0 !important",
-              paddingRight: "0 !important",
+            pb: "42px",
+            borderBottom: "1px solid #E6E8EC",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            transition: "all 0.3s linear",
+            "& .Mui-selected": {
+              backgroundColor: "#353945 !important",
+              color: "white !important",
+              borderRadius: "100px",
+            },
+            "& .MuiTabs-indicator": {
+              display: "none",
+            },
+            "& .MuiButtonBase-root": {
+              color: "#777E90",
+              fontSize: "14px !important",
+              lineHeight: "16px !important",
+              fontWeight: "700 !important",
+              textTransform: "none",
             },
           }}
         >
-          <Box
+          <Tabs
+            value={currentTab}
+            onChange={handleChange}
             sx={{
-              pb: "42px",
-              borderBottom: "1px solid #E6E8EC",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              transition: "all 0.3s linear",
-              "& .Mui-selected": {
-                backgroundColor: "#353945 !important",
-                color: "white !important",
-                borderRadius: "100px",
+              "& .MuiTabs-scroller": {
+                overflowX: "scroll !important",
               },
-              "& .MuiTabs-indicator": {
+
+              "& .MuiTabs-scroller::-webkit-scrollbar": {
                 display: "none",
-              },
-              "& .MuiButtonBase-root": {
-                color: "#777E90",
-                fontSize: "14px !important",
-                lineHeight: "16px !important",
-                fontWeight: "700 !important",
-                textTransform: "none",
               },
             }}
           >
-            <Tabs
-              value={currentTab}
-              onChange={handleChange}
-              sx={{
-                "& .MuiTabs-scroller": {
-                  overflowX: "scroll !important",
-                },
-
-                "& .MuiTabs-scroller::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
-            >
-              {renderCategories}
-            </Tabs>
-          </Box>
-          {renderTabPanel}
-
-          <BtnSeeMore
-            style={data?.next ? "block" : "none"}
-            // onClick={handleSeeMore}
-          >
-            See More
-          </BtnSeeMore>
+            {renderCategories}
+          </Tabs>
         </Box>
+        {renderTabPanel}
+        <BtnSeeMore
+          style={data?.next ? "block" : "none"}
+          onClick={handleSeeMore}
+        >
+          See More
+        </BtnSeeMore>
       </Box>
     </Container>
   );

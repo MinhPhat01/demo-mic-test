@@ -10,7 +10,7 @@ import Search from "../Search";
 
 export default function HeaderMobile() {
   const router = useRouter();
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       search: "",
     },
@@ -19,6 +19,7 @@ export default function HeaderMobile() {
   const theme = useTheme();
   const handleSearch = useCallback((values) => {
     router.push(`/products?search=${values.search}`);
+    reset();
   }, []);
   return (
     <Box
