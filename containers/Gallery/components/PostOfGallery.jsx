@@ -7,7 +7,15 @@ import { useMeasure } from "react-use";
 const PostOfGallery = ({ imgSrc, title, date }) => {
   const [ref, { width }] = useMeasure();
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: 2,
+        padding: "20px",
+        borderRadius: "16px"
+      }}
+    >
       <Box ref={ref} sx={{ width: "100%" }}>
         <Image
           width={width}

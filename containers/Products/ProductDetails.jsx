@@ -40,11 +40,11 @@ export default function ProductDetails() {
 
   const theme = useTheme();
   const [ref, { width }] = useMeasure();
-  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
   const [nav1, setNav1] = useState();
   const [nav2, setNav2] = useState();
   const slider1 = useRef(null);
   const slider2 = useRef(null);
+  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
   useEffect(() => {
     setNav1(slider1.current);
@@ -64,6 +64,29 @@ export default function ProductDetails() {
       return <ImgSmall key={index} imgSrc={item.value} />;
     });
   }, [listImg]);
+
+  const renderListBuy = useMemo(() => {
+    return imgECommerce.map((item) => {
+      return (
+        <MenuItem
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          key={item.id}
+          onClick={popupState.close}
+        >
+          <Image
+            src={item.imgSrc}
+            alt={item.name}
+            width={40}
+            height={40}
+          ></Image>
+        </MenuItem>
+      );
+    });
+  }, [imgECommerce]);
 
   if (!data) return null;
   return (
@@ -172,27 +195,7 @@ export default function ProductDetails() {
               {...bindMenu(popupState)}
               disableScrollLock={true}
             >
-              {imgECommerce.length > 0 &&
-                imgECommerce.map((item) => {
-                  return (
-                    <MenuItem
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                      key={item.id}
-                      onClick={popupState.close}
-                    >
-                      <Image
-                        src={item.imgSrc}
-                        alt={item.name}
-                        width={40}
-                        height={40}
-                      ></Image>
-                    </MenuItem>
-                  );
-                })}
+              {renderListBuy}
             </Menu>
           </Box>
         </Grid>

@@ -1,12 +1,10 @@
-import { Box, Container, Grid, ListItem, Tab, Tabs } from "@mui/material";
+import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import BtnSeeMore from "../../components/button/BtnSeeMore";
 import Title from "../../components/title/Title";
 import useSWR from "swr";
 import { useParams } from "../../hooks/useParams";
-import { PAGES_API, TYPE_PARAMS } from "../../apis";
-import { transformUrl } from "../../libs/transformUrl";
 import TabPanel from "../../components/tabs/TabPanel";
 import ProductItem from "./components/ProductItem";
 
@@ -22,7 +20,6 @@ export default function Products(props) {
   const dataCategories = initData.items;
 
   const router = useRouter();
-
   const [urlApi, setUrlApi] = useState(
     "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
   );
@@ -34,7 +31,6 @@ export default function Products(props) {
   const [isFetch, setIsFetch] = useState(false);
   const [isHold, setIsHold] = useState(true);
   const [isCurrent, setIsCurrent] = useState(false);
-
   const [params, setParams] = useParams({
     initState: {
       fields: "*",
@@ -45,11 +41,7 @@ export default function Products(props) {
     excludeKeys: ["limit", "offset", "type", "search"],
   });
 
-  const { data } = useSWR(
-    // transformUrl(PAGES_API, params)
-    `${urlApi}${childOf}${search}`,
-    fetcher
-  );
+  const { data } = useSWR(`${urlApi}${childOf}${search}`, fetcher);
 
   // useEffect just setData
   useEffect(() => {
@@ -58,6 +50,10 @@ export default function Products(props) {
     if (isHold) {
       setHoldData(data.items);
       setIsHold(false);
+    }
+    if (isCurrent) {
+      setDataTabPanel(holdData.concat(data.items));
+      setIsCurrent(false);
     }
   }, [data]);
 
@@ -78,6 +74,7 @@ export default function Products(props) {
   useEffect(() => {
     if (data === undefined) return;
     let convertChildOf = Number(router.query.child_of);
+
     if (router.query.child_of == undefined) {
       setChildOf("");
       setCurrentTab(0);
@@ -85,41 +82,30 @@ export default function Products(props) {
         child_of: undefined,
       });
 
-      // if (data.next) {
-      //   if (isFetch) {
-      //     setUrlApi(data.next);
-      //     setIsFetch(false);
-      //     setIsCurrent(true);
-      //   }
-      //   if (isCurrent) {
-      //     setDataTabPanel(holdData.concat(data.items));
-      //     setIsCurrent(false);
-      //   }
-      // }
+      if (isFetch) {
+        setUrlApi(data.next);
+        setIsFetch(false);
+      }
     } else {
       setCurrentTab(Number(router.query.child_of));
       setChildOf(`&child_of=${convertChildOf}`);
       setParams({
         child_of: router.query.child_of,
-        // search: undefined,
       });
       if (router.query.search == undefined) {
         setSearch("");
       }
-
-      // if (data.next) {
-      //   if (isFetch) {
-      //     setUrlApi(data.next);
-      //     setIsFetch(false);
-      //     setIsCurrent(true);
-      //   }
-      //   if (isCurrent) {
-      //     setDataTabPanel(holdData.concat(data.items));
-      //     setIsCurrent(false);
-      //   }
-      // }
+      if (data.next == null) {
+        setUrlApi(
+          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
+        );
+      }
+      if (isFetch) {
+        setUrlApi(data.next);
+        setIsFetch(false);
+      }
     }
-  }, [router, isFetch, isCurrent]);
+  }, [router, isFetch]);
 
   // Render Categories
   const renderCategories = useMemo(() => {
@@ -170,12 +156,20 @@ export default function Products(props) {
   const handleChange = useCallback(
     (event, newValue) => {
       if (newValue == 0) {
+        setUrlApi(
+          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
+        );
+        setCurrentTab(newValue);
         setChildOf("");
         setSearch("");
         setParams({
           child_of: undefined,
         });
       } else {
+        setUrlApi(
+          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
+        );
+        setCurrentTab(newValue);
         setChildOf(`&child_of=${newValue}`);
         setSearch("");
         setParams({
@@ -183,11 +177,12 @@ export default function Products(props) {
         });
       }
     },
-    [currentTab]
+    [currentTab, urlApi]
   );
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true);
+    setIsCurrent(true);
   }, []);
 
   return (

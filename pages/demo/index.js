@@ -1,27 +1,26 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { PAGES_API } from "../../apis";
-import { useParams } from "../../hooks/useParams";
-import { transformUrl } from "../../libs/transformUrl";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import {
+  usePopupState,
+  bindTrigger,
+  bindMenu,
+} from "material-ui-popup-state/hooks";
 
-export default function Demo() {
-  const [data, setData] = useState([]);
-  const [params, setParams] = useParams({
-    initState: {
-      fields: "*",
-      locale: "en",
-      limit: 8,
-      type: "product.ProductDetailPage",
-    },
-    excludeKeys: ["limit", "offset", "type", "search"],
-  });
-  const urlApi = transformUrl(PAGES_API, params);
+const MenuPopupState = () => {
+  const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
+  return (
+    <div>
+      <Button variant="contained" {...bindTrigger(popupState)}>
+        Open Menu
+      </Button>
+      <Menu {...bindMenu(popupState)}>
+        <MenuItem onClick={popupState.close}>Cake</MenuItem>
+        <MenuItem onClick={popupState.close}>Death</MenuItem>
+      </Menu>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const result = axios
-      .get("https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en")
-      .then((res) => console.log(res));
-  }, []);
-
-  return <div>index</div>;
-}
+export default MenuPopupState;

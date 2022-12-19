@@ -18,7 +18,7 @@ const HomePageNews = () => {
     if (!data?.items) return null;
     return data.items.map((item) => {
       return (
-        <Grid key={item.id} item xs={12} md={4}>
+        <Grid key={item.id} item xs={12} sm={6} md={4}>
           <Link href={`/news/${item.id}`}>
             <Post
               imgSrc={item.thumbnail}

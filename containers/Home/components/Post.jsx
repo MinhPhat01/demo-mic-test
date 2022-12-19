@@ -12,7 +12,15 @@ const Post = ({ imgSrc, title, date, content }) => {
   );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", boxShadow: 2, padding: "8px", borderRadius: "16px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: 2,
+        padding: "20px",
+        borderRadius: "16px",
+      }}
+    >
       <Box ref={ref} sx={{ width: "100%" }}>
         <Image
           width={width}
@@ -71,7 +79,7 @@ const Post = ({ imgSrc, title, date, content }) => {
           color: "#777E91",
           fontSize: "16px",
           lineHeight: "24px",
-          fontFamily: "Poppins",
+          fontFamily: "Poppins !important",
           textAlign: "justify",
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",

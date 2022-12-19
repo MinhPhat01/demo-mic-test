@@ -25,6 +25,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 const Footer = () => {
   const theme = useTheme();
   const { data } = useSWR("https://mic.t-solution.vn/api/v2", fetcher);
+
   const { data: dataProduct } = useSWR(
     "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductCategoryPage&locale=en",
     fetcher
@@ -221,7 +222,25 @@ const Footer = () => {
                     fontFamily: "Poppins",
                   }}
                 >
-                  {data.email}
+                  {data?.emails[0].value}
+                </Typography>
+              </Stack>
+              <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
+                <MailOutlineIcon
+                  fontSize="small"
+                  sx={{ color: "white" }}
+                ></MailOutlineIcon>
+                <Typography
+                  variant="p"
+                  sx={{
+                    color: "#FCFCFD",
+                    fontSize: "14px",
+                    lineHeight: "12px",
+                    fontWeight: "400",
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  {data?.emails[1].value}
                 </Typography>
               </Stack>
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
