@@ -28,14 +28,12 @@ export default function Products(props) {
   );
   const [currentTab, setCurrentTab] = useState(0);
   const [dataTabPanel, setDataTabPanel] = useState([]);
-  console.log(
-    "🚀 ~ file: Products.jsx:31 ~ Products ~ dataTabPanel",
-    dataTabPanel
-  );
-
+  const [holdData, setHoldData] = useState([]);
   const [childOf, setChildOf] = useState("");
   const [search, setSearch] = useState("");
   const [isFetch, setIsFetch] = useState(false);
+  const [isHold, setIsHold] = useState(true);
+  const [isCurrent, setIsCurrent] = useState(false);
 
   const [params, setParams] = useParams({
     initState: {
@@ -57,6 +55,10 @@ export default function Products(props) {
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
+    if (isHold) {
+      setHoldData(data.items);
+      setIsHold(false);
+    }
   }, [data]);
 
   // Search
@@ -74,6 +76,7 @@ export default function Products(props) {
 
   // useEffect setData by child of
   useEffect(() => {
+    if (data === undefined) return;
     let convertChildOf = Number(router.query.child_of);
     if (router.query.child_of == undefined) {
       setChildOf("");
@@ -82,26 +85,41 @@ export default function Products(props) {
         child_of: undefined,
       });
 
-      if (isFetch) {
-        setUrlApi(data.next);
-        setIsFetch(false);
-      }
+      // if (data.next) {
+      //   if (isFetch) {
+      //     setUrlApi(data.next);
+      //     setIsFetch(false);
+      //     setIsCurrent(true);
+      //   }
+      //   if (isCurrent) {
+      //     setDataTabPanel(holdData.concat(data.items));
+      //     setIsCurrent(false);
+      //   }
+      // }
     } else {
-      if (router.query.search == undefined) {
-        setSearch("");
-      }
       setCurrentTab(Number(router.query.child_of));
       setChildOf(`&child_of=${convertChildOf}`);
       setParams({
         child_of: router.query.child_of,
         // search: undefined,
       });
-      if (isFetch) {
-        setUrlApi(data.next);
-        setIsFetch(false);
+      if (router.query.search == undefined) {
+        setSearch("");
       }
+
+      // if (data.next) {
+      //   if (isFetch) {
+      //     setUrlApi(data.next);
+      //     setIsFetch(false);
+      //     setIsCurrent(true);
+      //   }
+      //   if (isCurrent) {
+      //     setDataTabPanel(holdData.concat(data.items));
+      //     setIsCurrent(false);
+      //   }
+      // }
     }
-  }, [router, isFetch, urlApi]);
+  }, [router, isFetch, isCurrent]);
 
   // Render Categories
   const renderCategories = useMemo(() => {
@@ -177,7 +195,6 @@ export default function Products(props) {
       <Box
         sx={{
           mb: "100px",
-          mt: "40px",
           "& .MuiTabPanel-root": {
             paddingLeft: "0 !important",
             paddingRight: "0 !important",
@@ -188,6 +205,7 @@ export default function Products(props) {
 
         <Box
           sx={{
+            mt: "40px",
             pb: "42px",
             borderBottom: "1px solid #E6E8EC",
             display: "flex",

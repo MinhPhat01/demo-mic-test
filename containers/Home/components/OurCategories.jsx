@@ -25,7 +25,7 @@ const OurCategories = () => {
   if (!data) return null;
 
   return (
-    <Box sx={{ mt: "60px" }}>
+    <Box sx={{ mt: "20px" }}>
       <Title title="Our Categories" widthText={"170px"} heightProps={20} />
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}

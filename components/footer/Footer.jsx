@@ -101,7 +101,9 @@ const Footer = () => {
               },
             }}
           >
-            <Image src={data.logo} alt="logo" width={115} height={80}></Image>
+            <Link href="/">
+              <Image src={data.logo} alt="logo" width={115} height={80}></Image>
+            </Link>
           </Grid>
           <Grid
             item
