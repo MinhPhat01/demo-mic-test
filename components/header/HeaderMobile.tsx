@@ -25,7 +25,7 @@ export default function HeaderMobile() {
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
-  }, []);
+  }, [router]);
   return (
     <Box
       sx={{

@@ -58,7 +58,7 @@ const MenuMobile = ({ setShow, show }: Props) => {
       })
 
 
-  }, [])
+  }, [listMenu])
 
   return (
     <Box

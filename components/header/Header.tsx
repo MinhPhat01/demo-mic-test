@@ -54,12 +54,12 @@ export default function Header() {
         </Box>
       );
     });
-  }, []);
+  }, [listMenuHeader]);
 
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
-  }, []);
+  }, [router]);
 
   if (!data) return null;
   return (
