@@ -1,29 +1,41 @@
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  InputBase,
-  Typography,
-} from "@mui/material";
+import { FormControl, FormLabel, InputProps, Typography } from "@mui/material";
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
+import Input from "react-phone-number-input/input";
+import CustomInput from "./CustomInput";
 
-export default function FormControlTextarea({
+type Props = {
+  label: string
+  name: "phone_number"
+  placeholder: string,
+  control: Control<
+    {
+      name: string; email: string; message: string; phone_number: string;
+    },
+    any
+  >;
+}
+
+type InputPropsWithoutValueAndOnChange = Omit<
+  InputProps,
+  "value" | "onChange" | "inputComponent"
+>;
+
+export default function FormControlPhoneNumber({
   label,
   name,
   placeholder,
   control,
-  error,
-}) {
+}: Props) {
   return (
     <Controller
       control={control}
       name={name}
+
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl
           variant="standard"
           sx={{
-            mt: "10px",
             width: "100%",
             "& .Mui-focused": {
               color: "#00a859 !important",
@@ -43,28 +55,14 @@ export default function FormControlTextarea({
           >
             {label}
           </FormLabel>
-          <InputBase
-            autoComplete="off"
-            multiline={true}
-            minRows={11}
-            id={name}
-            onChange={onChange}
-            value={value}
+          <Input
+            defaultCountry="VN"
             placeholder={placeholder}
-            sx={{
-              border: "2px solid #E6E8EC",
-              borderRadius: "12px",
-              "& .MuiInputBase-input": {
-                px: "16px",
-                py: "12px",
-                fontSize: "14px",
-                lineHeight: "24px",
-                fontFamily: "Poppins",
-                fontWeight: "500",
-                color: "#777E91",
-              },
-            }}
-          ></InputBase>
+            value={value}
+            onChange={onChange}
+            inputComponent={CustomInput as (props: InputPropsWithoutValueAndOnChange) => JSX.Element}
+          />
+
           <Typography
             sx={{
               mt: "10px",

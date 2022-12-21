@@ -3,14 +3,14 @@ import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-export default function ImgLarge({ imgSrc }) {
+export default function ImgSmall({ imgSrc }: { imgSrc: string }) {
   const [ref, { width }] = useMeasure();
 
   return (
-    <Box ref={ref} sx={{ borderRadius: "8px" }}>
+    <Box ref={ref} sx={{ borderRadius: "8px", mx: "10px" }}>
       <Image
         alt="image"
-        src={imgSrc || "/bgEmpty.png"}
+        src={imgSrc}
         width={width}
         height={width}
         style={{ borderRadius: "8px", objectFit: "cover" }}

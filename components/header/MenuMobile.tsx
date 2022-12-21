@@ -58,6 +58,7 @@ const MenuMobile = ({ setShow, show }: Props) => {
       })
 
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listMenu])
 
   return (

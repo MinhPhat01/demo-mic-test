@@ -1,61 +1,91 @@
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import BtnSeeMore from "../../components/button/BtnSeeMore";
-import Title from "../../components/title/Title";
 import useSWR from "swr";
-import { useParams } from "../../hooks/useParams";
-import TabPanel from "../../components/tabs/TabPanel";
 import ProductItem from "./components/ProductItem";
+import Title from "components/title/Title";
+import BtnSeeMore from "components/button/BtnSeeMore";
+import { IPage, responseSchema } from "interface";
+import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
+import TabPanel from "components/tabs/TabPanel";
+import { useParams } from "hooks/useParams";
+import { PAGES_API, TYPE_PARAMS } from "apis";
+import { transformUrl } from "libs/transformUrl";
 
 const itemAll = {
   id: 0,
   title: "All items",
 };
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+export type ProductProps = IPage<
+  [
+    responseSchema<PRODUCT_CATEGORIES_ITEMS>,
+    responseSchema<PRODUCT_DETAIL_ITEMS>
+  ]
+>;
 
-export default function Products(props) {
-  const { data: initData } = props;
-  const dataCategories = initData.items;
+export default function Products(props: ProductProps) {
+  const router = useRouter()
 
-  const router = useRouter();
-  const [urlApi, setUrlApi] = useState(
-    "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
-  );
-  const [currentTab, setCurrentTab] = useState(0);
-  const [dataTabPanel, setDataTabPanel] = useState([]);
-  const [holdData, setHoldData] = useState([]);
-  const [childOf, setChildOf] = useState("");
-  const [search, setSearch] = useState("");
-  const [isFetch, setIsFetch] = useState(false);
-  const [isHold, setIsHold] = useState(true);
-  const [isCurrent, setIsCurrent] = useState(false);
   const [params, setParams] = useParams({
     initState: {
       fields: "*",
+      type: TYPE_PARAMS["product.ProductDetailPage"],
       locale: "en",
       limit: 8,
-      type: "product.ProductDetailPage",
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
 
-  const { data } = useSWR(`${urlApi}${childOf}${search}`, fetcher);
+  const { initData } = props
 
-  // useEffect just setData
+  const dataCategories = initData[0].items;
+  const urlNextInit = initData[1].next
+
+
+
+  const [currentTab, setCurrentTab] = useState<number>(0)
+  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>([])
+  const [urlNext, setUrlNext] = useState<string>("")
+  const [isCurrent, setIsCurrent] = useState(false)
+  const [isFetch, setIsFetch] = useState<boolean>(false)
+  const { data } = useSWR(transformUrl(PAGES_API, params));
+  const { data: nextData } = useSWR(urlNext)
+
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
-    if (isHold) {
-      setHoldData(data.items);
-      setIsHold(false);
-    }
-    if (isCurrent) {
-      setDataTabPanel(holdData.concat(data.items));
-      setIsCurrent(false);
-    }
+
   }, [data]);
+
+
+  useEffect(() => {
+    if (!nextData) return;
+    if (router.query.child_of == undefined) {
+      setCurrentTab(0);
+      setParams({
+        child_of: undefined,
+      });
+      if (isFetch) {
+        setUrlNext(data.next)
+        setDataTabPanel(dataTabPanel.concat(nextData.items))
+        setIsFetch(false)
+
+      }
+    } else {
+      setCurrentTab(Number(router.query.child_of));
+      setParams({
+        child_of: router.query.child_of,
+        search: undefined,
+      });
+      if (isFetch) {
+        setUrlNext(data.next)
+        setDataTabPanel(dataTabPanel.concat(nextData.items))
+        setIsFetch(false)
+
+      }
+    }
+  }, [router, isFetch, nextData]);
 
   // Search
   useEffect(() => {
@@ -64,48 +94,31 @@ export default function Products(props) {
     } else {
       setParams({
         child_of: undefined,
-        // search: router.query.search,
+        search: router.query.search,
       });
-      setSearch(`&search=${router.query.search}`);
     }
   }, [router]);
 
-  // useEffect setData by child of
-  useEffect(() => {
-    if (data === undefined) return;
-    let convertChildOf = Number(router.query.child_of);
 
-    if (router.query.child_of == undefined) {
-      setChildOf("");
-      setCurrentTab(0);
-      setParams({
-        child_of: undefined,
-      });
+  const handleChange = useCallback(
+    (event: React.SyntheticEvent, newValue: number) => {
+      setCurrentTab(newValue)
+      if (newValue == 0) {
+        setParams({
+          child_of: undefined,
+        });
+      } else {
+        setParams({
+          child_of: newValue,
+          search: undefined,
+        });
+      }
+    }, [currentTab]);
 
-      if (isFetch) {
-        setUrlApi(data.next);
-        setIsFetch(false);
-      }
-    } else {
-      setCurrentTab(Number(router.query.child_of));
-      setChildOf(`&child_of=${convertChildOf}`);
-      setParams({
-        child_of: router.query.child_of,
-      });
-      if (router.query.search == undefined) {
-        setSearch("");
-      }
-      if (data.next == null) {
-        setUrlApi(
-          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
-        );
-      }
-      if (isFetch) {
-        setUrlApi(data.next);
-        setIsFetch(false);
-      }
-    }
-  }, [router, isFetch]);
+  const handleSeeMore = useCallback(() => {
+    setIsFetch(true)
+    setIsCurrent(true)
+  }, [])
 
   // Render Categories
   const renderCategories = useMemo(() => {
@@ -116,7 +129,7 @@ export default function Products(props) {
     });
   }, [dataCategories]);
 
-  // RenderTabPanel
+
   const renderTabPanel = useMemo(() => {
     if (dataTabPanel == undefined) return null;
     return (
@@ -153,37 +166,7 @@ export default function Products(props) {
     );
   }, [dataTabPanel, currentTab]);
 
-  const handleChange = useCallback(
-    (event, newValue) => {
-      if (newValue == 0) {
-        setUrlApi(
-          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
-        );
-        setCurrentTab(newValue);
-        setChildOf("");
-        setSearch("");
-        setParams({
-          child_of: undefined,
-        });
-      } else {
-        setUrlApi(
-          "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
-        );
-        setCurrentTab(newValue);
-        setChildOf(`&child_of=${newValue}`);
-        setSearch("");
-        setParams({
-          child_of: newValue,
-        });
-      }
-    },
-    [currentTab, urlApi]
-  );
 
-  const handleSeeMore = useCallback(() => {
-    setIsFetch(true);
-    setIsCurrent(true);
-  }, []);
 
   return (
     <Container sx={{ mt: "40px" }}>
@@ -242,7 +225,7 @@ export default function Products(props) {
         </Box>
         {renderTabPanel}
         <BtnSeeMore
-          style={data?.next ? "block" : "none"}
+          // style={nextData === undefined ? "block" : "none"}
           onClick={handleSeeMore}
         >
           See More

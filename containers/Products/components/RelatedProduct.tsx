@@ -1,24 +1,34 @@
 import { Box, Grid } from "@mui/material";
 import React, { useMemo } from "react";
 import Slider from "react-slick";
-import Title from "../../../components/title/Title";
 import ProductItemV2 from "./ProductItemV2";
 import useSWR from "swr";
 import Link from "next/link";
+import Title from "components/title/Title";
+import { PAGES_API, TYPE_PARAMS } from "apis";
+import { transformUrl } from "libs/transformUrl";
+import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+type Props = {
+  parentId: number,
+  id: string | string[]
+}
 
-const RelatedProduct = ({ parentId, id }) => {
-  const { data } = useSWR(
-    `https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&locale=en&child_of=${parentId}`,
-    fetcher
-  );
+const RelatedProduct = ({ parentId, id }: Props) => {
+  const { data: resData } = useSWR(transformUrl(PAGES_API, {
+    fields: "*",
+    child_of: parentId,
+    type: TYPE_PARAMS["product.ProductDetailPage"]
 
-  const filterData = data?.items.filter((item) => item.id != id);
+  }));
+  const data = resData?.items
+  const filterData = data?.filter((item: PRODUCT_DETAIL_ITEMS) => item.id != Number(id));
+
 
   const renderListProduct = useMemo(() => {
-    if (!filterData) return null;
-    return filterData.map((item) => {
+    if (!filterData) return;
+    return filterData.map((item: PRODUCT_DETAIL_ITEMS) => {
+
       return (
         <Link href={`/products/${item.id}`} key={item.id}>
           <ProductItemV2

@@ -1,13 +1,26 @@
 import { FormControl, FormLabel, InputBase, Typography } from "@mui/material";
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
+
+type Props = {
+  label: string
+  name: "name" | "email"
+  placeholder: string,
+  control: Control<
+    {
+      name: string; email: string; message: string; phone_number: string;
+
+    },
+    any
+  >;
+}
 
 export default function FormControlInput({
   label,
   name,
   placeholder,
   control,
-}) {
+}: Props) {
   return (
     <Controller
       control={control}

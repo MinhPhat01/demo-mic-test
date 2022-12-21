@@ -4,7 +4,14 @@ import Link from "next/link";
 import React from "react";
 import { useMeasure } from "react-use";
 
-export default function ProductItem({ title, id, imgSrc, pieces }) {
+type Props = {
+  title: string,
+  id: number,
+  imgSrc: string,
+  pieces: string,
+};
+
+export default function ProductItem({ title, id, imgSrc, pieces }: Props) {
   const [ref, { width }] = useMeasure();
   return (
     <Grid item xs={12} sm={6} md={3}>

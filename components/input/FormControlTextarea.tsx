@@ -1,27 +1,40 @@
-import { FormControl, FormLabel, Typography } from "@mui/material";
+import {
+  FormControl,
+  FormLabel,
+  InputBase,
+  Typography,
+} from "@mui/material";
 import React from "react";
-import { Controller } from "react-hook-form";
-import { isPossiblePhoneNumber } from "react-phone-number-input";
-import Input from "react-phone-number-input/input";
-import InputBaseCustom from "./InputBaseCustom";
+import { Control, Controller } from "react-hook-form";
 
-export default function FormControlPhoneNumber({
+type Props = {
+  label: string
+  name: "message"
+  placeholder: string,
+  control: Control<
+    {
+      name: string; email: string; message: string; phone_number: string;
+
+    },
+    any
+  >;
+}
+
+export default function FormControlTextarea({
   label,
   name,
   placeholder,
   control,
-}) {
+}: Props) {
   return (
     <Controller
       control={control}
       name={name}
-      // rules={{
-      //   validate: (value) => isPossiblePhoneNumber(String(value)),
-      // }}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl
           variant="standard"
           sx={{
+            mt: "10px",
             width: "100%",
             "& .Mui-focused": {
               color: "#00a859 !important",
@@ -41,14 +54,28 @@ export default function FormControlPhoneNumber({
           >
             {label}
           </FormLabel>
-          <Input
-            defaultCountry="VN"
-            placeholder={placeholder}
-            value={value}
+          <InputBase
+            autoComplete="off"
+            multiline={true}
+            minRows={11}
+            id={name}
             onChange={onChange}
-            inputComponent={InputBaseCustom}
-          />
-
+            value={value}
+            placeholder={placeholder}
+            sx={{
+              border: "2px solid #E6E8EC",
+              borderRadius: "12px",
+              "& .MuiInputBase-input": {
+                px: "16px",
+                py: "12px",
+                fontSize: "14px",
+                lineHeight: "24px",
+                fontFamily: "Poppins",
+                fontWeight: "500",
+                color: "#777E91",
+              },
+            }}
+          ></InputBase>
           <Typography
             sx={{
               mt: "10px",

@@ -16,7 +16,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Form from "./components/Form";
-import Map from "../../components/map/Map";
+import Map from "components/map/Map";
+
 
 export default function Contact() {
   const theme = useTheme();
@@ -44,7 +45,7 @@ export default function Contact() {
               >
                 <MapIcon sx={{ color: "#23262F" }}></MapIcon>
                 <Typography
-                  variant="p"
+
                   sx={{
                     color: "#23262F",
                     fontSize: "12px",
@@ -62,7 +63,7 @@ export default function Contact() {
                   sx={{ color: "#23262F" }}
                 ></MailOutlineIcon>
                 <Typography
-                  variant="p"
+
                   sx={{
                     color: "#23262F",
                     fontSize: "12px",
@@ -80,7 +81,7 @@ export default function Contact() {
                   sx={{ color: "#23262F" }}
                 ></PhoneIcon>
                 <Typography
-                  variant="p"
+
                   sx={{
                     color: "#23262F",
                     fontSize: "12px",

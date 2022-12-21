@@ -54,11 +54,13 @@ export default function Header() {
         </Box>
       );
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listMenuHeader]);
 
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   if (!data) return null;

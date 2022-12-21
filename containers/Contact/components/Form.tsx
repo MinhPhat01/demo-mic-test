@@ -1,14 +1,21 @@
 import { Box, Button, Grid, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
-import FormControlInput from "../../../components/input/FormControlInput";
-import FormControlPhoneNumber from "../../../components/input/FormControlPhoneNumber";
-import FormControlTextarea from "../../../components/input/FormControlTextarea";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
 import axios from "axios";
 import { useCallback } from "react";
-import { useNotify } from "../../../hooks/useNotify";
+import FormControlInput from "components/input/FormControlInput";
+import FormControlPhoneNumber from "components/input/FormControlPhoneNumber";
+import FormControlTextarea from "components/input/FormControlTextarea";
+import { useNotify } from "hooks/useNotify";
+
+type SubmitValues = {
+  name: string,
+  email: string,
+  message: string,
+  phone_number: string
+}
 
 const schema = yup.object({
   name: yup.string().required("Please enter your name"),
@@ -40,7 +47,7 @@ export default function Form() {
   });
   const { snackbarSuccess, snackbarError } = useNotify();
 
-  const onSubmit = useCallback(async (values) => {
+  const onSubmit = useCallback(async (values: SubmitValues) => {
     try {
       const headers = {
         Authorization: process.env.NEXT_PUBLIC_API_KEY,
@@ -54,7 +61,7 @@ export default function Form() {
       );
       snackbarSuccess("Submit form successfully");
       reset();
-    } catch (error) {
+    } catch (error: any) {
       snackbarError(error.response.data.message);
     }
   }, []);

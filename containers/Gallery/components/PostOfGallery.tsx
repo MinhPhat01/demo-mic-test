@@ -4,7 +4,13 @@ import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
-const PostOfGallery = ({ imgSrc, title, date }) => {
+type Props = {
+  imgSrc: string,
+  title: string,
+  date: string
+}
+
+const PostOfGallery = ({ imgSrc, title, date }: Props) => {
   const [ref, { width }] = useMeasure();
   return (
     <Box
@@ -33,7 +39,6 @@ const PostOfGallery = ({ imgSrc, title, date }) => {
           lineHeight: "32px",
           fontWeight: "600",
           fontFamily: "Poppins",
-          color: " #00A859",
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
           WebkitLineClamp: 2,

@@ -25,6 +25,7 @@ export default function HeaderMobile() {
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
   return (
     <Box

@@ -1,6 +1,6 @@
 export * from "./setting";
 
-type responseSchema<T> = {
+export type responseSchema<T> = {
   meta: {
     total_count: number;
     [key: string]: any;
@@ -10,11 +10,11 @@ type responseSchema<T> = {
   items: T[];
 };
 
-interface IPage<T extends unknown[]> {
+export interface IPage<T extends unknown[]> {
   initData: T;
   fallback: {
     [key: string]: any;
   };
 }
 
-export type { responseSchema, IPage };
+

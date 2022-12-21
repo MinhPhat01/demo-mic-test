@@ -1,11 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Typography, useTheme } from "@mui/material";
+import { IPage, } from "interface";
+import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -22,26 +17,28 @@ import {
 } from "material-ui-popup-state/hooks";
 import useMeasure from "react-use-measure";
 import Image from "next/image";
-import useSWR from "swr";
-import { useRouter } from "next/router";
 import RelatedProduct from "./components/RelatedProduct";
+import { useRouter } from "next/router";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+export type ProductDetailsProps = IPage<[PRODUCT_DETAIL_ITEMS]>
 
-export default function ProductDetails() {
-  const router = useRouter();
+
+
+export default function ProductDetails(props: ProductDetailsProps) {
+  const router = useRouter()
   const { id } = router.query;
-  const { data } = useSWR(
-    `https://mic.t-solution.vn/api/v2/pages/${id}`,
-    fetcher
-  );
+
+  const { initData } = props
+  const data = initData[0]
+  console.log("🚀 ~ file: ProductDetails.tsx:33 ~ ProductDetails ~ data", data)
+
   const parentId = data?.meta.parent.id;
   const listImg = data?.images;
 
   const theme = useTheme();
   const [ref, { width }] = useMeasure();
-  const [nav1, setNav1] = useState();
-  const [nav2, setNav2] = useState();
+  const [nav1, setNav1] = useState<Slider | undefined>(undefined);
+  const [nav2, setNav2] = useState<Slider | undefined>(undefined);
   const slider1 = useRef(null);
   const slider2 = useRef(null);
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
@@ -88,7 +85,6 @@ export default function ProductDetails() {
     });
   }, [imgECommerce]);
 
-  if (!data) return null;
   return (
     <Container sx={{ mb: "108px", mt: "40px" }}>
       <Grid container columnSpacing={4}>

@@ -14,7 +14,8 @@ export const TYPE_PARAMS = {
   "product.ProductCategoryPage": "product.ProductCategoryPage",
   "about.AboutPage": "about.AboutPage",
   "news.NewsListingPage": "news.NewsListingPage",
-  "gallery.GalleryDetailPage": "gallery.GalleryDetailPage"
+  "gallery.GalleryDetailPage": "gallery.GalleryDetailPage",
+  "product.ProductDetailPage": "product.ProductDetailPage"
 
 } as const;
 

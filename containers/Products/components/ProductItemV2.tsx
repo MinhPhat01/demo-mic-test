@@ -2,7 +2,13 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import { useMeasure } from "react-use";
 
-export default function ProductItemV2({ pieces, imgSrc, title }) {
+type Props = {
+  pieces: string,
+  imgSrc: string,
+  title: string
+}
+
+export default function ProductItemV2({ pieces, imgSrc, title }: Props) {
   const [ref, { width }] = useMeasure();
   return (
     <Box
