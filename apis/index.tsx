@@ -12,7 +12,9 @@ export const TYPE_PARAMS = {
   "home.HomePage": "home.HomePage",
   "news.NewDetailPage": "news.NewsDetailPage",
   "product.ProductCategoryPage": "product.ProductCategoryPage",
-  "about.AboutPage": "about.AboutPage"
+  "about.AboutPage": "about.AboutPage",
+  "news.NewsListingPage": "news.NewsListingPage",
+  "gallery.GalleryDetailPage": "gallery.GalleryDetailPage"
 
 } as const;
 

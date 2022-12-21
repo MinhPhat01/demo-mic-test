@@ -5,12 +5,29 @@ import Image from "next/image";
 import React from "react";
 import { useMeasure } from "react-use";
 
+
 type PROPS = {
   imgSrc: string,
   title: string,
   date: string,
-  content?: { block_type?: string; value?: string }[];
+  // content?: { block_type?: string; value?: string }[];
+  content: any
 }
+
+type FilterContent = {
+  block_type: string,
+  value: string | Node
+
+}
+
+type Test = {
+  value: string
+
+  p: boolean
+
+
+}
+
 
 const Post = ({ imgSrc, title, date, content }: PROPS) => {
   const [ref, { width }] = useMeasure();
@@ -54,6 +71,7 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
       >
         {title}
       </Typography>
+      <p></p>
       <Box
         sx={{
           mb: "16px",
@@ -75,10 +93,10 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
           {format(parseISO(date), "dd/MM/yyyy")}
         </Typography>
       </Box>
-      {filterContent.map((item, index) => {
+      {filterContent.map((item: FilterContent, index: number) => {
         return <Box
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(item.value)
+            __html: DOMPurify.sanitize(item.value, { ALLOWED_TAGS: ['q'] })
           }} key={index}
           sx={{
             color: "#777E91",
@@ -96,7 +114,7 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
 
       })}
 
-    </Box>
+    </Box >
   );
 };
 

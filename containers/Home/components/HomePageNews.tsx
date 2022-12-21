@@ -1,12 +1,11 @@
 import { Box, Grid } from "@mui/material";
-
-import Post from "./Post";
 import Link from "next/link";
 import { useMemo } from "react";
 import Title from "components/title/Title";
 import { HOME_PAGE_NEW } from "interface/responseSchema/home";
 import { responseSchema } from "interface";
 import BtnSeeMore from "components/button/BtnSeeMore";
+import Post from "components/Post/Post";
 
 type Props = {
   data: responseSchema<HOME_PAGE_NEW>
