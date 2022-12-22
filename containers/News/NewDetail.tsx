@@ -27,7 +27,6 @@ export default function NewDetail(props: NewDetailProps) {
               "& h1,h2,h3,h4,h5,h6": {
                 fontSize: "40px",
                 lineHeight: "48px",
-                fontFamily: "Poppins",
                 fontWeight: "600",
                 [theme.breakpoints.down("md")]: {
                   textAlign: "center",
@@ -36,7 +35,6 @@ export default function NewDetail(props: NewDetailProps) {
               "& i, p, ul, li, blockquote": {
                 fontSize: "24px",
                 lineHeight: "32px",
-                fontFamily: "Poppins",
                 fontWeight: "400",
                 color: "#141416",
                 [theme.breakpoints.down("md")]: {

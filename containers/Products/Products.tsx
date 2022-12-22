@@ -29,10 +29,10 @@ export default function Products(props: ProductProps) {
 
   const [params, setParams] = useParams({
     initState: {
-      fields: "*",
-      type: TYPE_PARAMS["product.ProductDetailPage"],
-      locale: "en",
-      limit: 8,
+      // fields: "*",
+      // type: TYPE_PARAMS["product.ProductDetailPage"],
+      // locale: "en",
+      // limit: 8,
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
@@ -40,52 +40,55 @@ export default function Products(props: ProductProps) {
   const { initData } = props
 
   const dataCategories = initData[0].items;
-  const urlNextInit = initData[1].next
 
-
-
+  const urlBase: string = "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
+  const [urlApi, setUrlApi] = useState<string>(urlBase)
   const [currentTab, setCurrentTab] = useState<number>(0)
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>([])
-  const [urlNext, setUrlNext] = useState<string>("")
-  const [isCurrent, setIsCurrent] = useState(false)
+  const [isNextData, setIsNextData] = useState<boolean>(false)
+  const [isHold, setIsHold] = useState<boolean>(true)
+  const [holdData, setHoldData] = useState([])
   const [isFetch, setIsFetch] = useState<boolean>(false)
-  const { data } = useSWR(transformUrl(PAGES_API, params));
-  const { data: nextData } = useSWR(urlNext)
+  const { data } = useSWR(transformUrl(urlApi, params));
 
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
-
+    if (isHold) {
+      setHoldData(data.items)
+      setIsHold(false)
+    }
+    if (isNextData) {
+      setDataTabPanel(holdData.concat(data.items))
+      setIsNextData(false)
+    }
   }, [data]);
 
-
   useEffect(() => {
-    if (!nextData) return;
     if (router.query.child_of == undefined) {
       setCurrentTab(0);
       setParams({
         child_of: undefined,
       });
       if (isFetch) {
-        setUrlNext(data.next)
-        setDataTabPanel(dataTabPanel.concat(nextData.items))
+        setUrlApi(data.next)
         setIsFetch(false)
-
       }
     } else {
+      if (data?.next === null) {
+        setUrlApi(urlBase)
+      }
       setCurrentTab(Number(router.query.child_of));
       setParams({
         child_of: router.query.child_of,
         search: undefined,
       });
       if (isFetch) {
-        setUrlNext(data.next)
-        setDataTabPanel(dataTabPanel.concat(nextData.items))
+        setUrlApi(data.next)
         setIsFetch(false)
-
       }
     }
-  }, [router, isFetch, nextData]);
+  }, [router, isFetch]);
 
   // Search
   useEffect(() => {
@@ -107,17 +110,21 @@ export default function Products(props: ProductProps) {
         setParams({
           child_of: undefined,
         });
+        setUrlApi(urlBase)
+
       } else {
         setParams({
           child_of: newValue,
           search: undefined,
         });
+        setUrlApi(urlBase)
       }
     }, [currentTab]);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true)
-    setIsCurrent(true)
+    setIsNextData(true)
+
   }, [])
 
   // Render Categories
@@ -225,7 +232,7 @@ export default function Products(props: ProductProps) {
         </Box>
         {renderTabPanel}
         <BtnSeeMore
-          // style={nextData === undefined ? "block" : "none"}
+          style={data?.next === null ? "none" : "block"}
           onClick={handleSeeMore}
         >
           See More

@@ -46,7 +46,6 @@ export default function FormControlPhoneNumber({
             sx={{
               fontSize: "12px",
               lineHeight: "12px",
-              fontFamily: "Poppins",
               fontWeight: "700",
               color: "#23262f",
               mb: "12px",

@@ -41,7 +41,6 @@ export default function ProductItem({ title, id, imgSrc, pieces }: Props) {
             sx={{
               fontSize: "16px",
               lineHeight: "24px",
-              fontFamily: "Poppins",
               fontWeight: "500",
               color: "#23262F",
               my: "16px",
@@ -63,7 +62,6 @@ export default function ProductItem({ title, id, imgSrc, pieces }: Props) {
               border: "2px solid #00A859",
               borderRadius: "4px",
               width: "fit-content",
-              fontFamily: "Poppins",
               fontWeight: "700",
             }}
           >

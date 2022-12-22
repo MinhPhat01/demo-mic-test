@@ -61,7 +61,6 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
           fontSize: "24px",
           lineHeight: "32px",
           fontWeight: "600",
-          fontFamily: "Poppins",
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
           WebkitLineClamp: 2,
@@ -86,7 +85,6 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
             fontSize: "12px",
             lineHeight: "12px",
             color: "#23262F",
-            fontFamily: "Poppins",
             fontWeight: "700",
           }}
         >
@@ -102,7 +100,6 @@ const Post = ({ imgSrc, title, date, content }: PROPS) => {
             color: "#777E91",
             fontSize: "16px",
             lineHeight: "24px",
-            fontFamily: "Poppins !important",
             textAlign: "justify",
             display: "-webkit-box",
             WebkitBoxOrient: "vertical",

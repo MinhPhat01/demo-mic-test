@@ -117,7 +117,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
               fontSize: "40px",
               lineHeight: "48px",
               fontWeight: "600",
-              fontFamily: "Poppins",
               color: "#23262",
               [theme.breakpoints.down("md")]: {
                 fontSize: "32px",
@@ -134,7 +133,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
               fontSize: "24px",
               lineHeight: "32px",
               fontWeight: "600",
-              fontFamily: "Poppins",
               color: "#00A859",
               my: "16px",
               [theme.breakpoints.down("md")]: {
@@ -149,7 +147,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
             sx={{
               fontSize: "16px",
               lineHeight: "24px",
-              fontFamily: "Poppins",
               textAlign: "justify",
               mb: "16px",
             }}

@@ -44,7 +44,7 @@ const Search = ({ control, name }: Props) => {
                   fontSize: "12px",
                   lineHeight: "20px",
                   fontWeight: "400",
-                  fontFamily: "Poppins",
+                 
                   padding: "12px 10px",
                 },
               }}

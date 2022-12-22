@@ -10,6 +10,7 @@ import { transformUrl } from "libs/transformUrl";
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 import { responseSchema } from "interface";
+import { usePopupState } from "material-ui-popup-state/hooks";
 
 export default function MenuProduct({ href }) {
   const { data } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(
@@ -19,8 +20,9 @@ export default function MenuProduct({ href }) {
       type: TYPE_PARAMS["product.ProductCategoryPage"],
     })
   );
-
+  const popupState = usePopupState({ variant: "popover", popupId: "productList" });
   const categoryList = data?.items;
+
   const renderList = useMemo(() => {
     if (!categoryList) return null;
     return categoryList.map((item) => {
@@ -31,8 +33,8 @@ export default function MenuProduct({ href }) {
               color: "#B1B5C3",
               fontSize: "12px",
               lineHeight: "20px",
-              fontFamily: "Poppins",
             }}
+            onClick={popupState.close}
           >
             {item.title}
           </MenuItem>
@@ -42,8 +44,6 @@ export default function MenuProduct({ href }) {
   }, [categoryList]);
   if (!data) return null;
   return (
-    <PopupState variant="popover" popupId="productList">
-      {(popupState) => (
         <Box
           {...bindHover(popupState)}
           sx={{
@@ -93,7 +93,5 @@ export default function MenuProduct({ href }) {
             {renderList}
           </HoverPopover>
         </Box>
-      )}
-    </PopupState>
   );
 }

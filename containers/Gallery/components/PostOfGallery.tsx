@@ -38,7 +38,6 @@ const PostOfGallery = ({ imgSrc, title, date }: Props) => {
           fontSize: "24px",
           lineHeight: "32px",
           fontWeight: "600",
-          fontFamily: "Poppins",
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
           WebkitLineClamp: 2,
@@ -62,7 +61,6 @@ const PostOfGallery = ({ imgSrc, title, date }: Props) => {
             fontSize: "12px",
             lineHeight: "12px",
             color: "#23262F",
-            fontFamily: "Poppins",
             fontWeight: "700",
           }}
         >

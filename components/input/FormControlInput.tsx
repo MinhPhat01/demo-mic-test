@@ -41,7 +41,6 @@ export default function FormControlInput({
               sx={{
                 fontSize: "12px",
                 lineHeight: "12px",
-                fontFamily: "Poppins",
                 fontWeight: "700",
                 color: "#23262f",
                 mb: "12px",
@@ -65,7 +64,6 @@ export default function FormControlInput({
                   py: "12px",
                   fontSize: "14px",
                   lineHeight: "24px",
-                  fontFamily: "Poppins",
                   fontWeight: "500",
                   color: "#777E91",
                 },

@@ -119,7 +119,6 @@ export default function Form() {
           sx={{
             fontSize: "16px",
             lineHeight: "16px",
-            fontFamily: "Poppins",
             fontWeight: "500",
             color: "#00A859",
             padding: "16px 24px",

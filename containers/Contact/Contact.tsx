@@ -17,13 +17,16 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import Form from "./components/Form";
 import Map from "components/map/Map";
-
+import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
+import useSWR from "swr"
 
 export default function Contact() {
+  const { data } = useSWR<HOME_PAGE_COMMON>("https://mic.t-solution.vn/api/v2");
   const theme = useTheme();
+  if (!data) return null;
   return (
     <Container sx={{ mb: "38px", mt: "40px" }}>
-      <Title title="CONTACT US" widthText="160px" heightProps={10}></Title>
+      <Title title="CONTACT US" widthText="160px" heightProps={10} />
       <Grid container sx={{ mt: "40px" }} columnSpacing={4}>
         <Grid
           item
@@ -45,52 +48,52 @@ export default function Contact() {
               >
                 <MapIcon sx={{ color: "#23262F" }}></MapIcon>
                 <Typography
-
                   sx={{
                     color: "#23262F",
                     fontSize: "12px",
                     lineHeight: "20pxF",
                     fontWeight: "400",
-                    fontFamily: "Poppins",
                   }}
                 >
-                  373A Tran Phu St, Ward 8, District 5, HCM City
+                  {data.address}
                 </Typography>
               </Stack>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <MailOutlineIcon
-                  fontSize="small"
-                  sx={{ color: "#23262F" }}
-                ></MailOutlineIcon>
-                <Typography
-
-                  sx={{
-                    color: "#23262F",
-                    fontSize: "12px",
-                    lineHeight: "20px",
-                    fontWeight: "400",
-                    fontFamily: "Poppins",
-                  }}
-                >
-                  vanphong@tbgdphanmic.vn
-                </Typography>
-              </Stack>
+              {data.emails.map((item, index) => {
+                return (
+                  <Stack key={index} direction={"row"} alignItems="center" spacing={1} >
+                    <MailOutlineIcon
+                      fontSize="small"
+                      sx={{ color: "#23262F" }}
+                    />
+                    <a href={`mailto: ${item.value}`}>
+                      <Typography
+                        sx={{
+                          color: "#23262F",
+                          fontSize: "12px",
+                          lineHeight: "20px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {item.value}
+                      </Typography>
+                    </a>
+                  </Stack>
+                )
+              })}
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <PhoneIcon
                   fontSize="small"
                   sx={{ color: "#23262F" }}
                 ></PhoneIcon>
                 <Typography
-
                   sx={{
                     color: "#23262F",
                     fontSize: "12px",
                     lineHeight: "20px",
                     fontWeight: "400",
-                    fontFamily: "Poppins",
                   }}
                 >
-                  +(84) 28 3924 1814
+                  <a href={`tel: ${data.hotline}`}>{data.hotline}</a>
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
@@ -108,7 +111,6 @@ export default function Contact() {
               fontSize: "16px",
               lineHeight: "24px",
               color: "#23262F",
-              fontFamily: "Poppins",
               fontWeight: "500",
               mb: "32px",
             }}
@@ -117,7 +119,7 @@ export default function Contact() {
           </Typography>
           <Form></Form>
         </Grid>
-      </Grid>
-    </Container>
+      </Grid >
+    </Container >
   );
 }

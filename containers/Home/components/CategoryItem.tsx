@@ -41,7 +41,6 @@ const CategoryItem = ({ imgSrc, title, id }: PROPS) => {
             lineHeight: "24px",
             color: "#23262F",
             fontWeight: "500",
-            fontFamily: "Poppins",
           }}
         >
           {title}

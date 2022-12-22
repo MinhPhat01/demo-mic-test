@@ -11,10 +11,6 @@ import React, { useMemo } from "react";
 import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import Map from "components/map/Map"
 import useSWR from "swr";
 import Link from "next/link";
@@ -42,13 +38,12 @@ const Footer = () => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
           <Typography
-
             sx={{
               color: "#FCFCFD",
               fontSize: "14px",
               lineHeight: "16px",
               fontWeight: "400",
-              fontFamily: "Poppins",
+
             }}
           >
             {item.title}
@@ -70,7 +65,6 @@ const Footer = () => {
                 fontSize: "14px",
                 lineHeight: "16px",
                 fontWeight: "400",
-                fontFamily: "Poppins",
               }}
             >
               {item.name}
@@ -143,7 +137,6 @@ const Footer = () => {
                 fontSize: "16px",
                 lineHeight: "24px",
                 fontWeight: "500",
-                fontFamily: "Poppins",
               }}
             >
               Menu
@@ -170,7 +163,6 @@ const Footer = () => {
                 fontSize: "16px",
                 lineHeight: "24px",
                 fontWeight: "500",
-                fontFamily: "Poppins",
               }}
             >
               Products
@@ -199,7 +191,6 @@ const Footer = () => {
                 fontSize: "16px",
                 lineHeight: "24px",
                 fontWeight: "500",
-                fontFamily: "Poppins",
               }}
             >
               Address
@@ -218,61 +209,44 @@ const Footer = () => {
                     fontSize: "14px",
                     lineHeight: "12px",
                     fontWeight: "400",
-                    fontFamily: "Poppins",
                   }}
                 >
                   {data.address}
                 </Typography>
               </Stack>
-              <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
-                <MailOutlineIcon
-                  fontSize="small"
-                  sx={{ color: "white" }}
-                ></MailOutlineIcon>
-                <Typography
-
-                  sx={{
-                    color: "#FCFCFD",
-                    fontSize: "14px",
-                    lineHeight: "12px",
-                    fontWeight: "400",
-                    fontFamily: "Poppins",
-                  }}
-                >
-                  {data?.emails[0].value}
-                </Typography>
-              </Stack>
-              <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
-                <MailOutlineIcon
-                  fontSize="small"
-                  sx={{ color: "white" }}
-                ></MailOutlineIcon>
-                <Typography
-
-                  sx={{
-                    color: "#FCFCFD",
-                    fontSize: "14px",
-                    lineHeight: "12px",
-                    fontWeight: "400",
-                    fontFamily: "Poppins",
-                  }}
-                >
-                  {data?.emails[1].value}
-                </Typography>
-              </Stack>
+              {data.emails.map((item, index) => {
+                return (
+                  <Stack key={index} direction={"row"} alignItems="center" spacing={1} >
+                    <MailOutlineIcon
+                      fontSize="small"
+                      sx={{ color: "white" }}
+                    />
+                    <a href={`mailto: ${item.value}`}>
+                      <Typography
+                        sx={{
+                          color: "white",
+                          fontSize: "14px",
+                          lineHeight: "12px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        {item.value}
+                      </Typography>
+                    </a>
+                  </Stack>
+                )
+              })}
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
                 <PhoneIcon fontSize="small" sx={{ color: "white" }}></PhoneIcon>
                 <Typography
-
                   sx={{
                     color: "#FCFCFD",
                     fontSize: "14px",
                     lineHeight: "12px",
                     fontWeight: "400",
-                    fontFamily: "Poppins",
                   }}
                 >
-                  {data.hotline}
+                  <a href={`tel: ${data.hotline}`}>{data.hotline}</a>
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
@@ -300,7 +274,6 @@ const Footer = () => {
             color: "#F4F5F6",
             fontSize: "12px",
             lineHeight: "20px",
-            fontFamily: "Poppins",
             [theme.breakpoints.down("md")]: {
               display: "flex",
               flexDirection: "column",

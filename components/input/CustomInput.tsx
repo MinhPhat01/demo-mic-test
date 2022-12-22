@@ -15,7 +15,6 @@ const CustomInput = (props: InputProps, ref?: React.Ref<HTMLInputElement>) => {
                     py: "12px",
                     fontSize: "14px",
                     lineHeight: "24px",
-                    fontFamily: "Poppins",
                     fontWeight: "500",
                     color: "#777E91",
                 },
