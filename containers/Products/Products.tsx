@@ -108,6 +108,7 @@ export default function Products(props: ProductProps) {
       if (newValue == 0) {
         setParams({
           child_of: undefined,
+          search: undefined
         });
         setUrlApi(urlBase)
 
