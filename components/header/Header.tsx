@@ -12,7 +12,7 @@ import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 
 type ValuesSubmit = {
-  search: any
+  search: string
 }
 
 

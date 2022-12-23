@@ -10,7 +10,7 @@ import MenuMobile from "./MenuMobile";
 
 
 type ValuesSubmit = {
-  search: any,
+  search: string,
 };
 
 export default function HeaderMobile() {

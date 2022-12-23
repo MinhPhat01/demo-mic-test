@@ -16,5 +16,3 @@ export interface IPage<T extends unknown[]> {
     [key: string]: any;
   };
 }
-
-
