@@ -119,7 +119,7 @@ export default function Products(props: ProductProps) {
         });
         setUrlApi(urlBase)
       }
-    }, [currentTab]);
+    }, [currentTab, router.query.child_of]);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true)
