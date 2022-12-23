@@ -18,12 +18,18 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import Form from "./components/Form";
 import Map from "components/map/Map";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
-import useSWR from "swr"
+import { IPage } from "interface";
 
-export default function Contact() {
-  const { data } = useSWR<HOME_PAGE_COMMON>("https://mic.t-solution.vn/api/v2");
+export type PropsContact = IPage<[HOME_PAGE_COMMON]>
+
+
+export default function Contact(props: PropsContact) {
+
+  const { initData } = props
+  const data = initData[0]
+
   const theme = useTheme();
-  if (!data) return null;
+
   return (
     <Container sx={{ mb: "38px", mt: "40px" }}>
       <Title title="CONTACT US" widthText="160px" heightProps={10} />

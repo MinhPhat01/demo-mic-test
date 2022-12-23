@@ -44,54 +44,54 @@ export default function MenuProduct({ href }) {
   }, [categoryList]);
   if (!data) return null;
   return (
+    <Box
+      {...bindHover(popupState)}
+      sx={{
+        pb: "10px",
+      }}
+    >
+      <Link href={href}>
         <Box
-          {...bindHover(popupState)}
           sx={{
-            pb: "10px",
+            display: "flex",
+            alignItems: "flex-start",
+            columnGap: "2px",
           }}
         >
-          <Link href={href}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                columnGap: "2px",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Lato",
-                  fontWeight: 700,
-                  color: "#141416",
-                  fontSize: "14px",
-                  lineHeight: "16px",
-                }}
-              >
-                Product
-              </Typography>
-              <KeyboardArrowDownIcon fontSize="inherit" />
-            </Box>
-          </Link>
-          <HoverPopover
+          <Typography
             sx={{
-              "& .MuiPaper-root": {
-                backgroundColor: "#fcfcfd",
-                padding: "16px 0",
-              },
+              fontFamily: "Lato",
+              fontWeight: 700,
+              color: "#141416",
+              fontSize: "14px",
+              lineHeight: "16px",
             }}
-            {...bindPopover(popupState)}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            disableScrollLock={true}
           >
-            {renderList}
-          </HoverPopover>
+            Product
+          </Typography>
+          <KeyboardArrowDownIcon fontSize="inherit" />
         </Box>
+      </Link>
+      <HoverPopover
+        sx={{
+          "& .MuiPaper-root": {
+            backgroundColor: "#fcfcfd",
+            padding: "16px 0",
+          },
+        }}
+        {...bindPopover(popupState)}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        disableScrollLock={true}
+      >
+        {renderList}
+      </HoverPopover>
+    </Box>
   );
 }

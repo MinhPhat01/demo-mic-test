@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import { Box, Container, Stack, useTheme } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +15,9 @@ type ValuesSubmit = {
   search: any
 }
 
-export default function Header() {
+
+export default function Header({ initData }: { initData: HOME_PAGE_COMMON }) {
+  const data = initData[0]
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -24,7 +25,6 @@ export default function Header() {
     },
   });
   const theme = useTheme();
-  const { data } = useSWR<HOME_PAGE_COMMON>("https://mic.t-solution.vn/api/v2");
 
   const renderList = useMemo(() => {
     return listMenuHeader.map((item) => {
@@ -54,13 +54,13 @@ export default function Header() {
         </Box>
       );
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listMenuHeader]);
 
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   if (!data) return null;

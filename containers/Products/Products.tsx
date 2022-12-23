@@ -9,7 +9,6 @@ import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 import TabPanel from "components/tabs/TabPanel";
 import { useParams } from "hooks/useParams";
-import { PAGES_API, TYPE_PARAMS } from "apis";
 import { transformUrl } from "libs/transformUrl";
 
 const itemAll = {
@@ -38,8 +37,8 @@ export default function Products(props: ProductProps) {
   });
 
   const { initData } = props
-
   const dataCategories = initData[0].items;
+  const fetchDataFirst = initData[1]
 
   const urlBase: string = "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
   const [urlApi, setUrlApi] = useState<string>(urlBase)

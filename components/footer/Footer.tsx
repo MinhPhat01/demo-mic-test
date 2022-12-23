@@ -21,10 +21,9 @@ import { menuOfFooter } from "constant";
 import { responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
-const Footer = () => {
+const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
   const theme = useTheme();
-  const { data } = useSWR<HOME_PAGE_COMMON>("https://mic.t-solution.vn/api/v2");
-
+  const data = initData[0]
   const { data: dataProduct } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(transformUrl(PAGES_API, {
     locale: "en",
     fields: "*",

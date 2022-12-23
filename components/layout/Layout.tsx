@@ -3,11 +3,18 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Footer from "../footer/Footer";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Header from "components/header/Header";
+import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+type Props = {
+  children: React.ReactNode,
+  initData: HOME_PAGE_COMMON
+}
+
+const Layout = (props: Props) => {
+  const { children, initData } = props
   const [visible, setVisible] = useState<boolean>(false);
   const theme = useTheme();
-  
+
   useEffect(() => {
     const toggleVisible = () => {
       const scrolled = document.documentElement.scrollTop;
@@ -30,7 +37,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden" }}>
-      <Header />
+      <Header initData={initData} />
       <Box
         sx={{
           flex: 1,
@@ -42,7 +49,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       >
         {children}
       </Box>
-      <Footer />
+      <Footer initData={initData} />
       <Box
         onClick={scrollToTop}
         style={{ display: visible ? "block" : "none" }}
