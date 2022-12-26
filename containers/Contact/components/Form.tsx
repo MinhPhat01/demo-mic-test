@@ -1,14 +1,14 @@
-import { Box, Button, Grid, useTheme } from "@mui/material";
+import { useCallback } from "react";
+import { Box, Button, Grid, useTheme, styled } from "@mui/material";
+import axios from "axios";
+import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
-import axios from "axios";
-import { useCallback } from "react";
+import { useNotify } from "hooks/useNotify";
 import FormControlInput from "components/input/FormControlInput";
 import FormControlPhoneNumber from "components/input/FormControlPhoneNumber";
 import FormControlTextarea from "components/input/FormControlTextarea";
-import { useNotify } from "hooks/useNotify";
 
 type SubmitValues = {
   name: string,
@@ -97,44 +97,46 @@ export default function Form() {
         name="message"
         placeholder="I need some help..."
       />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "end",
-          mt: "20px",
-          "& .MuiButtonBase-root": {
-            backgroundColor: "white !important",
-          },
-          [theme.breakpoints.down("md")]: {
-            justifyContent: "center",
-          },
-        }}
-      >
-        <Button
+      <StyledWrapButton>
+        <StyledButton
           type="submit"
           onClick={handleSubmit(onSubmit)}
           disableRipple={true}
           disableFocusRipple={true}
-          sx={{
-            fontSize: "16px",
-            lineHeight: "16px",
-            fontWeight: "500",
-            color: "#00A859",
-            padding: "16px 24px",
-            border: "1px solid #00A859",
-            borderRadius: "8px",
-            textTransform: "none",
-            backgroundColor: "white !important",
-            "&:hover": {
-              backgroundColor: "#00A859 !important",
-              color: "white",
-            },
-          }}
         >
           Submit
-        </Button>
-      </Box>
+        </StyledButton>
+      </StyledWrapButton>
     </Box>
   );
 }
+
+const StyledWrapButton = styled(Box)(({ theme }) => {
+  return {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "end",
+    marginTop: "20px",
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
+    },
+  }
+})
+
+const StyledButton = styled(Button)(() => {
+  return {
+    fontSize: "16px",
+    lineHeight: "16px",
+    fontWeight: "500",
+    color: "#00A859",
+    padding: "16px 24px",
+    border: "1px solid #00A859",
+    borderRadius: "8px",
+    textTransform: "none",
+    backgroundColor: "white !important",
+    "&:hover": {
+      backgroundColor: "#00A859 !important",
+      color: "white",
+    },
+  }
+})

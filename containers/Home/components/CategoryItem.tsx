@@ -1,29 +1,19 @@
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import Image from "next/image";
 import React from "react";
-import { useMeasure } from "react-use";
+import Image from "next/image";
 import Link from "next/link";
+import { Typography, Box, styled } from "@mui/material";
+import { useMeasure } from "react-use";
 
-type PROPS = {
+type CategoryItemProps = {
   imgSrc: string,
   title: string,
   id: number,
 };
 
-const CategoryItem = ({ imgSrc, title, id }: PROPS) => {
+const CategoryItem = ({ imgSrc, title, id }: CategoryItemProps) => {
   const [ref, { width }] = useMeasure();
   return (
-    <Box
-      sx={{
-        padding: "10px",
-        boxShadow:
-          "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
-        borderRadius: "20px",
-        background: "#FCFCFD",
-        textAlign: "center",
-      }}
-    >
+    <StyledWrapper>
       <Link href={`/products?child_of=${id}`}>
         <Box ref={ref}>
           <Image
@@ -34,20 +24,33 @@ const CategoryItem = ({ imgSrc, title, id }: PROPS) => {
             style={{ objectFit: "cover", borderRadius: "16px" }}
           ></Image>
         </Box>
-        <Typography
-          sx={{
-            my: "12px",
-            fontSize: "16px",
-            lineHeight: "24px",
-            color: "#23262F",
-            fontWeight: "500",
-          }}
-        >
+        <StyledTitle>
           {title}
-        </Typography>
+        </StyledTitle>
       </Link>
-    </Box>
+    </StyledWrapper>
   );
 };
 
 export default CategoryItem;
+
+const StyledWrapper = styled(Box)(() => {
+  return {
+    padding: "10px",
+    boxShadow:
+      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+    borderRadius: "20px",
+    background: "#FCFCFD",
+    textAlign: "center",
+  }
+})
+
+const StyledTitle = styled(Typography)(() => {
+  return {
+    margin: "12px 0",
+    fontSize: "16px",
+    lineHeight: "24px",
+    color: "#23262F",
+    fontWeight: "500",
+  }
+})

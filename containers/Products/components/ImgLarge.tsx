@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
+import { Box } from "@mui/material";
 import { useMeasure } from "react-use";
 
 export default function ImgLarge({ imgSrc }: { imgSrc: string }) {

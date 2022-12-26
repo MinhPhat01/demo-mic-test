@@ -1,15 +1,15 @@
-import { Box, Grid } from "@mui/material";
-import CategoryItem from "./CategoryItem";
 import { useMemo } from "react";
+import { Box, Grid } from "@mui/material";
 import { responseSchema } from "interface";
 import { HOME_PAGE_OUR_CATEGORIES } from "interface/responseSchema/home";
 import Title from "components/title/Title";
+import CategoryItem from "./CategoryItem";
 
-type Props = {
+type OurCategoriesProps = {
   data: responseSchema<HOME_PAGE_OUR_CATEGORIES>
 }
 
-const OurCategories = ({ data }: Props) => {
+const OurCategories = ({ data }: OurCategoriesProps) => {
   const renderList = useMemo(() => {
     if (!data?.items) return null;
     return data.items.map((item) => {
@@ -24,7 +24,7 @@ const OurCategories = ({ data }: Props) => {
 
   return (
     <Box sx={{ mt: "20px" }}>
-      <Title title="Our Categories" widthText={"170px"} heightProps={20} />
+      <Title title="Our Categories" widthText={"170px"} lineHeight={20} />
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}
       </Grid>

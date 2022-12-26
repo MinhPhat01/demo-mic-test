@@ -1,8 +1,8 @@
+import { useMemo } from "react";
 import { Box, Container } from "@mui/material";
-import Title from "components/title/Title";
 import { IPage, responseSchema } from "interface";
 import { ITEM_ABOUT } from "interface/responseSchema/about";
-import { useMemo } from "react";
+import Title from "components/title/Title";
 import OurMission from "./components/OurMission";
 import OurStory from "./components/OurStory";
 import OurValue from "./components/OurValue";
@@ -20,6 +20,7 @@ export default function About(props: PropsAbout) {
       return (
         <OurStory key={index} content={item.value} />
       )
+
     })
   }, [dataStory])
   const renderMission = useMemo(() => {
@@ -27,10 +28,9 @@ export default function About(props: PropsAbout) {
       return (
         <OurMission key={index} content={item.value} />
       )
+
     })
   }, [dataMission])
-
-
 
   return (
     <Container sx={{ mt: "40px" }}>
@@ -46,7 +46,6 @@ export default function About(props: PropsAbout) {
         <Title title={"Our Value"} widthText={"140px"}></Title>
         <OurValue data={dataValue} />
       </Box>
-
     </Container>
   );
 }

@@ -1,9 +1,9 @@
-import { Box, useTheme } from "@mui/material";
 import React, { useMemo, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import Link from "next/link";
 import Image from "next/image";
-import ChangeLanguage from "../changeLanguage/ChangeLanguage";
+import Link from "next/link";
+import { Box, useTheme, styled } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 
 const listMenu = [
   { id: 1, name: "home", src: "/" },
@@ -14,12 +14,12 @@ const listMenu = [
   { id: 6, name: "contact", src: "/contact" },
 ];
 
-type Props = {
+type MenuMobileProps = {
   setShow: (b: boolean) => void
   show: boolean
 }
 
-const MenuMobile = ({ setShow, show }: Props) => {
+const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
   const theme = useTheme();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const handleClick = (index: number) => () => {
@@ -32,50 +32,27 @@ const MenuMobile = ({ setShow, show }: Props) => {
       listMenu.map((item, index) => {
         return (
           <Link href={`${item.src}`} key={item.id}>
-            <Box
+            <StyledMenuItem
               onClick={handleClick(index)}
               sx={{
-                fontSize: "14px",
-                lineHeight: "16px",
-                fontFamily: "Lato",
-                fontWeight: "700",
-                pl: "20px",
-                py: "10px",
-                textTransform: "capitalize",
                 color: selectedIndex === index ? "#00A859" : "#141416",
                 borderLeft:
                   selectedIndex === index ? "2px solid #00A859" : "",
-                marginLeft: "-24px",
                 [theme.breakpoints.down("sm")]: {
                   marginLeft: "-20px",
                 },
               }}
             >
               {item.name}
-            </Box>
+            </StyledMenuItem>
           </Link>
         );
       })
-
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listMenu])
 
   return (
-    <Box
-      sx={{
-        background: "red",
-        position: "fixed",
-        inset: 0,
-        zIndex: 999,
-        height: "100%",
-        backgroundColor: "white",
-        padding: "20px",
-        [theme.breakpoints.up("md")]: {
-          display: "none",
-        },
-      }}
-    >
+    <StyledWrapperMenu>
       <Box
         sx={{
           display: "flex",
@@ -94,8 +71,33 @@ const MenuMobile = ({ setShow, show }: Props) => {
         {renderListMenu}
       </Box>
       <ChangeLanguage />
-    </Box>
+    </StyledWrapperMenu>
   );
 };
 
 export default MenuMobile;
+
+const StyledMenuItem = styled(Box)(() => {
+  return {
+    fontSize: "14px",
+    lineHeight: "16px",
+    fontWeight: "700",
+    padding: "10px 0px 10px 20px",
+    textTransform: "capitalize",
+    marginLeft: "-20px",
+  }
+})
+
+const StyledWrapperMenu = styled(Box)(({ theme }) => {
+  return {
+    position: "fixed",
+    inset: 0,
+    zIndex: 999,
+    height: "100%",
+    backgroundColor: "white",
+    padding: "20px",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  }
+})

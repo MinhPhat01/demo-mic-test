@@ -1,12 +1,12 @@
-import { Box } from "@mui/material";
 import React from "react";
-import { useMeasure } from "react-use";
+import Link from "next/link";
+import { Box, styled } from "@mui/material";
 import Slider from "react-slick";
+import { useMeasure } from "react-use";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { responseSchema } from "interface";
 import { HOME_PAGE } from "interface/responseSchema/home";
-import Link from "next/link";
 import Image from "components/Image"
 
 const settings = {
@@ -18,29 +18,19 @@ const settings = {
   arrows: false
 };
 
-type Props = {
+type BannerProps = {
   data: responseSchema<HOME_PAGE>
 }
 
-
-const Banner = ({ data }: Props) => {
+const Banner = ({ data }: BannerProps) => {
   const banners = data.items[0].banners
   const [ref, { width }] = useMeasure();
 
   return (
-    <Box
+    <StyledWrapper
       ref={ref}
       sx={{
-        mb: "48px",
         height: width / (1440 / 516),
-        "& .slick-dots li": {
-          width: "10px !important",
-        },
-        "& .slick-dots li button:before": {
-          margin: "0 !important",
-          fontSize: "12px !important",
-          color: "#B1B5C3 !important",
-        },
       }}
     >
       <Slider {...settings}>
@@ -62,8 +52,22 @@ const Banner = ({ data }: Props) => {
             );
           })}
       </Slider>
-    </Box >
+    </StyledWrapper >
   );
 };
 
 export default Banner;
+
+const StyledWrapper = styled(Box)(() => {
+  return {
+    marginBottom: "48px",
+    "& .slick-dots li": {
+      width: "10px !important",
+    },
+    "& .slick-dots li button:before": {
+      margin: "0 !important",
+      fontSize: "12px !important",
+      color: "#B1B5C3 !important",
+    },
+  }
+})

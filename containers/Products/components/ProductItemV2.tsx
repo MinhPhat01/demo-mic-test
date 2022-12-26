@@ -1,14 +1,14 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 
-type Props = {
+type ProductItemV2Props = {
   pieces: string,
   imgSrc: string,
   title: string
 }
 
-export default function ProductItemV2({ pieces, imgSrc, title }: Props) {
+export default function ProductItemV2({ pieces, imgSrc, title }: ProductItemV2Props) {
   const [ref, { width }] = useMeasure();
   return (
     <Box
@@ -26,36 +26,40 @@ export default function ProductItemV2({ pieces, imgSrc, title }: Props) {
           style={{ objectFit: "cover", height: width, borderRadius: "4px" }}
         ></Image>
       </Box>
-      <Typography
-        sx={{
-          fontSize: "16px",
-          lineHeight: "24px",
-          fontWeight: "500",
-          color: "#23262F",
-          my: "16px",
-          display: "-webkit-box",
-          overflow: "hidden",
-          minHeight: "48px",
-          WebkitBoxOrient: "vertical",
-          WebkitLineClamp: 2,
-        }}
-      >
+      <StyledTitle>
         {title}
-      </Typography>
-      <Box
-        sx={{
-          padding: "6px 8px",
-          fontSize: "12px",
-          lineHeight: "12px",
-          color: "#00A859",
-          border: "2px solid #00A859",
-          borderRadius: "4px",
-          width: "fit-content",
-          fontWeight: "700",
-        }}
-      >
+      </StyledTitle>
+      <StyledPieces>
         {pieces || "pieces"}
-      </Box>
+      </StyledPieces>
     </Box>
   );
 }
+
+const StyledTitle = styled(Typography)(() => {
+  return {
+    fontSize: "16px",
+    lineHeight: "24px",
+    fontWeight: "500",
+    color: "#23262F",
+    margin: "16px 0",
+    display: "-webkit-box",
+    overflow: "hidden",
+    minHeight: "48px",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
+  }
+})
+
+const StyledPieces = styled(Box)(() => {
+  return {
+    padding: "6px 8px",
+    fontSize: "12px",
+    lineHeight: "12px",
+    color: "#00A859",
+    border: "2px solid #00A859",
+    borderRadius: "4px",
+    width: "fit-content",
+    fontWeight: "700",
+  }
+})

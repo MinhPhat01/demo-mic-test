@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
 import React from "react";
+import { Button, styled } from "@mui/material";
 
-type PROPS = {
+type BtnSeeMoreProps = {
   children: React.ReactNode,
   onClick?: () => void,
   disable?: boolean,
@@ -9,30 +9,35 @@ type PROPS = {
 
 };
 
-export default function BtnSeeMore({ children, onClick, disable, style }: PROPS) {
+export default function BtnSeeMore({ children, onClick, disable, style }: BtnSeeMoreProps) {
   return (
-    <Button
+    <StyledButton
       style={{ display: style }}
       disabled={disable}
       onClick={onClick}
       disableRipple={true}
       variant="contained"
-      sx={{
-        padding: "16px 24px",
-        background: "#00A859 !important",
-        borderRadius: "90px",
-        color: "#FCFCFD",
-        fontSize: "16px",
-        lineHeight: "16px",
-        fontFamily: "Lato",
-        fontWeight: "700",
-        mt: "40px",
-        position: "relative",
-        left: "50%",
-        transform: "translate(-50%,0)",
-      }}
     >
       {children}
-    </Button>
+    </StyledButton>
   );
 }
+
+const StyledButton = styled(Button)(() => {
+  return {
+    padding: "16px 24px",
+    background: "#00A859 !important",
+    borderRadius: "90px",
+    color: "#FCFCFD",
+    fontSize: "16px",
+    lineHeight: "16px",
+    fontFamily: "Lato",
+    fontWeight: "700",
+    marginTop: "40px",
+    position: "relative",
+    left: "50%",
+    transform: "translate(-50%,0)",
+  }
+})
+
+

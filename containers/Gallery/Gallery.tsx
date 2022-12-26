@@ -1,6 +1,6 @@
-import { Container, Grid } from "@mui/material";
-import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { Container, Grid } from "@mui/material";
 import useSWR from "swr";
 import PostOfGallery from "./components/PostOfGallery";
 import Title from "components/title/Title";
@@ -51,7 +51,7 @@ export default function Gallery(props: GalleryProps) {
 
   return (
     <Container sx={{ mb: "98px", mt: "40px" }}>
-      <Title title={"OUR GALLERY"} widthText="180px" heightProps={20}></Title>
+      <Title title={"OUR GALLERY"} widthText="180px" lineHeight={20}></Title>
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}
       </Grid>

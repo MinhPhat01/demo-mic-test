@@ -1,16 +1,14 @@
-import { Box, Typography } from "@mui/material";
-import { format, parseISO } from "date-fns";
-import DOMPurify from 'isomorphic-dompurify';
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
+import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
+import { format, parseISO } from "date-fns";
+import DomPurifyOfPost from "components/dompurify/DomPurifyOfPost";
 
-
-type PROPS = {
+type PostProps = {
   imgSrc: string,
   title: string,
   date: string,
-  // content?: { block_type?: string; value?: string }[];
   content: any
 }
 
@@ -20,99 +18,82 @@ type FilterContent = {
 
 }
 
-type Test = {
-  value: string
-
-  p: boolean
-
-
-}
-
-
-const Post = ({ imgSrc, title, date, content }: PROPS) => {
+const Post = ({ imgSrc, title, date, content }: PostProps) => {
   const [ref, { width }] = useMeasure();
   const filterContent = content?.filter(
     (item) => item.block_type === "content"
   );
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        boxShadow: 2,
-        padding: "20px",
-        borderRadius: "16px",
-      }}
-    >
+    <StyledWrapperPost>
       <Box ref={ref} sx={{ width: "100%" }}>
         <Image
           width={width}
           src={imgSrc || "/bgEmpty.png"}
-          alt={"img"}
+          alt="img"
           height={(width * 4) / 6}
           style={{ objectFit: "contain", borderRadius: "8px" }}
-        ></Image>
+        />
       </Box>
-      <Typography
-        sx={{
-          my: "12px",
-          color: "#00A859",
-          fontSize: "24px",
-          lineHeight: "32px",
-          fontWeight: "600",
-          display: "-webkit-box",
-          WebkitBoxOrient: "vertical",
-          WebkitLineClamp: 2,
-          overflow: "hidden",
-          minHeight: "64px",
-        }}
-      >
+      <StyledTitle>
         {title}
-      </Typography>
-      <p></p>
-      <Box
-        sx={{
-          mb: "16px",
-          width: "fit-content",
-          border: "2px solid #E6E8EC",
-          borderRadius: "4px",
-        }}
-      >
-        <Typography
-          sx={{
-            padding: "8px",
-            fontSize: "12px",
-            lineHeight: "12px",
-            color: "#23262F",
-            fontWeight: "700",
-          }}
-        >
+      </StyledTitle>
+      <StyledWrapperDate>
+        <StyledDate>
           {format(parseISO(date), "dd/MM/yyyy")}
-        </Typography>
-      </Box>
+        </StyledDate>
+      </StyledWrapperDate>
       {filterContent.map((item: FilterContent, index: number) => {
-        return <Box
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(item.value, { ALLOWED_TAGS: ['q'] })
-          }} key={index}
-          sx={{
-            color: "#777E91",
-            fontSize: "16px",
-            lineHeight: "24px",
-            textAlign: "justify",
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 4,
-            overflow: "hidden",
-            minHeight: "96px",
-          }}>
-        </Box>
-
+        const { value } = item
+        return <DomPurifyOfPost key={index} value={value}></DomPurifyOfPost>
       })}
 
-    </Box >
+    </StyledWrapperPost >
   );
 };
 
 export default Post;
+
+const StyledWrapperPost = styled(Box)(() => {
+  return {
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px",
+    borderRadius: "16px",
+    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+  }
+})
+
+const StyledTitle = styled(Typography)(() => {
+  return {
+    margin: '12px 0',
+    color: "#00A859",
+    fontSize: "24px",
+    lineHeight: "32px",
+    fontWeight: "600",
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
+    overflow: "hidden",
+    minHeight: "64px",
+  }
+})
+
+const StyledDate = styled(Typography)(() => {
+  return {
+    padding: "8px",
+    fontSize: "12px",
+    lineHeight: "12px",
+    color: "#23262F",
+    fontWeight: "700",
+  }
+})
+
+const StyledWrapperDate = styled(Box)(() => {
+  return {
+    marginBottom: "16px",
+    width: "fit-content",
+    border: "2px solid #E6E8EC",
+    borderRadius: "4px",
+  }
+})

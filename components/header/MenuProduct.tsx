@@ -1,16 +1,16 @@
-import Typography from "@mui/material/Typography";
-import HoverPopover from "material-ui-popup-state/HoverPopover";
-import PopupState, { bindHover, bindPopover } from "material-ui-popup-state";
-import { Box, MenuItem } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Link from "next/link";
 import { useMemo } from "react";
+import Link from "next/link";
+import { Box, MenuItem, styled } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useSWR from "swr";
+import { usePopupState } from "material-ui-popup-state/hooks";
+import HoverPopover from "material-ui-popup-state/HoverPopover";
+import { bindHover, bindPopover } from "material-ui-popup-state";
 import { transformUrl } from "libs/transformUrl";
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 import { responseSchema } from "interface";
-import { usePopupState } from "material-ui-popup-state/hooks";
 
 export default function MenuProduct({ href }) {
   const { data } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(
@@ -51,26 +51,12 @@ export default function MenuProduct({ href }) {
       }}
     >
       <Link href={href}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            columnGap: "2px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: "Lato",
-              fontWeight: 700,
-              color: "#141416",
-              fontSize: "14px",
-              lineHeight: "16px",
-            }}
-          >
+        <StyledWrapperMenuProduct>
+          <StyledText>
             Product
-          </Typography>
+          </StyledText>
           <KeyboardArrowDownIcon fontSize="inherit" />
-        </Box>
+        </StyledWrapperMenuProduct>
       </Link>
       <HoverPopover
         sx={{
@@ -95,3 +81,23 @@ export default function MenuProduct({ href }) {
     </Box>
   );
 }
+
+const StyledText = styled(Typography)(() => {
+  return {
+    fontWeight: 700,
+    color: "#141416",
+    fontSize: "14px",
+    lineHeight: "16px",
+  }
+})
+
+const StyledWrapperMenuProduct = styled(Box)(() => {
+  return {
+    display: "flex",
+    alignItems: "center",
+    columnGap: "2px",
+    "& .MuiSvgIcon-root": {
+      marginTop: "2px"
+    }
+  }
+})

@@ -3,14 +3,13 @@ import React, { createContext, useMemo } from "react";
 import { SETTING_API } from "apis";
 import { SETTING_ITEM } from "interface";
 
-
-type Props = {
+type SettingProps = {
     children: React.ReactNode;
 };
 
 export const SettingContext = createContext({} as SETTING_ITEM);
 
-const Setting = ({ children }: Props) => {
+const Setting = ({ children }: SettingProps) => {
     const { data } = useSWR(SETTING_API, {
         refreshInterval: 600 * 1000,
     });

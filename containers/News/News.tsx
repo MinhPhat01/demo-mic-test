@@ -1,13 +1,13 @@
-import { Container, Grid } from "@mui/material";
-import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { Container, Grid } from "@mui/material";
 import useSWR from "swr";
 import Title from "components/title/Title";
 import BtnSeeMore from "components/button/BtnSeeMore";
 import SkeletonCard from "components/skeletonCard/SkeletonCard";
+import Post from "components/Post/Post";
 import { IPage, responseSchema } from "interface";
 import { NEW_DETAIL_ITEMS } from "interface/responseSchema/news";
-import Post from "components/Post/Post";
 
 export type NewsProps = IPage<
   [responseSchema<NEW_DETAIL_ITEMS>]
@@ -15,7 +15,6 @@ export type NewsProps = IPage<
 
 export default function News(props: NewsProps) {
   const { initData } = props
-  console.log("🚀 ~ file: News.tsx:18 ~ News ~ initData", initData)
   const dataFetch = initData[0].items
   const nextData = initData[0].next
   const [isFetch, setIsFetch] = useState<boolean>(true);
@@ -35,7 +34,7 @@ export default function News(props: NewsProps) {
   const handleSeeMore = useCallback(() => {
     setIsFetch(true);
     setUrlNext(nextData)
-  }, [resData]);
+  }, []);
 
   const renderList = useMemo(() => {
     return data.map((item) => {
@@ -68,7 +67,7 @@ export default function News(props: NewsProps) {
 
   return (
     <Container sx={{ mb: "98px", mt: "40px" }}>
-      <Title title={"OUR NEWS"} widthText="140px" heightProps={10}></Title>
+      <Title title={"OUR NEWS"} widthText="140px" lineHeight={10}></Title>
       <Grid container spacing={4} sx={{ mt: "8px" }}>
         {renderList}
       </Grid>

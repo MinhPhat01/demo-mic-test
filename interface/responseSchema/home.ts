@@ -1,6 +1,6 @@
 import { MetaItem } from "./utils";
 
-interface CAROUSEL {
+interface BANNER_ITEM {
   block_type: string;
   value: { icon: string; link: string };
 }
@@ -12,7 +12,7 @@ export type HOME_PAGE = {
   last_published_at: string;
   category_title: string;
   news_title: string;
-  banners: CAROUSEL[];
+  banners: BANNER_ITEM[];
 };
 
 export type HOME_PAGE_OUR_CATEGORIES = {

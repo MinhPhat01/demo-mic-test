@@ -3,7 +3,7 @@ import { SnackbarProvider } from "notistack";
 import NextNProgress from "nextjs-progressbar";
 import App, { AppContext, AppProps } from "next/app";
 import Layout from "components/layout/Layout";
-import UI from "components/ErrorBoundary";
+import UI from "hocs/ErrorBoundary";
 import ComponentThemeProvider from "hocs/ThemeProvider";
 import SWR from "contexts/SWR";
 import Setting from "contexts/Settings";

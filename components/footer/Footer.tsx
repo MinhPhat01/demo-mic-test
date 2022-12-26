@@ -1,19 +1,12 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import Image from "next/image";
 import React, { useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Box, Container, Grid, Stack, Typography, useTheme, styled } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import PhoneIcon from "@mui/icons-material/Phone";
 import Map from "components/map/Map"
+import PhoneIcon from "@mui/icons-material/Phone";
 import useSWR from "swr";
-import Link from "next/link";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { transformUrl } from "libs/transformUrl";
 import { PAGES_API, TYPE_PARAMS } from "apis";
@@ -36,17 +29,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
     return categoryList.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
-          <Typography
-            sx={{
-              color: "#FCFCFD",
-              fontSize: "14px",
-              lineHeight: "16px",
-              fontWeight: "400",
-
-            }}
-          >
+          <StyledText>
             {item.title}
-          </Typography>
+          </StyledText>
         </Link>
       );
     });
@@ -58,16 +43,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
       menuOfFooter.map((item) => {
         return (
           <Link key={item.id} href={item.href}>
-            <Typography
-              sx={{
-                color: "#FCFCFD",
-                fontSize: "14px",
-                lineHeight: "16px",
-                fontWeight: "400",
-              }}
-            >
+            <StyledText>
               {item.name}
-            </Typography>
+            </StyledText>
           </Link>
         );
       })
@@ -114,7 +92,7 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
             }}
           >
             <Link href="/">
-              <Image src={data.logo} alt="logo" width={115} height={80}></Image>
+              <Image src={data.logo} alt="logo" width={115} height={80} style={{ objectFit: "contain" }}></Image>
             </Link>
           </Grid>
           <Grid
@@ -128,18 +106,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
               },
             }}
           >
-            <Typography
-              variant="h3"
-              sx={{
-                mb: "40px",
-                color: "#FCFCFD",
-                fontSize: "16px",
-                lineHeight: "24px",
-                fontWeight: "500",
-              }}
-            >
+            <StyledHeading variant="h3">
               Menu
-            </Typography>
+            </StyledHeading>
             <Stack direction={"column"} rowGap={4}>
               {renderMenu}
             </Stack>
@@ -154,18 +123,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
               },
             }}
           >
-            <Typography
-              variant="h3"
-              sx={{
-                mb: "40px",
-                color: "#FCFCFD",
-                fontSize: "16px",
-                lineHeight: "24px",
-                fontWeight: "500",
-              }}
-            >
+            <StyledHeading variant="h3">
               Products
-            </Typography>
+            </StyledHeading>
             <Stack direction={"column"} spacing={2}>
               {renderProduct}
             </Stack>
@@ -182,18 +142,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
               },
             }}
           >
-            <Typography
-              variant="h3"
-              sx={{
-                mb: "40px",
-                color: "#FCFCFD",
-                fontSize: "16px",
-                lineHeight: "24px",
-                fontWeight: "500",
-              }}
-            >
+            <StyledHeading variant="h3">
               Address
-            </Typography>
+            </StyledHeading>
             <Stack direction={"column"} spacing={2}>
               <Stack
                 fontSize="small"
@@ -202,16 +153,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
                 alignItems={"center"}
               >
                 <MapIcon sx={{ color: "white" }}></MapIcon>
-                <Typography
-                  sx={{
-                    color: "#FCFCFD",
-                    fontSize: "14px",
-                    lineHeight: "12px",
-                    fontWeight: "400",
-                  }}
-                >
+                <StyledText>
                   {data.address}
-                </Typography>
+                </StyledText>
               </Stack>
               {data.emails.map((item, index) => {
                 return (
@@ -221,32 +165,18 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
                       sx={{ color: "white" }}
                     />
                     <a href={`mailto: ${item.value}`}>
-                      <Typography
-                        sx={{
-                          color: "white",
-                          fontSize: "14px",
-                          lineHeight: "12px",
-                          fontWeight: "400",
-                        }}
-                      >
+                      <StyledText>
                         {item.value}
-                      </Typography>
+                      </StyledText>
                     </a>
                   </Stack>
                 )
               })}
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
                 <PhoneIcon fontSize="small" sx={{ color: "white" }}></PhoneIcon>
-                <Typography
-                  sx={{
-                    color: "#FCFCFD",
-                    fontSize: "14px",
-                    lineHeight: "12px",
-                    fontWeight: "400",
-                  }}
-                >
+                <StyledText>
                   <a href={`tel: ${data.hotline}`}>{data.hotline}</a>
-                </Typography>
+                </StyledText>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
                 {renderListSocial}
@@ -265,22 +195,7 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
             <Map />
           </Grid>
         </Grid>
-        <Box
-          sx={{
-            width: "100%",
-            borderTop: "1px solid #F4F5F6",
-            py: "32px",
-            color: "#F4F5F6",
-            fontSize: "12px",
-            lineHeight: "20px",
-            [theme.breakpoints.down("md")]: {
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-          }}
-        >
+        <StyledBoxCopyright>
           <Stack
             direction="row"
             alignItems="center"
@@ -295,10 +210,46 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
             {renderListSocial}
           </Stack>
           Copyright © 2022 MINH DUC. All rights reserved
-        </Box>
+        </StyledBoxCopyright>
       </Container>
     </Box>
   );
 };
 
 export default Footer;
+
+const StyledText = styled(Typography)(() => {
+  return {
+    color: "#FCFCFD",
+    fontSize: "14px",
+    lineHeight: "16px",
+    fontWeight: "400",
+  }
+})
+
+const StyledHeading = styled(Typography)(() => {
+  return {
+    marginBottom: "40px",
+    color: "#FCFCFD",
+    fontSize: "16px",
+    lineHeight: "24px",
+    fontWeight: "500",
+  }
+})
+
+const StyledBoxCopyright = styled(Box)(({ theme }) => {
+  return {
+    width: "100%",
+    borderTop: "1px solid #F4F5F6",
+    padding: "32px 0",
+    color: "#F4F5F6",
+    fontSize: "12px",
+    lineHeight: "20px",
+    [theme.breakpoints.down("md")]: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  }
+})

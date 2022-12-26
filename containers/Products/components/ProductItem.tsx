@@ -1,29 +1,22 @@
-import { Box, Grid, Typography } from "@mui/material";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { Box, Grid, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 
-type Props = {
+type ProductItemProps = {
   title: string,
   id: number,
   imgSrc: string,
   pieces: string,
 };
 
-export default function ProductItem({ title, id, imgSrc, pieces }: Props) {
+export default function ProductItem({ title, id, imgSrc, pieces }: ProductItemProps) {
   const [ref, { width }] = useMeasure();
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Link href={`products/${id}`}>
-        <Box
-          sx={{
-            cursor: "pointer",
-            padding: "20px",
-            boxShadow: 2,
-            borderRadius: "16px",
-          }}
-        >
+        <StyledWrap>
           <Box ref={ref} sx={{ height: width, borderRadius: "4px" }}>
             <Image
               src={imgSrc}
@@ -37,38 +30,51 @@ export default function ProductItem({ title, id, imgSrc, pieces }: Props) {
               }}
             ></Image>
           </Box>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              lineHeight: "24px",
-              fontWeight: "500",
-              color: "#23262F",
-              my: "16px",
-              display: "-webkit-box",
-              overflow: "hidden",
-              minHeight: "48px",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 2,
-            }}
-          >
+          <StyledTitle>
             {title}
-          </Typography>
-          <Box
-            sx={{
-              padding: "6px 8px",
-              fontSize: "12px",
-              lineHeight: "12px",
-              color: "#00A859",
-              border: "2px solid #00A859",
-              borderRadius: "4px",
-              width: "fit-content",
-              fontWeight: "700",
-            }}
-          >
+          </StyledTitle>
+          <StyledPieces>
             {pieces || "pieces"}
-          </Box>
-        </Box>
+          </StyledPieces>
+        </StyledWrap>
       </Link>
     </Grid>
   );
 }
+
+const StyledWrap = styled(Box)(() => {
+  return {
+    cursor: "pointer",
+    padding: "20px",
+    boxShadow: "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+    borderRadius: "16px",
+  }
+})
+
+const StyledTitle = styled(Typography)(() => {
+  return {
+    fontSize: "16px",
+    lineHeight: "24px",
+    fontWeight: "500",
+    color: "#23262F",
+    margin: "16px 0",
+    display: "-webkit-box",
+    overflow: "hidden",
+    minHeight: "48px",
+    WebkitBoxOrient: "vertical",
+    WebkitLineClamp: 2,
+  }
+})
+
+const StyledPieces = styled(Box)(() => {
+  return {
+    padding: "6px 8px",
+    fontSize: "12px",
+    lineHeight: "12px",
+    color: "#00A859",
+    border: "2px solid #00A859",
+    borderRadius: "4px",
+    width: "fit-content",
+    fontWeight: "700",
+  }
+})

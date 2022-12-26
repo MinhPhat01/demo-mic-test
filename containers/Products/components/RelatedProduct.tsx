@@ -1,12 +1,12 @@
-import { Box, Grid } from "@mui/material";
 import React, { useMemo } from "react";
-import Slider from "react-slick";
-import ProductItemV2 from "./ProductItemV2";
-import useSWR from "swr";
 import Link from "next/link";
+import { Box, Grid } from "@mui/material";
+import useSWR from "swr";
+import Slider from "react-slick";
 import Title from "components/title/Title";
-import { PAGES_API, TYPE_PARAMS } from "apis";
 import { transformUrl } from "libs/transformUrl";
+import ProductItemV2 from "./ProductItemV2";
+import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 
 type Props = {
@@ -69,7 +69,7 @@ const RelatedProduct = ({ parentId, id }: Props) => {
   return (
     <Grid item xs={12} sx={{ mt: "88px", mb: "20px" }}>
       <Box sx={{ mb: "24px" }}>
-        <Title title={"RELATED PRODUCT"} widthText="240px" heightProps={32} />
+        <Title title={"RELATED PRODUCT"} widthText="240px" lineHeight={32} />
       </Box>
       <Slider {...settings}>{renderListProduct}</Slider>
     </Grid>

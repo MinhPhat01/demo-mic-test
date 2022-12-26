@@ -1,28 +1,22 @@
-import { Box, Button, Container, Grid, Typography, useTheme } from "@mui/material";
-import { IPage, } from "interface";
-import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { Box, Button, Container, Grid, Typography, useTheme, styled } from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
+import useMeasure from "react-use-measure";
 import ImgLarge from "./components/ImgLarge";
 import ImgSmall from "./components/ImgSmall";
-import { imgECommerce } from "../../constant";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import {
-  usePopupState,
-  bindTrigger,
-  bindMenu,
-} from "material-ui-popup-state/hooks";
-import useMeasure from "react-use-measure";
-import Image from "next/image";
 import RelatedProduct from "./components/RelatedProduct";
-import { useRouter } from "next/router";
+import { IPage, } from "interface";
+import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
+import { imgECommerce } from "constant";
 
 export type ProductDetailsProps = IPage<[PRODUCT_DETAIL_ITEMS]>
-
-
 
 export default function ProductDetails(props: ProductDetailsProps) {
   const router = useRouter()
@@ -30,7 +24,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
 
   const { initData } = props
   const data = initData[0]
-  console.log("🚀 ~ file: ProductDetails.tsx:33 ~ ProductDetails ~ data", data)
 
   const parentId = data?.meta.parent.id;
   const listImg = data?.images;
@@ -111,48 +104,15 @@ export default function ProductDetails(props: ProductDetailsProps) {
           </Box>
         </Grid>
         <Grid xs={12} item md={6}>
-          <Typography
-            variant="h5"
-            sx={{
-              fontSize: "40px",
-              lineHeight: "48px",
-              fontWeight: "600",
-              color: "#23262",
-              [theme.breakpoints.down("md")]: {
-                fontSize: "32px",
-                lineHeight: "40px",
-                mt: "30px",
-              },
-            }}
-          >
+          <StyledText variant="h5">
             {data?.title}
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              fontSize: "24px",
-              lineHeight: "32px",
-              fontWeight: "600",
-              color: "#00A859",
-              my: "16px",
-              [theme.breakpoints.down("md")]: {
-                fontSize: "16px",
-                lineHeight: "24px",
-              },
-            }}
-          >
+          </StyledText>
+          <StyledText variant="h6">
             Specification: {data?.description}
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              lineHeight: "24px",
-              textAlign: "justify",
-              mb: "16px",
-            }}
-          >
+          </StyledText>
+          <StyledDetails>
             {data?.specification}
-          </Typography>
+          </StyledDetails>
           <Box
             sx={{
               "& .MuiPaper-root": {
@@ -160,25 +120,14 @@ export default function ProductDetails(props: ProductDetailsProps) {
               },
             }}
           >
-            <Button
+            <StyledButton
               ref={ref}
               {...bindTrigger(popupState)}
               disableRipple={true}
               variant="contained"
-              sx={{
-                padding: "16px 24px",
-                background: "#00A859 !important",
-                borderRadius: "8px",
-                color: "#FCFCFD",
-                fontSize: "16px",
-                lineHeight: "16px",
-                fontFamily: "Lato",
-                fontWeight: "700",
-                textTransform: "none",
-              }}
             >
               Buy Now
-            </Button>
+            </StyledButton>
             <Menu
               sx={{
                 "& .MuiList-root": {
@@ -197,3 +146,41 @@ export default function ProductDetails(props: ProductDetailsProps) {
     </Container>
   );
 }
+
+const StyledText = styled(Typography)(({ theme }) => {
+  return {
+    fontSize: "40px",
+    lineHeight: "48px",
+    fontWeight: "600",
+    color: "#23262",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "32px",
+      lineHeight: "40px",
+      marginTop: "30px",
+    },
+  }
+})
+
+const StyledDetails = styled(Typography)(() => {
+  return {
+    fontSize: "16px",
+    lineHeight: "24px",
+    textAlign: "justify",
+    marginBottom: "16px",
+  }
+})
+
+const StyledButton = styled(Button)(() => {
+  return {
+    padding: "16px 24px",
+    background: "#00A859 !important",
+    borderRadius: "8px",
+    color: "#FCFCFD",
+    fontSize: "16px",
+    lineHeight: "16px",
+    fontWeight: "700",
+    textTransform: "none",
+  }
+})
+
+

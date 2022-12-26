@@ -1,13 +1,12 @@
-import { Box, useTheme } from "@mui/material";
-import Image from "next/image";
 import React, { useCallback, useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Box, useTheme } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useForm } from "react-hook-form";
 import Search from "components/Search";
 import MenuMobile from "./MenuMobile";
-
 
 type ValuesSubmit = {
   search: string,
@@ -25,7 +24,7 @@ export default function HeaderMobile() {
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
   return (
     <Box
@@ -34,6 +33,7 @@ export default function HeaderMobile() {
           display: "none",
         },
         pt: "20px",
+        cursor: "pointer"
       }}
     >
       {show ? (

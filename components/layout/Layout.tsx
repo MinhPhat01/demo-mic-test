@@ -1,16 +1,16 @@
-import { Box, useTheme } from "@mui/material";
-import React, { ReactNode, useEffect, useState } from "react";
-import Footer from "../footer/Footer";
+import React, { useEffect, useState } from "react";
+import { Box, useTheme, styled } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Header from "components/header/Header";
+import Footer from "components/footer/Footer";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 
-type Props = {
+type LayoutProps = {
   children: React.ReactNode,
   initData: HOME_PAGE_COMMON
 }
 
-const Layout = (props: Props) => {
+const Layout = (props: LayoutProps) => {
   const { children, initData } = props
   const [visible, setVisible] = useState<boolean>(false);
   const theme = useTheme();
@@ -50,27 +50,33 @@ const Layout = (props: Props) => {
         {children}
       </Box>
       <Footer initData={initData} />
-      <Box
+      <StyledScrollToTop
         onClick={scrollToTop}
-        style={{ display: visible ? "block" : "none" }}
-        sx={{
-          cursor: "pointer",
-          boxShadow: 3,
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          backgroundColor: "#00A859",
-          padding: "4px",
-          borderRadius: "14px",
-        }}
+        style={{ display: visible ? "flex" : "none" }}
       >
         <KeyboardArrowUpIcon
           fontSize="large"
           sx={{ color: "white" }}
         />
-      </Box>
+      </StyledScrollToTop>
     </Box>
   );
 };
 
 export default Layout;
+
+const StyledScrollToTop = styled(Box)(() => {
+  return {
+    cursor: "pointer",
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+    backgroundColor: "#00A859",
+    padding: "4px",
+    borderRadius: "14px",
+    display: 'flex',
+    alignItems: "center",
+    justifyContent: "center",
+    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+  }
+})

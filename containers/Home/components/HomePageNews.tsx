@@ -1,18 +1,17 @@
-import { Box, Grid } from "@mui/material";
-import Link from "next/link";
 import { useMemo } from "react";
-import Title from "components/title/Title";
+import Link from "next/link";
+import { Box, Grid } from "@mui/material";
 import { HOME_PAGE_NEW } from "interface/responseSchema/home";
 import { responseSchema } from "interface";
+import Title from "components/title/Title";
 import BtnSeeMore from "components/button/BtnSeeMore";
 import Post from "components/Post/Post";
 
-type Props = {
+type HomePageNewsProps = {
   data: responseSchema<HOME_PAGE_NEW>
 }
 
-const HomePageNews = ({ data }: Props) => {
-
+const HomePageNews = ({ data }: HomePageNewsProps) => {
   const renderList = useMemo(() => {
     if (!data?.items) return null;
     return data.items.map((item) => {
@@ -35,7 +34,7 @@ const HomePageNews = ({ data }: Props) => {
 
   return (
     <Box sx={{ mt: "24px", mb: "46px" }}>
-      <Title title="News" widthText="140px" heightProps={10} />
+      <Title title="News" widthText="140px" lineHeight={10} />
       <Grid container sx={{ my: "12px" }} spacing={4}>
         {renderList}
       </Grid>

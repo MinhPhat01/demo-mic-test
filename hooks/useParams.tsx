@@ -2,13 +2,12 @@ import queryString from "query-string";
 import { usePrevious } from "react-use";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-
 import pick from "lodash/pick";
 import omit from "lodash/omit";
 import isEqual from "lodash/isEqual";
 import { transformUrl } from "libs/transformUrl";
 
-interface Props {
+interface UseParamsProps {
     initState?: {
         [key: string]: any;
     };
@@ -19,7 +18,7 @@ interface Props {
     isScroll?: boolean;
 }
 
-export const useParams = (props: Props = {}) => {
+export const useParams = (props: UseParamsProps = {}) => {
     const {
         initState = {},
         callback = () => {

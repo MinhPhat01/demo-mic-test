@@ -1,20 +1,14 @@
-import {
-  FormControl,
-  FormLabel,
-  InputBase,
-  Typography,
-} from "@mui/material";
 import React from "react";
+import { FormControl, FormLabel, InputBase, Typography, styled } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
-type Props = {
+type FormControlTextareaProps = {
   label: string
   name: "message"
   placeholder: string,
   control: Control<
     {
       name: string; email: string; message: string; phone_number: string;
-
     },
     any
   >;
@@ -25,35 +19,17 @@ export default function FormControlTextarea({
   name,
   placeholder,
   control,
-}: Props) {
+}: FormControlTextareaProps) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
-        <FormControl
-          variant="standard"
-          sx={{
-            mt: "10px",
-            width: "100%",
-            "& .Mui-focused": {
-              color: "#00a859 !important",
-            },
-          }}
-        >
-          <FormLabel
-            sx={{
-              fontSize: "12px",
-              lineHeight: "12px",
-              fontWeight: "700",
-              color: "#23262f",
-              mb: "12px",
-            }}
-            htmlFor={name}
-          >
+        <StyledFormControl variant="standard">
+          <StyledFormLabel htmlFor={name}>
             {label}
-          </FormLabel>
-          <InputBase
+          </StyledFormLabel>
+          <StyledInputBase
             autoComplete="off"
             multiline={true}
             minRows={11}
@@ -61,19 +37,7 @@ export default function FormControlTextarea({
             onChange={onChange}
             value={value}
             placeholder={placeholder}
-            sx={{
-              border: "2px solid #E6E8EC",
-              borderRadius: "12px",
-              "& .MuiInputBase-input": {
-                px: "16px",
-                py: "12px",
-                fontSize: "14px",
-                lineHeight: "24px",
-                fontWeight: "500",
-                color: "#777E91",
-              },
-            }}
-          ></InputBase>
+          />
           <Typography
             sx={{
               mt: "10px",
@@ -84,8 +48,42 @@ export default function FormControlTextarea({
           >
             {error?.message}
           </Typography>
-        </FormControl>
+        </StyledFormControl>
       )}
     />
   );
 }
+
+const StyledFormControl = styled(FormControl)(() => {
+  return {
+    width: "100%",
+    marginBottom: "10px",
+    "& .Mui-focused": {
+      color: "#00a859 !important",
+    },
+  }
+})
+
+const StyledFormLabel = styled(FormLabel)(() => {
+  return {
+    fontSize: "12px",
+    lineHeight: "12px",
+    fontWeight: "700",
+    color: "#23262f",
+    marginBottom: "12px",
+  }
+})
+
+const StyledInputBase = styled(InputBase)(() => {
+  return {
+    border: "2px solid #E6E8EC",
+    borderRadius: "12px",
+    "& .MuiInputBase-input": {
+      padding: "12px 16px",
+      fontSize: "14px",
+      lineHeight: "24px",
+      fontWeight: "500",
+      color: "#777E91",
+    }
+  }
+})

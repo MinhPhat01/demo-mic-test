@@ -1,15 +1,15 @@
-import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
-import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import { Box, Container, Grid, Tab, Tabs, styled } from "@mui/material";
 import useSWR from "swr";
-import ProductItem from "./components/ProductItem";
+import { useParams } from "hooks/useParams";
+import { transformUrl } from "libs/transformUrl";
 import Title from "components/title/Title";
+import TabPanel from "components/tabs/TabPanel";
+import ProductItem from "./components/ProductItem";
 import BtnSeeMore from "components/button/BtnSeeMore";
 import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
-import TabPanel from "components/tabs/TabPanel";
-import { useParams } from "hooks/useParams";
-import { transformUrl } from "libs/transformUrl";
 
 const itemAll = {
   id: 0,
@@ -155,18 +155,7 @@ export default function Products(props: ProductProps) {
               );
             })
           ) : (
-            <Box
-              sx={{
-                mt: "30px",
-                position: "relative",
-                left: "50%",
-                transform: "translate(-50%,0)",
-                fontSize: "24px",
-                fontWeight: 500,
-              }}
-            >
-              Nothing
-            </Box>
+            <StyledBoxNothing>Nothing</StyledBoxNothing>
           )}
         </Grid>
       </TabPanel>
@@ -186,34 +175,8 @@ export default function Products(props: ProductProps) {
           },
         }}
       >
-        <Title title={"OUR PRODUCT"} widthText="190px" heightProps={24}></Title>
-
-        <Box
-          sx={{
-            mt: "40px",
-            pb: "42px",
-            borderBottom: "1px solid #E6E8EC",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            transition: "all 0.3s linear",
-            "& .Mui-selected": {
-              backgroundColor: "#353945 !important",
-              color: "white !important",
-              borderRadius: "100px",
-            },
-            "& .MuiTabs-indicator": {
-              display: "none",
-            },
-            "& .MuiButtonBase-root": {
-              color: "#777E90",
-              fontSize: "14px !important",
-              lineHeight: "16px !important",
-              fontWeight: "700 !important",
-              textTransform: "none",
-            },
-          }}
-        >
+        <Title title={"OUR PRODUCT"} widthText="190px" lineHeight={24}></Title>
+        <StyledWrapTabs>
           <Tabs
             value={currentTab}
             onChange={handleChange}
@@ -221,7 +184,6 @@ export default function Products(props: ProductProps) {
               "& .MuiTabs-scroller": {
                 overflowX: "scroll !important",
               },
-
               "& .MuiTabs-scroller::-webkit-scrollbar": {
                 display: "none",
               },
@@ -229,7 +191,7 @@ export default function Products(props: ProductProps) {
           >
             {renderCategories}
           </Tabs>
-        </Box>
+        </StyledWrapTabs>
         {renderTabPanel}
         <BtnSeeMore
           style={data?.next === null ? "none" : "block"}
@@ -241,3 +203,41 @@ export default function Products(props: ProductProps) {
     </Container>
   );
 }
+
+const StyledWrapTabs = styled(Box)(() => {
+  return {
+    marginTop: "40px",
+    paddingBottom: "42px",
+    borderBottom: "1px solid #E6E8EC",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    transition: "all 0.3s linear",
+    "& .Mui-selected": {
+      backgroundColor: "#353945 !important",
+      color: "white !important",
+      borderRadius: "100px",
+    },
+    "& .MuiTabs-indicator": {
+      display: "none",
+    },
+    "& .MuiButtonBase-root": {
+      color: "#777E90",
+      fontSize: "14px !important",
+      lineHeight: "16px !important",
+      fontWeight: "700 !important",
+      textTransform: "none",
+    },
+  }
+})
+
+const StyledBoxNothing = styled(Box)(() => {
+  return {
+    marginTop: "30px",
+    position: "relative",
+    left: "50%",
+    transform: "translate(-50%,0)",
+    fontSize: "24px",
+    fontWeight: 500,
+  }
+})

@@ -1,6 +1,6 @@
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
 
 const ChangeLanguage = () => {
   const [show, setShow] = useState<boolean>(true);

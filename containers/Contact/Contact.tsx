@@ -1,13 +1,5 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
 import React from "react";
-import Title from "../../components/title/Title";
+import { Box, Container, Grid, Stack, Typography, useTheme, styled } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -15,13 +7,13 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { IPage } from "interface";
+import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import Form from "./components/Form";
 import Map from "components/map/Map";
-import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
-import { IPage } from "interface";
+import Title from "components/title/Title";
 
 export type PropsContact = IPage<[HOME_PAGE_COMMON]>
-
 
 export default function Contact(props: PropsContact) {
 
@@ -32,7 +24,7 @@ export default function Contact(props: PropsContact) {
 
   return (
     <Container sx={{ mb: "38px", mt: "40px" }}>
-      <Title title="CONTACT US" widthText="160px" heightProps={10} />
+      <Title title="CONTACT US" widthText="160px" lineHeight={10} />
       <Grid container sx={{ mt: "40px" }} columnSpacing={4}>
         <Grid
           item
@@ -53,16 +45,9 @@ export default function Contact(props: PropsContact) {
                 spacing={1}
               >
                 <MapIcon sx={{ color: "#23262F" }}></MapIcon>
-                <Typography
-                  sx={{
-                    color: "#23262F",
-                    fontSize: "12px",
-                    lineHeight: "20pxF",
-                    fontWeight: "400",
-                  }}
-                >
+                <StyledText>
                   {data.address}
-                </Typography>
+                </StyledText>
               </Stack>
               {data.emails.map((item, index) => {
                 return (
@@ -72,16 +57,9 @@ export default function Contact(props: PropsContact) {
                       sx={{ color: "#23262F" }}
                     />
                     <a href={`mailto: ${item.value}`}>
-                      <Typography
-                        sx={{
-                          color: "#23262F",
-                          fontSize: "12px",
-                          lineHeight: "20px",
-                          fontWeight: "400",
-                        }}
-                      >
+                      <StyledText>
                         {item.value}
-                      </Typography>
+                      </StyledText>
                     </a>
                   </Stack>
                 )
@@ -91,16 +69,9 @@ export default function Contact(props: PropsContact) {
                   fontSize="small"
                   sx={{ color: "#23262F" }}
                 ></PhoneIcon>
-                <Typography
-                  sx={{
-                    color: "#23262F",
-                    fontSize: "12px",
-                    lineHeight: "20px",
-                    fontWeight: "400",
-                  }}
-                >
+                <StyledText>
                   <a href={`tel: ${data.hotline}`}>{data.hotline}</a>
-                </Typography>
+                </StyledText>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
                 <FacebookIcon sx={{ color: "#23262F" }}></FacebookIcon>
@@ -112,20 +83,31 @@ export default function Contact(props: PropsContact) {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography
-            sx={{
-              fontSize: "16px",
-              lineHeight: "24px",
-              color: "#23262F",
-              fontWeight: "500",
-              mb: "32px",
-            }}
-          >
+          <StyledTitleForm>
             Please send us a message if you need any help!
-          </Typography>
+          </StyledTitleForm>
           <Form></Form>
         </Grid>
       </Grid >
     </Container >
   );
 }
+
+const StyledText = styled(Typography)(() => {
+  return {
+    color: "#23262F",
+    fontSize: "12px",
+    lineHeight: "20px",
+    fontWeight: "400",
+  }
+})
+
+const StyledTitleForm = styled(Typography)(() => {
+  return {
+    fontSize: "16px",
+    lineHeight: "24px",
+    color: "#23262F",
+    fontWeight: "500",
+    marginBottom: "32px",
+  }
+})
