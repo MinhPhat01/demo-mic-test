@@ -39,26 +39,20 @@ export default function Products(props: ProductProps) {
 
   const { initData } = props
   const dataCategories = initData[0].items;
-  const fetchDataFirst = initData[1]
+  const fetchDataFirst = initData[1].items
+
 
   const [urlApi, setUrlApi] = useState<string>(urlBase)
   const [currentTab, setCurrentTab] = useState<number>(0)
-  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>([])
+  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
   const [isNextData, setIsNextData] = useState<boolean>(false)
-  const [isHold, setIsHold] = useState<boolean>(true)
-  const [holdData, setHoldData] = useState([])
   const [isFetch, setIsFetch] = useState<boolean>(false)
-  const { data } = useSWR(transformUrl(urlApi, params));
-
+  const { data } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params));
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
-    if (isHold) {
-      setHoldData(data.items)
-      setIsHold(false)
-    }
     if (isNextData) {
-      setDataTabPanel(holdData.concat(data.items))
+      setDataTabPanel(fetchDataFirst.concat(data.items))
       setIsNextData(false)
     }
   }, [data]);

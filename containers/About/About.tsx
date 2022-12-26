@@ -16,6 +16,7 @@ export default function About(props: PropsAbout) {
   const dataValue = initData[0].items[0].value_content
 
   const renderStory = useMemo(() => {
+    if(!dataStory) return;
     return dataStory.filter((item) => item.block_type === "content").map((item, index) => {
       return (
         <OurStory key={index} content={item.value} />
@@ -24,6 +25,7 @@ export default function About(props: PropsAbout) {
     })
   }, [dataStory])
   const renderMission = useMemo(() => {
+    if(!dataMission) return;
     return dataMission.filter((item) => item.block_type === "content").map((item, index) => {
       return (
         <OurMission key={index} content={item.value} />

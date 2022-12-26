@@ -17,11 +17,10 @@ export default function News(props: NewsProps) {
   const { initData } = props
   const dataFetch = initData[0].items
   const nextData = initData[0].next
-  const [isFetch, setIsFetch] = useState<boolean>(true);
+  const [isFetch, setIsFetch] = useState<boolean>(false);
   const [data, setData] = useState(dataFetch);
   const [urlNext, setUrlNext] = useState<string>("")
-
-  const { data: resData, isLoading } = useSWR(urlNext)
+  const { data: resData } = useSWR<responseSchema<NEW_DETAIL_ITEMS>>(urlNext)
 
   useEffect(() => {
     if (isFetch) {
@@ -72,7 +71,7 @@ export default function News(props: NewsProps) {
         {renderList}
       </Grid>
       <BtnSeeMore
-        style={urlNext == "" ? "block" : "none"}
+        style={resData?.next === null ? "none" : "block"}
         onClick={handleSeeMore}
       >
         See More

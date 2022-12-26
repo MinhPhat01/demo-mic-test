@@ -8,14 +8,15 @@ import { transformUrl } from "libs/transformUrl";
 import ProductItemV2 from "./ProductItemV2";
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
+import { responseSchema } from "interface";
 
-type Props = {
+type RelatedProductProps = {
   parentId: number,
   id: string | string[]
 }
 
-const RelatedProduct = ({ parentId, id }: Props) => {
-  const { data: resData } = useSWR(transformUrl(PAGES_API, {
+const RelatedProduct = ({ parentId, id }: RelatedProductProps) => {
+  const { data: resData } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(PAGES_API, {
     fields: "*",
     child_of: parentId,
     type: TYPE_PARAMS["product.ProductDetailPage"]

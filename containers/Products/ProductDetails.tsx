@@ -27,9 +27,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
 
   const parentId = data?.meta.parent.id;
   const listImg = data?.images;
-
-  const theme = useTheme();
   const [ref, { width }] = useMeasure();
+  
   const [nav1, setNav1] = useState<Slider | undefined>(undefined);
   const [nav2, setNav2] = useState<Slider | undefined>(undefined);
   const slider1 = useRef(null);

@@ -14,9 +14,7 @@ type OurValueProps = {
 }
 
 export default function OurValue({ data }: OurValueProps) {
-  const [ref, { width, height }] = useMeasure();
-  const theme = useTheme();
-
+  const [ref, { width }] = useMeasure();
 
   const settings = {
     dots: false,
@@ -45,6 +43,7 @@ export default function OurValue({ data }: OurValueProps) {
     ],
   };
   const renderValue = useMemo(() => {
+    if(!data) return;
     return data.map((item, index) => {
       return <Box key={index} sx={{ padding: "0px 20px" }}>
         <StyledTitle>

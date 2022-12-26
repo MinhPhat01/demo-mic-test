@@ -25,7 +25,7 @@ const OurCategories = ({ data }: OurCategoriesProps) => {
   return (
     <Box sx={{ mt: "20px" }}>
       <Title title="Our Categories" widthText={"170px"} lineHeight={20} />
-      <Grid container spacing={4} sx={{ mt: "8px" }}>
+      <Grid container spacing={"32px"} sx={{ mt: "8px" }}>
         {renderList}
       </Grid>
     </Box>
