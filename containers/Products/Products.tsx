@@ -22,6 +22,7 @@ export type ProductProps = IPage<
     responseSchema<PRODUCT_DETAIL_ITEMS>
   ]
 >;
+const urlBase: string = "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
 
 export default function Products(props: ProductProps) {
   const router = useRouter()
@@ -40,7 +41,6 @@ export default function Products(props: ProductProps) {
   const dataCategories = initData[0].items;
   const fetchDataFirst = initData[1]
 
-  const urlBase: string = "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
   const [urlApi, setUrlApi] = useState<string>(urlBase)
   const [currentTab, setCurrentTab] = useState<number>(0)
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>([])

@@ -11,28 +11,35 @@ import { transformUrl } from "libs/transformUrl";
 import { SETTING_API } from "apis";
 import prefetchData from "libs/prefetchData";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
+import { CacheProvider } from "@emotion/react";
+import createEmotionCache from "createEmotionCache";
 
 type TProps = Pick<AppProps, "Component" | "pageProps"> & {
   initData: HOME_PAGE_COMMON
 }
 
-function MyApp({ Component, pageProps, initData }: TProps) {
-  return (
-    <UI>
-      <SWR>
-        <ComponentThemeProvider>
-          <Setting>
-            <SnackbarProvider>
-              <Layout initData={initData}>
-                <NextNProgress color="#00A859" />
-                <Component {...pageProps} />
-              </Layout>
-            </SnackbarProvider>
-          </Setting>
-        </ComponentThemeProvider>
+const clientSideEmotionCache = createEmotionCache();
 
-      </SWR >
-    </UI>
+// function MyApp({ Component, pageProps, initData }: TProps) {
+function MyApp(props: any) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, initData } = props;
+  return (
+    <CacheProvider value={emotionCache}>
+      <UI>
+        <SWR>
+          <ComponentThemeProvider>
+            <Setting>
+              <SnackbarProvider>
+                <Layout initData={initData}>
+                  <NextNProgress color="#00A859" />
+                  <Component {...pageProps} />
+                </Layout>
+              </SnackbarProvider>
+            </Setting>
+          </ComponentThemeProvider>
+        </SWR >
+      </UI>
+    </CacheProvider>
   );
 }
 
