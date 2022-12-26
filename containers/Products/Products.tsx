@@ -10,6 +10,7 @@ import ProductItem from "./components/ProductItem";
 import BtnSeeMore from "components/button/BtnSeeMore";
 import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
+import { PAGES_API, TYPE_PARAMS } from "apis";
 
 const itemAll = {
   id: 0,
@@ -22,17 +23,15 @@ export type ProductProps = IPage<
     responseSchema<PRODUCT_DETAIL_ITEMS>
   ]
 >;
-const urlBase: string = "https://mic.t-solution.vn/api/v2/pages/?fields=*&type=product.ProductDetailPage&limit=8&locale=en"
 
 export default function Products(props: ProductProps) {
   const router = useRouter()
-
   const [params, setParams] = useParams({
     initState: {
-      // fields: "*",
-      // type: TYPE_PARAMS["product.ProductDetailPage"],
-      // locale: "en",
-      // limit: 8,
+      fields: "*",
+      type: TYPE_PARAMS["product.ProductDetailPage"],
+      locale: "en",
+      limit: 8,
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
@@ -40,25 +39,27 @@ export default function Products(props: ProductProps) {
   const { initData } = props
   const dataCategories = initData[0].items;
   const fetchDataFirst = initData[1].items
-
-
-  const [urlApi, setUrlApi] = useState<string>(urlBase)
+  const [urlApi, setUrlApi] = useState<string>(PAGES_API)
   const [currentTab, setCurrentTab] = useState<number>(0)
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
   const [isNextData, setIsNextData] = useState<boolean>(false)
   const [isFetch, setIsFetch] = useState<boolean>(false)
   const { data } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params));
+  console.log("🚀 ~ file: Products.tsx:48 ~ Products ~ data", data)
+
   useEffect(() => {
     if (!data) return;
     setDataTabPanel(data.items);
     if (isNextData) {
-      setDataTabPanel(fetchDataFirst.concat(data.items))
+      setDataTabPanel(dataTabPanel.concat(data.items))
       setIsNextData(false)
     }
   }, [data]);
 
   useEffect(() => {
+    if (data == undefined) return;
     if (router.query.child_of == undefined) {
+
       setCurrentTab(0);
       setParams({
         child_of: undefined,
@@ -68,9 +69,7 @@ export default function Products(props: ProductProps) {
         setIsFetch(false)
       }
     } else {
-      if (data?.next === null) {
-        setUrlApi(urlBase)
-      }
+
       setCurrentTab(Number(router.query.child_of));
       setParams({
         child_of: router.query.child_of,
@@ -80,6 +79,7 @@ export default function Products(props: ProductProps) {
         setUrlApi(data.next)
         setIsFetch(false)
       }
+     
     }
   }, [router, isFetch]);
 
@@ -95,7 +95,6 @@ export default function Products(props: ProductProps) {
     }
   }, [router]);
 
-
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
       setCurrentTab(newValue)
@@ -104,14 +103,14 @@ export default function Products(props: ProductProps) {
           child_of: undefined,
           search: undefined
         });
-        setUrlApi(urlBase)
+        setUrlApi(PAGES_API)
 
       } else {
         setParams({
           child_of: newValue,
           search: undefined,
         });
-        setUrlApi(urlBase)
+        setUrlApi(PAGES_API)
       }
     }, [currentTab, router.query.child_of]);
 
@@ -129,7 +128,6 @@ export default function Products(props: ProductProps) {
       return <Tab key={index} label={item.title} value={item.id} />;
     });
   }, [dataCategories]);
-
 
   const renderTabPanel = useMemo(() => {
     if (dataTabPanel == undefined) return null;

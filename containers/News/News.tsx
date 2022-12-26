@@ -19,20 +19,20 @@ export default function News(props: NewsProps) {
   const nextData = initData[0].next
   const [isFetch, setIsFetch] = useState<boolean>(false);
   const [data, setData] = useState(dataFetch);
-  const [urlNext, setUrlNext] = useState<string>("")
+  const [urlNext, setUrlNext] = useState<string>(nextData)
   const { data: resData } = useSWR<responseSchema<NEW_DETAIL_ITEMS>>(urlNext)
 
   useEffect(() => {
     if (isFetch) {
       if (resData == undefined) return;
+      setUrlNext(resData.next)
       setData(data.concat(resData.items));
       setIsFetch(false);
     }
-  }, [isFetch, resData, data]);
+  }, [data, isFetch, resData]);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true);
-    setUrlNext(nextData)
   }, []);
 
   const renderList = useMemo(() => {
@@ -71,7 +71,7 @@ export default function News(props: NewsProps) {
         {renderList}
       </Grid>
       <BtnSeeMore
-        style={resData?.next === null ? "none" : "block"}
+        style={urlNext === null ? "none" : "block"}
         onClick={handleSeeMore}
       >
         See More

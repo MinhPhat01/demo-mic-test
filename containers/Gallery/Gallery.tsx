@@ -16,13 +16,14 @@ export default function Gallery(props: GalleryProps) {
   const dataNext = initData[0].next
 
   const [isFetch, setIsFetch] = useState<boolean>(false);
-  const [urlNext, setUrlNext] = useState<string>("")
+  const [urlNext, setUrlNext] = useState<string>(dataNext)
   const [data, setData] = useState(dataFetch);
   const { data: resData } = useSWR<responseSchema<GALLERY_DETAIL_ITEMS>>(urlNext);
 
   useEffect(() => {
     if (isFetch) {
       if (!resData) return;
+      setUrlNext(resData.next)
       setData(data.concat(resData.items));
       setIsFetch(false);
     }
@@ -46,7 +47,6 @@ export default function Gallery(props: GalleryProps) {
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true);
-    setUrlNext(dataNext)
   }, []);
 
   return (
@@ -56,7 +56,7 @@ export default function Gallery(props: GalleryProps) {
         {renderList}
       </Grid>
       <BtnSeeMore
-        style={resData?.next === null ? "none" : "block"}
+        style={urlNext === null ? "none" : "block"}
         onClick={handleSeeMore}
       >
         See More

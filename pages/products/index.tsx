@@ -21,7 +21,7 @@ export async function getServerSideProps() {
       type: TYPE_PARAMS["product.ProductDetailPage"],
       fields: "*",
       locale: "en",
-      limit: 8
+      limit: 2
     })
     ]
 
