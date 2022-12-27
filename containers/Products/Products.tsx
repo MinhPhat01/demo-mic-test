@@ -44,13 +44,20 @@ export default function Products(props: ProductProps) {
   const fetchDataFirst = initData[1].items
   const nextData = initData[1].next
 
-  const [urlApi, setUrlApi] = useState<string>(PAGES_API)
+  // const [urlApi, setUrlApi] = useState<string>(PAGES_API)
+  const [urlApi, setUrlApi] = useState<string>(nextData)
+
   const [currentTab, setCurrentTab] = useState<number>(0)
   const [isFetch, setIsFetch] = useState<boolean>(false)
   const [isNextData, setIsNextData] = useState<boolean>(false)
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
-
   const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params))
+  // const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(() => {
+  //   if (isNextData) {
+  //     return;
+  //   }
+  //   return transformUrl(urlApi, params)
+  // })
 
   useEffect(() => {
     setUrlApi(PAGES_API)
@@ -65,6 +72,8 @@ export default function Products(props: ProductProps) {
       setDataTabPanel(data.items);
     }
   }, [data]);
+
+
 
   useEffect(() => {
     if (!data) return;
