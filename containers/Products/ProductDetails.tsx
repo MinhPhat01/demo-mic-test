@@ -30,7 +30,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
   const [ref, { width }] = useMeasure();
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  const refSlider = useRef({ ref1: Slider, ref2: Slider })
+  const refSlider = useRef<{ ref1: Slider, ref2: Slider }>({ ref1: Slider, ref2: Slider })
 
   const renderListImgLarge = useMemo(() => {
     if (!listImg) return null;
@@ -76,7 +76,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
           <Box sx={{ cursor: "pointer" }}>
             <Slider asNavFor={refSlider.current.ref2} ref={(slider) => {
               refSlider.current.ref1 = slider
-
             }}>
               {renderListImgLarge}
             </Slider>
