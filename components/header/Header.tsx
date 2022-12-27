@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Box, Container, Stack, useTheme, styled } from "@mui/material";
+import { Box, Container, Stack, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import MenuProduct from "./MenuProduct";
@@ -10,6 +10,7 @@ import Search from "components/Search";
 import HeaderMobile from "./HeaderMobile";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 import { listMenuHeader } from "constant";
+
 
 type ValuesSubmit = {
   search: string
@@ -23,19 +24,20 @@ export default function Header({ initData }: { initData: HOME_PAGE_COMMON }) {
       search: "",
     },
   });
-  const theme = useTheme();
 
   const renderList = useMemo(() => {
     return listMenuHeader.map((item) => {
       return (
-        <StyledMenuHeader
+        <Box
           key={item.id}
         >
           <Link key={item.id} href={item.href}>
-            {item.name}
+            <Typography variant="h1">
+              {item.name}
+            </Typography>
           </Link>
           {item.component ? <MenuProduct href={item.href} /> : ""}
-        </StyledMenuHeader>
+        </Box >
       );
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,14 +81,6 @@ export default function Header({ initData }: { initData: HOME_PAGE_COMMON }) {
   );
 }
 
-const StyledMenuHeader = styled(Box)(() => {
-  return {
-    fontWeight: 700,
-    color: "#141416",
-    fontSize: "14px",
-    lineHeight: "16px",
-  }
-})
 
 const StyledWrapperHeader = styled(Box)(() => {
   return {

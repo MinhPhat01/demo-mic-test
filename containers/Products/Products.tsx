@@ -39,35 +39,43 @@ export default function Products(props: ProductProps) {
   });
 
   const { initData } = props
-  const dataCategories = initData[0].items;
+
+  const dataCategories = initData[0].items
   const fetchDataFirst = initData[1].items
+  const nextData = initData[1].next
+
   const [urlApi, setUrlApi] = useState<string>(PAGES_API)
   const [currentTab, setCurrentTab] = useState<number>(0)
   const [isFetch, setIsFetch] = useState<boolean>(false)
   const [isNextData, setIsNextData] = useState<boolean>(false)
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
-  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params));
+
+  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params))
 
   useEffect(() => {
     setUrlApi(PAGES_API)
-  }, [router.asPath])
+  }, [router.query.child_of])
 
   useEffect(() => {
     if (!data) return;
-    setDataTabPanel(data.items);
     if (isNextData) {
       setDataTabPanel(dataTabPanel.concat(data.items))
       setIsNextData(false)
+    } else {
+      setDataTabPanel(data.items);
     }
   }, [data]);
 
   useEffect(() => {
+    if (!data) return;
     if (isFetch) {
-      if (!data) return;
       setUrlApi(data.next)
       setIsFetch(false)
     }
+  }, [isFetch])
 
+  // Render data follow child_of
+  useEffect(() => {
     if (router.query.child_of == undefined) {
       setCurrentTab(0);
       setParams({
@@ -80,8 +88,7 @@ export default function Products(props: ProductProps) {
         search: undefined,
       });
     }
-  }, [router, isFetch]);
-
+  }, [router.query.child_of]);
 
   // Search
   useEffect(() => {
@@ -93,7 +100,7 @@ export default function Products(props: ProductProps) {
         search: router.query.search,
       });
     }
-  }, [router]);
+  }, [router.query.serach]);
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
@@ -112,7 +119,7 @@ export default function Products(props: ProductProps) {
         });
         setUrlApi(PAGES_API)
       }
-    }, [currentTab]);
+    }, []);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true)
@@ -168,17 +175,11 @@ export default function Products(props: ProductProps) {
     );
   }, [dataTabPanel, currentTab]);
 
-
-
   return (
     <Container sx={{ mt: "40px" }}>
       <Box
         sx={{
           mb: "100px",
-          "& .MuiTabPanel-root": {
-            paddingLeft: "0 !important",
-            paddingRight: "0 !important",
-          },
         }}
       >
         <Title title={"OUR PRODUCT"} widthText="190px" lineHeight={24}></Title>
@@ -186,14 +187,6 @@ export default function Products(props: ProductProps) {
           <Tabs
             value={currentTab}
             onChange={handleChange}
-            sx={{
-              "& .MuiTabs-scroller": {
-                overflowX: "scroll !important",
-              },
-              "& .MuiTabs-scroller::-webkit-scrollbar": {
-                display: "none",
-              },
-            }}
           >
             {renderCategories}
           </Tabs>

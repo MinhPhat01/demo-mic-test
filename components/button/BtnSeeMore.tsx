@@ -23,10 +23,10 @@ export default function BtnSeeMore({ children, onClick, disable, style }: BtnSee
   );
 }
 
-const StyledButton = styled(Button)(() => {
+const StyledButton = styled(Button)(({ theme }) => {
   return {
     padding: "16px 24px",
-    background: "#00A859 !important",
+    background: theme.palette.primary.main,
     borderRadius: "90px",
     color: "#FCFCFD",
     fontSize: "16px",

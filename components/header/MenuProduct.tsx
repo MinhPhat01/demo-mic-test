@@ -52,9 +52,9 @@ export default function MenuProduct({ href }) {
     >
       <Link href={href}>
         <StyledWrapperMenuProduct>
-          <StyledText>
+          <Typography variant="h1">
             Product
-          </StyledText>
+          </Typography>
           <KeyboardArrowDownIcon fontSize="inherit" />
         </StyledWrapperMenuProduct>
       </Link>
@@ -81,15 +81,6 @@ export default function MenuProduct({ href }) {
     </Box>
   );
 }
-
-const StyledText = styled(Typography)(() => {
-  return {
-    fontWeight: 700,
-    color: "#141416",
-    fontSize: "14px",
-    lineHeight: "16px",
-  }
-})
 
 const StyledWrapperMenuProduct = styled(Box)(() => {
   return {

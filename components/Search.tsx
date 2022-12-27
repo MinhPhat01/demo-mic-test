@@ -10,6 +10,7 @@ type SearchProps = {
 }
 
 const Search = ({ control, name }: SearchProps) => {
+  const theme = useTheme()
   return (
     <Controller
       control={control}
@@ -19,7 +20,7 @@ const Search = ({ control, name }: SearchProps) => {
           <Box
             sx={{
               "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#00a859 !important",
+                borderColor: theme.palette.primary.main,
               },
             }}
           >

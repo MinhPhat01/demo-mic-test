@@ -29,9 +29,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
     return categoryList.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
-          <StyledText>
+          <Typography variant="h3">
             {item.title}
-          </StyledText>
+          </Typography>
         </Link>
       );
     });
@@ -43,9 +43,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
       menuOfFooter.map((item) => {
         return (
           <Link key={item.id} href={item.href}>
-            <StyledText>
+            <Typography variant="h3">
               {item.name}
-            </StyledText>
+            </Typography>
           </Link>
         );
       })
@@ -69,7 +69,7 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
 
   if (!data) return null;
   return (
-    <Box sx={{ background: "#00A859" }}>
+    <Box sx={{ background: theme.palette.primary.main }}>
       <Container sx={{ pt: "80px" }}>
         <Grid
           container
@@ -153,9 +153,9 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
                 alignItems={"center"}
               >
                 <MapIcon sx={{ color: "white" }}></MapIcon>
-                <StyledText>
+                <Typography variant="h3">
                   {data.address}
-                </StyledText>
+                </Typography>
               </Stack>
               {data.emails.map((item, index) => {
                 return (
@@ -165,18 +165,18 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
                       sx={{ color: "white" }}
                     />
                     <a href={`mailto: ${item.value}`}>
-                      <StyledText>
+                      <Typography variant="h3">
                         {item.value}
-                      </StyledText>
+                      </Typography>
                     </a>
                   </Stack>
                 )
               })}
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
                 <PhoneIcon fontSize="small" sx={{ color: "white" }}></PhoneIcon>
-                <StyledText>
+                <Typography variant="h3">
                   <a href={`tel: ${data.hotline}`}>{data.hotline}</a>
-                </StyledText>
+                </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing="12px">
                 {renderListSocial}
@@ -218,14 +218,6 @@ const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
 
 export default Footer;
 
-const StyledText = styled(Typography)(() => {
-  return {
-    color: "#FCFCFD",
-    fontSize: "14px",
-    lineHeight: "16px",
-    fontWeight: "400",
-  }
-})
 
 const StyledHeading = styled(Typography)(() => {
   return {

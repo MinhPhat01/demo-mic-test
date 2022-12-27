@@ -65,13 +65,13 @@ const Layout = (props: LayoutProps) => {
 
 export default Layout;
 
-const StyledScrollToTop = styled(Box)(() => {
+const StyledScrollToTop = styled(Box)(({ theme }) => {
   return {
     cursor: "pointer",
     position: "fixed",
     bottom: "20px",
     right: "20px",
-    backgroundColor: "#00A859",
+    backgroundColor: theme.palette.primary.main,
     padding: "4px",
     borderRadius: "14px",
     display: 'flex',

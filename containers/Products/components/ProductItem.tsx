@@ -30,7 +30,7 @@ export default function ProductItem({ title, id, imgSrc, pieces }: ProductItemPr
               }}
             ></Image>
           </Box>
-          <StyledTitle>
+          <StyledTitle variant="h2">
             {title}
           </StyledTitle>
           <StyledPieces>
@@ -53,10 +53,6 @@ const StyledWrap = styled(Box)(() => {
 
 const StyledTitle = styled(Typography)(() => {
   return {
-    fontSize: "16px",
-    lineHeight: "24px",
-    fontWeight: "500",
-    color: "#23262F",
     margin: "16px 0",
     display: "-webkit-box",
     overflow: "hidden",

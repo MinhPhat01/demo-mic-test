@@ -24,9 +24,9 @@ const CategoryItem = ({ imgSrc, title, id }: CategoryItemProps) => {
             style={{ objectFit: "cover", borderRadius: "16px" }}
           ></Image>
         </Box>
-        <StyledTitle>
+        <Typography variant="h2" sx={{ margin: "12px 0" }}>
           {title}
-        </StyledTitle>
+        </Typography>
       </Link>
     </StyledWrapper>
   );
@@ -45,12 +45,3 @@ const StyledWrapper = styled(Box)(() => {
   }
 })
 
-const StyledTitle = styled(Typography)(() => {
-  return {
-    margin: "12px 0",
-    fontSize: "16px",
-    lineHeight: "24px",
-    color: "#23262F",
-    fontWeight: "500",
-  }
-})

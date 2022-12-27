@@ -123,12 +123,12 @@ const StyledWrapButton = styled(Box)(({ theme }) => {
   }
 })
 
-const StyledButton = styled(Button)(() => {
+const StyledButton = styled(Button)(({ theme }) => {
   return {
     fontSize: "16px",
     lineHeight: "16px",
     fontWeight: "500",
-    color: "#00A859",
+    color: theme.palette.primary.main,
     padding: "16px 24px",
     border: "1px solid #00A859",
     borderRadius: "8px",

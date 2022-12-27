@@ -28,17 +28,12 @@ export default function ProductDetails(props: ProductDetailsProps) {
   const parentId = data?.meta.parent.id;
   const listImg = data?.images;
   const [ref, { width }] = useMeasure();
-  
-  const [nav1, setNav1] = useState<Slider | undefined>(undefined);
-  const [nav2, setNav2] = useState<Slider | undefined>(undefined);
-  const slider1 = useRef(null);
-  const slider2 = useRef(null);
+
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  useEffect(() => {
-    setNav1(slider1.current);
-    setNav2(slider2.current);
-  }, []);
+  const [nav1, setNav1] = useState<Slider | undefined>(undefined);
+  const [nav2, setNav2] = useState<Slider | undefined>(undefined);
+
 
   const renderListImgLarge = useMemo(() => {
     if (!listImg) return null;
@@ -82,7 +77,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
       <Grid container columnSpacing={4}>
         <Grid item xs={12} md={6}>
           <Box sx={{ cursor: "pointer" }}>
-            <Slider asNavFor={nav2} ref={slider1}>
+            <Slider asNavFor={nav2} ref={(slider) => {
+              setNav1(slider)
+            }}>
               {renderListImgLarge}
             </Slider>
           </Box>
@@ -91,7 +88,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
           >
             <Slider
               asNavFor={nav1}
-              ref={slider2}
+              ref={(slider) => {
+                setNav2(slider)
+              }}
               slidesToShow={3}
               swipeToSlide={true}
               focusOnSelect={true}
