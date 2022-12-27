@@ -11,6 +11,8 @@ import BtnSeeMore from "components/button/BtnSeeMore";
 import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 import { PAGES_API, TYPE_PARAMS } from "apis";
+import SkeletonCard from "components/skeletonCard/SkeletonCard";
+import { Skeleton } from "@material-ui/lab";
 
 const itemAll = {
   id: 0,
@@ -31,7 +33,7 @@ export default function Products(props: ProductProps) {
       fields: "*",
       type: TYPE_PARAMS["product.ProductDetailPage"],
       locale: "en",
-      limit: 8,
+      limit: 2,
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
@@ -41,11 +43,14 @@ export default function Products(props: ProductProps) {
   const fetchDataFirst = initData[1].items
   const [urlApi, setUrlApi] = useState<string>(PAGES_API)
   const [currentTab, setCurrentTab] = useState<number>(0)
-  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
-  const [isNextData, setIsNextData] = useState<boolean>(false)
   const [isFetch, setIsFetch] = useState<boolean>(false)
-  const { data } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params));
-  console.log("🚀 ~ file: Products.tsx:48 ~ Products ~ data", data)
+  const [isNextData, setIsNextData] = useState<boolean>(false)
+  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
+  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params));
+
+  useEffect(() => {
+    setUrlApi(PAGES_API)
+  }, [router.asPath])
 
   useEffect(() => {
     if (!data) return;
@@ -57,31 +62,26 @@ export default function Products(props: ProductProps) {
   }, [data]);
 
   useEffect(() => {
-    if (data == undefined) return;
-    if (router.query.child_of == undefined) {
+    if (isFetch) {
+      if (!data) return;
+      setUrlApi(data.next)
+      setIsFetch(false)
+    }
 
+    if (router.query.child_of == undefined) {
       setCurrentTab(0);
       setParams({
         child_of: undefined,
       });
-      if (isFetch) {
-        setUrlApi(data.next)
-        setIsFetch(false)
-      }
     } else {
-
       setCurrentTab(Number(router.query.child_of));
       setParams({
         child_of: router.query.child_of,
         search: undefined,
       });
-      if (isFetch) {
-        setUrlApi(data.next)
-        setIsFetch(false)
-      }
-     
     }
   }, [router, isFetch]);
+
 
   // Search
   useEffect(() => {
@@ -112,12 +112,11 @@ export default function Products(props: ProductProps) {
         });
         setUrlApi(PAGES_API)
       }
-    }, [currentTab, router.query.child_of]);
+    }, [currentTab]);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true)
     setIsNextData(true)
-
   }, [])
 
   // Render Categories
@@ -131,6 +130,15 @@ export default function Products(props: ProductProps) {
 
   const renderTabPanel = useMemo(() => {
     if (dataTabPanel == undefined) return null;
+    if (isLoading) {
+      return <Grid container spacing={"20px"} sx={{ mt: "20px" }}>
+        <SkeletonCard></SkeletonCard>
+        <SkeletonCard></SkeletonCard>
+        <SkeletonCard></SkeletonCard>
+        <SkeletonCard></SkeletonCard>
+        <Skeleton width="80px" height="60px" style={{ borderRadius: "20px", margin: "auto", marginTop: "20px" }}></Skeleton>
+      </Grid>
+    }
     return (
       <TabPanel value={currentTab} index={currentTab}>
         <Grid container spacing={4}>
@@ -150,6 +158,12 @@ export default function Products(props: ProductProps) {
             <StyledBoxNothing>Nothing</StyledBoxNothing>
           )}
         </Grid>
+        <BtnSeeMore
+          style={data?.next === null ? "none" : "block"}
+          onClick={handleSeeMore}
+        >
+          See More
+        </BtnSeeMore>
       </TabPanel>
     );
   }, [dataTabPanel, currentTab]);
@@ -185,16 +199,12 @@ export default function Products(props: ProductProps) {
           </Tabs>
         </StyledWrapTabs>
         {renderTabPanel}
-        <BtnSeeMore
-          style={data?.next === null ? "none" : "block"}
-          onClick={handleSeeMore}
-        >
-          See More
-        </BtnSeeMore>
+
       </Box>
     </Container>
   );
 }
+
 
 const StyledWrapTabs = styled(Box)(() => {
   return {

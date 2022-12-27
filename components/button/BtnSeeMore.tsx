@@ -31,7 +31,6 @@ const StyledButton = styled(Button)(() => {
     color: "#FCFCFD",
     fontSize: "16px",
     lineHeight: "16px",
-    fontFamily: "Lato",
     fontWeight: "700",
     marginTop: "40px",
     position: "relative",

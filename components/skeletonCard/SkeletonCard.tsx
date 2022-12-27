@@ -3,12 +3,11 @@ import { Box, Grid, Skeleton } from "@mui/material";
 import { useMeasure } from "react-use";
 
 export default function SkeletonCard() {
-  const [ref, { width }] = useMeasure();
 
   return (
     <Grid item md={3} xs={6} >
-      <Box ref={ref}>
-        <Skeleton variant="rectangular" width={width} height={width} />
+      <Box>
+        <Skeleton variant="rectangular" width={"100%"} height={"200px"} />
         <Skeleton width={"50%"} />
         <Skeleton width="30%" />
       </Box>
