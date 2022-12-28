@@ -61,7 +61,8 @@ const Footer = ({ initData }: { initData: any }) => {
     })
   }, [data?.social_icons])
 
-  if (!data) return null;
+  if (dataCategory.items === undefined) return;
+  
   return (
     <Box sx={{ background: theme.palette.primary.main }}>
       <Container sx={{ pt: "80px" }}>

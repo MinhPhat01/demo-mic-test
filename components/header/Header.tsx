@@ -61,7 +61,7 @@ export default function Header({ initData }: { initData: any }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  if (!data) return null;
+  if (dataCategory.items === undefined) return;
   return (
     <StyledWrapperHeader>
       <Container sx={{ mb: "18px" }}>
