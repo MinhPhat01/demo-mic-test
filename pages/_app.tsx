@@ -18,6 +18,7 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  // console.log("🚀 ~ file: _app.tsx:21 ~ MyApp ~ pageProps", pageProps)
   return (
     <CacheProvider value={emotionCache}>
       <UI>

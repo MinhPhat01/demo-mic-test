@@ -14,9 +14,12 @@ import { menuOfFooter } from "constant";
 import { responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
-const Footer = ({ initData }: { initData: unknown }) => {
+const Footer = ({ initData }: { initData: any }) => {
   const theme = useTheme();
-  const data = initData[Object.keys(initData)[0]]
+
+
+  const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
+
   const { data: dataProduct } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(transformUrl(PAGES_API, {
     locale: "en",
     fields: "*",

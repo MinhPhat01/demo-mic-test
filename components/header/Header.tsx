@@ -15,8 +15,12 @@ type ValuesSubmit = {
   search: string
 }
 
-export default function Header({ initData }: { initData: unknown }) {
-  const data = initData[Object.keys(initData)[0]]
+export default function Header({ initData }: { initData: any }) {
+
+
+  const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
+
+
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
