@@ -3,29 +3,22 @@ import Link from "next/link";
 import { Box, MenuItem, styled } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useSWR from "swr";
 import { usePopupState } from "material-ui-popup-state/hooks";
 import HoverPopover from "material-ui-popup-state/HoverPopover";
 import { bindHover, bindPopover } from "material-ui-popup-state";
-import { transformUrl } from "libs/transformUrl";
-import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
-import { responseSchema } from "interface";
 
-export default function MenuProduct({ href }) {
-  const { data } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(
-    transformUrl(PAGES_API, {
-      locale: "en",
-      fields: "*",
-      type: TYPE_PARAMS["product.ProductCategoryPage"],
-    })
-  );
+type MenuProductProps = {
+  href: string,
+  dataCategory: PRODUCT_CATEGORIES_ITEMS []
+}
+
+export default function MenuProduct({ href, dataCategory }: MenuProductProps) {
+
   const popupState = usePopupState({ variant: "popover", popupId: "productList" });
-  const categoryList = data?.items;
-
   const renderList = useMemo(() => {
-    if (!categoryList) return null;
-    return categoryList.map((item) => {
+    if (dataCategory == undefined) return;
+    return dataCategory.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
           <MenuItem
@@ -34,15 +27,14 @@ export default function MenuProduct({ href }) {
               fontSize: "12px",
               lineHeight: "20px",
             }}
-            onClick={popupState.close}
           >
             {item.title}
           </MenuItem>
         </Link>
       );
     });
-  }, [categoryList]);
-  if (!data) return null;
+  }, [dataCategory]);
+
   return (
     <Box
       {...bindHover(popupState)}

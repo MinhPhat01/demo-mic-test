@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { Box, Container, Grid, Tab, Tabs, styled } from "@mui/material";
+import { Box, Container, Grid, Tab, Tabs, styled, Button } from "@mui/material";
+import CircularProgress from '@mui/material/CircularProgress';
 import useSWR from "swr";
 import { useParams } from "hooks/useParams";
 import { transformUrl } from "libs/transformUrl";
@@ -12,8 +13,8 @@ import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import SkeletonCard from "components/skeletonCard/SkeletonCard";
-import { Skeleton } from "@material-ui/lab";
 import { useUpdateEffect } from "react-use";
+
 
 const itemAll = {
   id: 0,
@@ -66,7 +67,7 @@ export default function Products(props: ProductProps) {
       return prevData.concat(data.items)
     })
     setIsFetch(false)
-    
+
   }, [data]);
 
   useUpdateEffect(() => {
@@ -134,13 +135,7 @@ export default function Products(props: ProductProps) {
   const renderTabPanel = useMemo(() => {
     if (dataTabPanel === undefined) return null;
     if (isLoading) {
-      return <Grid container spacing={"20px"} sx={{ mt: "20px" }}>
-        <SkeletonCard></SkeletonCard>
-        <SkeletonCard></SkeletonCard>
-        <SkeletonCard></SkeletonCard>
-        <SkeletonCard></SkeletonCard>
-        <Skeleton width="80px" height="60px" style={{ borderRadius: "20px", margin: "auto", marginTop: "20px" }}></Skeleton>
-      </Grid>
+      return <SkeletonTabPanel />
     }
     return (
       <TabPanel value={currentTab} index={currentTab}>
@@ -232,3 +227,17 @@ const StyledBoxNothing = styled(Box)(() => {
     fontWeight: 500,
   }
 })
+
+const SkeletonTabPanel = () => {
+  return (
+    <Grid container spacing={"20px"} sx={{ mt: "20px" }}>
+      <SkeletonCard></SkeletonCard>
+      <SkeletonCard></SkeletonCard>
+      <SkeletonCard></SkeletonCard>
+      <SkeletonCard></SkeletonCard>
+      <Box sx={{ backgroundColor: "#e4e4e4", borderRadius: "90px", width: "100px", padding: "10px", display: "flex", alignItems: "center", justifyContent: "center", margin: "20px auto 0 auto" }}>
+        <CircularProgress size={"30px"} />
+      </Box>
+    </Grid>
+  )
+}

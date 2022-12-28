@@ -10,7 +10,6 @@ const color = {
     }
 }
 
-
 export const roboto = Roboto({
     weight: ["300", "400", "500", "700"],
     subsets: ["latin"],
@@ -63,9 +62,7 @@ const theme = createTheme({
                 }
             }
         },
-
-
-    }
+    },
 })
 
 export default function ComponentThemeProvider({ children }: { children: React.ReactNode }) {

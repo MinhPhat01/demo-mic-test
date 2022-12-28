@@ -15,11 +15,20 @@ type ValuesSubmit = {
   search: string
 }
 
+export interface I_DataCategory {
+  meta?: {
+    total_count?: number;
+    [key: string]: any;
+  }
+  next?: string | null;
+  previous?: string | null;
+  items?: [];
+}
+
 export default function Header({ initData }: { initData: any }) {
 
-
   const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
-
+  const dataCategory: I_DataCategory = Object.values(initData || {} || undefined)[1]
 
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
@@ -39,7 +48,7 @@ export default function Header({ initData }: { initData: any }) {
               {item.name}
             </Typography>
           </Link>
-          {item.component ? <MenuProduct href={item.href} /> : ""}
+          {item.component ? <MenuProduct dataCategory={dataCategory.items || undefined} href={item.href} /> : ""}
         </Box >
       );
     });

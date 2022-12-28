@@ -16,6 +16,7 @@ export const listMenuHeader = [
   },
   {
     id: 3,
+
     href: "/products",
     component: true,
   },
@@ -76,5 +77,3 @@ export const menuOfFooter = [
     href: "/gallery",
   },
 ];
-
-

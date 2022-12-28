@@ -24,6 +24,7 @@ const prefetchData = async (
     const productCategoryUrl = transformUrl(PAGES_API, {
       ...params,
       type: TYPE_PARAMS["product.ProductCategoryPage"],
+      locale: "en",
     });
 
     additionalUrlList.push(productCategoryUrl);
@@ -37,13 +38,12 @@ const prefetchData = async (
 
     for await (const res of mergedUrlList.map(async (el) => {
       return axios.get(el).then(({ data }) => {
-     
         return [el, data];
       });
     })) {
       const [key, value] = res;
       // console.log("🚀 ~ file: prefetchData.ts:45 ~ forawait ~ key", key)
-  
+
       if (originalUrlList.includes(key)) {
         originalResList.push(value);
       }

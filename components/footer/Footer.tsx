@@ -6,26 +6,17 @@ import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Map from "components/map/Map"
 import PhoneIcon from "@mui/icons-material/Phone";
-import useSWR from "swr";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
-import { transformUrl } from "libs/transformUrl";
-import { PAGES_API, TYPE_PARAMS } from "apis";
 import { menuOfFooter } from "constant";
-import { responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
+import { I_DataCategory } from "components/header/Header";
 
 const Footer = ({ initData }: { initData: any }) => {
   const theme = useTheme();
 
-
   const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
-
-  const { data: dataProduct } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(transformUrl(PAGES_API, {
-    locale: "en",
-    fields: "*",
-    type: TYPE_PARAMS["product.ProductCategoryPage"]
-  }));
-  const categoryList = dataProduct?.items;
+  const dataCategory: I_DataCategory = Object.values(initData || {} || undefined)[1]
+  const categoryList: PRODUCT_CATEGORIES_ITEMS[] = dataCategory.items || undefined;
 
   const renderProduct = useMemo(() => {
     if (!categoryList) return null;

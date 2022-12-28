@@ -6,7 +6,6 @@ type BtnSeeMoreProps = {
   onClick?: () => void,
   disable?: boolean,
   style?: string
-
 };
 
 export default function BtnSeeMore({ children, onClick, disable, style }: BtnSeeMoreProps) {
