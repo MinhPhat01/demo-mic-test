@@ -7,7 +7,7 @@ import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 
 type LayoutProps = {
   children: React.ReactNode,
-  initData: HOME_PAGE_COMMON
+  initData?: HOME_PAGE_COMMON
 }
 
 const Layout = (props: LayoutProps) => {

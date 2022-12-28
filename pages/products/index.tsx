@@ -2,6 +2,7 @@ import { PAGES_API, TYPE_PARAMS } from 'apis'
 import Products, { ProductProps } from 'containers/Products/Products'
 import prefetchData from 'libs/prefetchData'
 import { transformUrl } from 'libs/transformUrl'
+import { GetServerSidePropsContext } from 'next'
 import React from 'react'
 
 export default function ProductPage(props: ProductProps) {
@@ -10,7 +11,10 @@ export default function ProductPage(props: ProductProps) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+
+  const { query } = context
+
   try {
     const urls = [transformUrl(PAGES_API, {
       type: TYPE_PARAMS["product.ProductCategoryPage"],
@@ -21,7 +25,8 @@ export async function getServerSideProps() {
       type: TYPE_PARAMS["product.ProductDetailPage"],
       fields: "*",
       locale: "en",
-      limit: 2
+      limit: 8,
+      child_of: query.child_of
     })
     ]
 

@@ -13,6 +13,7 @@ import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/respon
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import SkeletonCard from "components/skeletonCard/SkeletonCard";
 import { Skeleton } from "@material-ui/lab";
+import { useUpdateEffect } from "react-use";
 
 const itemAll = {
   id: 0,
@@ -33,58 +34,42 @@ export default function Products(props: ProductProps) {
       fields: "*",
       type: TYPE_PARAMS["product.ProductDetailPage"],
       locale: "en",
-      limit: 2,
+      limit: 8,
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
-
   const { initData } = props
-
   const dataCategories = initData[0].items
   const fetchDataFirst = initData[1].items
   const nextData = initData[1].next
 
-  // const [urlApi, setUrlApi] = useState<string>(PAGES_API)
   const [urlApi, setUrlApi] = useState<string>(nextData)
-
-  const [currentTab, setCurrentTab] = useState<number>(0)
   const [isFetch, setIsFetch] = useState<boolean>(false)
-  const [isNextData, setIsNextData] = useState<boolean>(false)
+  const [currentTab, setCurrentTab] = useState<number>((Number(router.query.child_of) || 0))
   const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
-  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(urlApi, params))
-  // const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(() => {
-  //   if (isNextData) {
-  //     return;
-  //   }
-  //   return transformUrl(urlApi, params)
-  // })
+  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(() => {
+
+    if (!isFetch) return;
+
+    if (!urlApi) return;
+
+    return transformUrl(urlApi, params)
+  })
 
   useEffect(() => {
-    setUrlApi(PAGES_API)
-  }, [router.query.child_of])
+    if (data == undefined) return;
 
-  useEffect(() => {
-    if (!data) return;
-    if (isNextData) {
-      setDataTabPanel(dataTabPanel.concat(data.items))
-      setIsNextData(false)
-    } else {
-      setDataTabPanel(data.items);
-    }
+    const nextData = data.next
+    setUrlApi(nextData)
+
+    setDataTabPanel((prevData) => {
+      return prevData.concat(data.items)
+    })
+    setIsFetch(false)
+    
   }, [data]);
 
-
-
-  useEffect(() => {
-    if (!data) return;
-    if (isFetch) {
-      setUrlApi(data.next)
-      setIsFetch(false)
-    }
-  }, [isFetch])
-
-  // Render data follow child_of
-  useEffect(() => {
+  useUpdateEffect(() => {
     if (router.query.child_of == undefined) {
       setCurrentTab(0);
       setParams({
@@ -97,6 +82,9 @@ export default function Products(props: ProductProps) {
         search: undefined,
       });
     }
+    setDataTabPanel([])
+    setUrlApi(PAGES_API)
+    setIsFetch(true)
   }, [router.query.child_of]);
 
   // Search
@@ -117,27 +105,26 @@ export default function Products(props: ProductProps) {
       if (newValue == 0) {
         setParams({
           child_of: undefined,
-          search: undefined
+          search: undefined,
         });
-        setUrlApi(PAGES_API)
-
       } else {
         setParams({
           child_of: newValue,
           search: undefined,
         });
-        setUrlApi(PAGES_API)
       }
+      setDataTabPanel([])
+      setUrlApi(PAGES_API)
+      setIsFetch(true)
     }, []);
 
   const handleSeeMore = useCallback(() => {
     setIsFetch(true)
-    setIsNextData(true)
   }, [])
 
   // Render Categories
   const renderCategories = useMemo(() => {
-    if (!dataCategories) return null;
+    if (dataCategories == undefined) return;
     const mergeCategories = [itemAll, ...dataCategories];
     return mergeCategories.map((item, index) => {
       return <Tab key={index} label={item.title} value={item.id} />;
@@ -145,7 +132,7 @@ export default function Products(props: ProductProps) {
   }, [dataCategories]);
 
   const renderTabPanel = useMemo(() => {
-    if (dataTabPanel == undefined) return null;
+    if (dataTabPanel === undefined) return null;
     if (isLoading) {
       return <Grid container spacing={"20px"} sx={{ mt: "20px" }}>
         <SkeletonCard></SkeletonCard>
@@ -175,7 +162,7 @@ export default function Products(props: ProductProps) {
           )}
         </Grid>
         <BtnSeeMore
-          style={data?.next === null ? "none" : "block"}
+          style={urlApi === null ? "none" : "block"}
           onClick={handleSeeMore}
         >
           See More

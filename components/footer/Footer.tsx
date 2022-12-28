@@ -14,9 +14,9 @@ import { menuOfFooter } from "constant";
 import { responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
-const Footer = ({ initData }: { initData: HOME_PAGE_COMMON }) => {
+const Footer = ({ initData }: { initData: unknown }) => {
   const theme = useTheme();
-  const data = initData[0]
+  const data = initData[Object.keys(initData)[0]]
   const { data: dataProduct } = useSWR<responseSchema<PRODUCT_CATEGORIES_ITEMS>>(transformUrl(PAGES_API, {
     locale: "en",
     fields: "*",

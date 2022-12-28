@@ -11,13 +11,12 @@ import HeaderMobile from "./HeaderMobile";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 import { listMenuHeader } from "constant";
 
-
 type ValuesSubmit = {
   search: string
 }
 
-export default function Header({ initData }: { initData: HOME_PAGE_COMMON }) {
-  const data = initData[0]
+export default function Header({ initData }: { initData: unknown }) {
+  const data = initData[Object.keys(initData)[0]]
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
