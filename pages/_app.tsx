@@ -18,23 +18,25 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+
   return (
     <CacheProvider value={emotionCache}>
       <ErrorBoundaryUI>
-        <SWR fallback={pageProps.fallback} >
+        <SnackbarProvider>
           <ComponentThemeProvider>
-            <Setting>
-              <SnackbarProvider>
+            <SWR fallback={pageProps.fallback}>
+              <Setting>
                 <Layout>
                   <NextNProgress color="#00A859" />
                   <Component {...pageProps} />
                 </Layout>
-              </SnackbarProvider>
-            </Setting>
+              </Setting>
+            </SWR>
           </ComponentThemeProvider>
-        </SWR >
+        </SnackbarProvider>
       </ErrorBoundaryUI>
-    </CacheProvider>
+    </CacheProvider >
   );
 }
 

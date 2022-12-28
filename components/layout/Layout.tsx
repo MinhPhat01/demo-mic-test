@@ -4,6 +4,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Header from "components/header/Header";
 import Footer from "components/footer/Footer";
 import useSWR from "swr"
+import { SETTING_API, TYPE_PARAMS, PAGES_API } from "apis";
+import { transformUrl } from "libs/transformUrl";
 
 type LayoutProps = {
   children: React.ReactNode,
@@ -11,8 +13,12 @@ type LayoutProps = {
 
 const Layout = (props: LayoutProps) => {
 
-  const { data } = useSWR("api/v2")
-  const { data: listCategory } = useSWR("/api/v2/pages/?fields=%2A&locale=en&type=product.ProductCategoryPage")
+  const { data } = useSWR(SETTING_API)
+  const { data: listCategory } = useSWR(transformUrl(PAGES_API, {
+    type: TYPE_PARAMS["product.ProductCategoryPage"],
+    locale: "en",
+    fields: "*"
+  }))
   const dataCategory = listCategory?.items
 
   const { children } = props
@@ -39,8 +45,6 @@ const Layout = (props: LayoutProps) => {
     });
   };
 
-  if (data == undefined) return;
-  if (listCategory == undefined) return;
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden" }}>
       <Header data={data} dataCategory={dataCategory} />
@@ -56,6 +60,7 @@ const Layout = (props: LayoutProps) => {
         {children}
       </Box>
       <Footer data={data} dataCategory={dataCategory} />
+
       <StyledScrollToTop
         onClick={scrollToTop}
         style={{ display: visible ? "flex" : "none" }}

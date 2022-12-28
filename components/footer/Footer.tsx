@@ -11,14 +11,14 @@ import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
 type FooterProps = {
-  data: HOME_PAGE_COMMON
-  dataCategory: PRODUCT_CATEGORIES_ITEMS[]
+  data?: HOME_PAGE_COMMON
+  dataCategory?: PRODUCT_CATEGORIES_ITEMS[]
 }
 
 const Footer = ({ data, dataCategory }: FooterProps) => {
   const theme = useTheme();
   const renderProduct = useMemo(() => {
-    if (!dataCategory) return null;
+    if (!dataCategory) return;
     return dataCategory.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
@@ -59,6 +59,8 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
       );
     })
   }, [data?.social_icons])
+
+  if (!data) return;
 
   return (
     <Box sx={{ background: theme.palette.primary.main }}>

@@ -12,7 +12,6 @@ import { listMenuHeader } from "constant";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product"
 
-
 type ValuesSubmit = {
   search: string
 }
@@ -23,7 +22,6 @@ type HeaderProps = {
 }
 
 export default function Header({ data, dataCategory }: HeaderProps) {
-  console.log("🚀 ~ file: Header.tsx:26 ~ Header ~ dataCategory", dataCategory)
 
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
@@ -56,7 +54,8 @@ export default function Header({ data, dataCategory }: HeaderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  if (data == undefined) return;
+  if (!data) return;
+
   return (
     <StyledWrapperHeader>
       <Container sx={{ mb: "18px" }}>

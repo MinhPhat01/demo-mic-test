@@ -16,7 +16,6 @@ const Setting = ({ children }: SettingProps) => {
 
     const memoData = useMemo(() => {
         if (data == undefined) return {} as SETTING_ITEM;
-
         return data;
     }, [data]);
 
