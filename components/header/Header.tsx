@@ -48,7 +48,7 @@ export default function Header({ initData }: { initData: any }) {
               {item.name}
             </Typography>
           </Link>
-          {item.component ? <MenuProduct dataCategory={dataCategory.items || undefined} href={item.href} /> : ""}
+          {item.component ? <MenuProduct dataCategory={dataCategory?.items} href={item.href} /> : ""}
         </Box >
       );
     });
