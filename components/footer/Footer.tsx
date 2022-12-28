@@ -16,7 +16,7 @@ const Footer = ({ initData }: { initData: any }) => {
 
   const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
   const dataCategory: I_DataCategory = Object.values(initData || {} || undefined)[1]
-  const categoryList: PRODUCT_CATEGORIES_ITEMS[] = dataCategory?.items 
+  const categoryList: PRODUCT_CATEGORIES_ITEMS[] = dataCategory?.items || undefined
 
   const renderProduct = useMemo(() => {
     if (!categoryList) return null;
