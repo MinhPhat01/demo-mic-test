@@ -6,21 +6,20 @@ import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import Map from "components/map/Map"
 import PhoneIcon from "@mui/icons-material/Phone";
-import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { menuOfFooter } from "constant";
+import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
-import { I_DataCategory } from "components/header/Header";
 
-const Footer = ({ initData }: { initData: any }) => {
+type FooterProps = {
+  data: HOME_PAGE_COMMON
+  dataCategory: PRODUCT_CATEGORIES_ITEMS[]
+}
+
+const Footer = ({ data, dataCategory }: FooterProps) => {
   const theme = useTheme();
-
-  const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
-  const dataCategory: I_DataCategory = Object.values(initData || {} || undefined)[1]
-  const categoryList: PRODUCT_CATEGORIES_ITEMS[] = dataCategory?.items || undefined
-
   const renderProduct = useMemo(() => {
-    if (!categoryList) return null;
-    return categoryList.map((item) => {
+    if (!dataCategory) return null;
+    return dataCategory.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
           <Typography variant="h3">
@@ -29,7 +28,7 @@ const Footer = ({ initData }: { initData: any }) => {
         </Link>
       );
     });
-  }, [categoryList]);
+  }, [dataCategory]);
 
   const renderMenu = useMemo(() => {
     return (
@@ -60,8 +59,6 @@ const Footer = ({ initData }: { initData: any }) => {
       );
     })
   }, [data?.social_icons])
-
-  if (dataCategory.items === undefined) return;
 
   return (
     <Box sx={{ background: theme.palette.primary.main }}>

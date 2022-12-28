@@ -3,7 +3,7 @@ import { SnackbarProvider } from "notistack";
 import NextNProgress from "nextjs-progressbar";
 import { AppProps } from "next/app";
 import Layout from "components/layout/Layout";
-import UI from "hocs/ErrorBoundary";
+import ErrorBoundaryUI from "hocs/ErrorBoundary";
 import ComponentThemeProvider from "hocs/ThemeProvider";
 import SWR from "contexts/SWR";
 import Setting from "contexts/Settings";
@@ -18,15 +18,14 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
   return (
     <CacheProvider value={emotionCache}>
-      <UI>
-        <SWR>
+      <ErrorBoundaryUI>
+        <SWR fallback={pageProps.fallback} >
           <ComponentThemeProvider>
             <Setting>
               <SnackbarProvider>
-                <Layout initData={pageProps.fallback}>
+                <Layout>
                   <NextNProgress color="#00A859" />
                   <Component {...pageProps} />
                 </Layout>
@@ -34,7 +33,7 @@ function MyApp(props: MyAppProps) {
             </Setting>
           </ComponentThemeProvider>
         </SWR >
-      </UI>
+      </ErrorBoundaryUI>
     </CacheProvider>
   );
 }

@@ -42,7 +42,6 @@ const prefetchData = async (
       });
     })) {
       const [key, value] = res;
-      // console.log("🚀 ~ file: prefetchData.ts:45 ~ forawait ~ key", key)
 
       if (originalUrlList.includes(key)) {
         originalResList.push(value);

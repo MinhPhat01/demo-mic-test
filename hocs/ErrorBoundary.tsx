@@ -6,8 +6,8 @@ function ErrorFallback() {
     </div>
 }
 
-const UI = ({ children }: { children: React.ReactNode }) => {
+const ErrorBoundaryUI = ({ children }: { children: React.ReactNode }) => {
     return <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
 }
 
-export default UI
+export default ErrorBoundaryUI

@@ -4,31 +4,26 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Box, Container, Stack, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import MenuProduct from "./MenuProduct";
 import Search from "components/Search";
 import HeaderMobile from "./HeaderMobile";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 import { listMenuHeader } from "constant";
+import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
+import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product"
+
 
 type ValuesSubmit = {
   search: string
 }
 
-export interface I_DataCategory {
-  meta?: {
-    total_count?: number;
-    [key: string]: any;
-  }
-  next?: string | null;
-  previous?: string | null;
-  items?: [];
+type HeaderProps = {
+  data: HOME_PAGE_COMMON
+  dataCategory: PRODUCT_CATEGORIES_ITEMS[]
 }
 
-export default function Header({ initData }: { initData: any }) {
-
-  const data: HOME_PAGE_COMMON = Object.values(initData || {} || undefined)[0]
-  const dataCategory: I_DataCategory = Object.values(initData || {} || undefined)[1]
+export default function Header({ data, dataCategory }: HeaderProps) {
+  console.log("🚀 ~ file: Header.tsx:26 ~ Header ~ dataCategory", dataCategory)
 
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
@@ -48,7 +43,7 @@ export default function Header({ initData }: { initData: any }) {
               {item.name}
             </Typography>
           </Link>
-          {item.component ? <MenuProduct dataCategory={dataCategory?.items || undefined} href={item.href} /> : ""}
+          {item.component ? <MenuProduct dataCategory={dataCategory} href={item.href} /> : ""}
         </Box >
       );
     });
@@ -61,7 +56,7 @@ export default function Header({ initData }: { initData: any }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
-  if (dataCategory.items === undefined) return;
+  if (data == undefined) return;
   return (
     <StyledWrapperHeader>
       <Container sx={{ mb: "18px" }}>

@@ -33,7 +33,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         limit: 3,
       }),
     ];
-
+    
     const { resList, fallback } = await prefetchData(urls, {});
 
     return {

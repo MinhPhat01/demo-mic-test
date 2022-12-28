@@ -10,11 +10,10 @@ import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
 type MenuProductProps = {
   href: string,
-  dataCategory: PRODUCT_CATEGORIES_ITEMS []
+  dataCategory: PRODUCT_CATEGORIES_ITEMS[]
 }
 
 export default function MenuProduct({ href, dataCategory }: MenuProductProps) {
-
   const popupState = usePopupState({ variant: "popover", popupId: "productList" });
   const renderList = useMemo(() => {
     if (dataCategory == undefined) return;
