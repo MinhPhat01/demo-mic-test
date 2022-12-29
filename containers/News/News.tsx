@@ -4,7 +4,6 @@ import { Container, Grid } from "@mui/material";
 import useSWR from "swr";
 import Title from "components/title/Title";
 import BtnSeeMore from "components/button/BtnSeeMore";
-import SkeletonCard from "components/skeletonCard/SkeletonCard";
 import Post from "components/Post/Post";
 import { IPage, responseSchema } from "interface";
 import { NEW_DETAIL_ITEMS } from "interface/responseSchema/news";
@@ -36,6 +35,7 @@ export default function News(props: NewsProps) {
   }, []);
 
   const renderList = useMemo(() => {
+    if (data == undefined) return;
     return data.map((item) => {
       return (
         <Grid key={item.id} item xs={12} sm={6} md={4}>
@@ -51,18 +51,6 @@ export default function News(props: NewsProps) {
       );
     });
   }, [data]);
-
-  // if (isLoading)
-  //   return (
-  //     <Container sx={{ mb: "98px", mt: "40px" }}>
-  //       <Grid container spacing={4} sx={{ mt: "20px" }}>
-  //         <SkeletonCard></SkeletonCard>
-  //         <SkeletonCard></SkeletonCard>
-  //         <SkeletonCard></SkeletonCard>
-  //         <SkeletonCard></SkeletonCard>
-  //       </Grid>
-  //     </Container>
-  //   );
 
   return (
     <Container sx={{ mb: "98px", mt: "40px" }}>

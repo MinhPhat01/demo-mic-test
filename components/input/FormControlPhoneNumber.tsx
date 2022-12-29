@@ -65,9 +65,6 @@ const StyledFormControl = styled(FormControl)(() => {
   return {
     width: "100%",
     marginBottom: "10px",
-    "& .Mui-focused": {
-      color: "#00a859 !important",
-    },
   }
 })
 

@@ -13,7 +13,7 @@ export async function getServerSideProps() {
     const urls = [
       transformUrl(PAGES_API, {
         type: TYPE_PARAMS["news.NewDetailPage"],
-        limit: 1,
+        limit: 3,
         fields: "*"
       })
     ]

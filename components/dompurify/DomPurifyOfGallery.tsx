@@ -5,15 +5,13 @@ import DOMPurify from "isomorphic-dompurify";
 
 
 type DomPurifyOfGalleryProps = {
-    key: number
     value: string | Node
 }
 
-export default function DomPurifyOfGallery({ key, value }: DomPurifyOfGalleryProps) {
+export default function DomPurifyOfGallery({value }: DomPurifyOfGalleryProps) {
     const [ref, { width }] = useMeasure();
     return (
         <StyledBox
-            key={key}
             sx={{
                 "& img": {
                     width: width,

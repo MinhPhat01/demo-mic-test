@@ -4,6 +4,7 @@ import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 import { format, parseISO } from "date-fns";
 import DomPurifyOfPost from "components/dompurify/DomPurifyOfPost";
+import { boxShadow } from "constant";
 
 type PostProps = {
   imgSrc: string,
@@ -15,7 +16,6 @@ type PostProps = {
 type FilterContent = {
   block_type: string,
   value: string | Node
-
 }
 
 const Post = ({ imgSrc, title, date, content }: PostProps) => {
@@ -60,7 +60,7 @@ const StyledWrapperPost = styled(Box)(() => {
     flexDirection: "column",
     padding: "20px",
     borderRadius: "16px",
-    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+    boxShadow: boxShadow.boxShadow3,
   }
 })
 

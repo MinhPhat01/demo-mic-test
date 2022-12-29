@@ -4,16 +4,14 @@ import { useMeasure } from "react-use";
 import DOMPurify from 'isomorphic-dompurify';
 
 type DomPurifyOfNewsProps = {
-    key: number,
     value: string | Node
 }
 
-export default function DomPurifyOfNews({ key, value }: DomPurifyOfNewsProps) {
+export default function DomPurifyOfNews({ value }: DomPurifyOfNewsProps) {
     const theme = useTheme();
     const [ref, { width }] = useMeasure();
     return (
         <StyledBox
-            key={key}
             sx={{
                 "& img": {
                     width: width,

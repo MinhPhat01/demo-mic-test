@@ -5,10 +5,10 @@ import { useRouter } from "next/router";
 import { Box, Container, Stack, styled, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import MenuProduct from "./MenuProduct";
-import Search from "components/Search";
 import HeaderMobile from "./HeaderMobile";
+import Search from "components/Search";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
-import { listMenuHeader } from "constant";
+import { boxShadow, listMenuHeader } from "constant";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product"
 
@@ -33,29 +33,24 @@ export default function Header({ data, dataCategory }: HeaderProps) {
   const renderList = useMemo(() => {
     return listMenuHeader.map((item) => {
       return (
-        <Box
-          key={item.id}
-        >
-          <Link key={item.id} href={item.href}>
+        <Box key={item.id}>
+          <Link href={item.href}>
             <Typography variant="h1">
               {item.name}
             </Typography>
           </Link>
           {item.component ? <MenuProduct dataCategory={dataCategory} href={item.href} /> : ""}
-        </Box >
+        </Box>
       );
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listMenuHeader]);
 
   const handleSearch = useCallback((values: ValuesSubmit) => {
     router.push(`/products?search=${values.search}`);
     reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   if (!data) return;
-
   return (
     <StyledWrapperHeader>
       <Container sx={{ mb: "18px" }}>
@@ -97,7 +92,7 @@ const StyledWrapperHeader = styled(Box)(() => {
     right: 0,
     backgroundColor: "white",
     zIndex: "999",
-    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+    boxShadow: boxShadow.boxShadow3
   }
 })
 const StyledWrapperHeaderChild = styled(Box)(({ theme }) => {

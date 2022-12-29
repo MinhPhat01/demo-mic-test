@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Typography, Box, styled } from "@mui/material";
 import { useMeasure } from "react-use";
+import { boxShadow } from "constant";
 
 type CategoryItemProps = {
   imgSrc: string,
@@ -37,8 +38,7 @@ export default CategoryItem;
 const StyledWrapper = styled(Box)(() => {
   return {
     padding: "10px",
-    boxShadow:
-      "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
+    boxShadow: boxShadow.boxShadow3,
     borderRadius: "20px",
     background: "#FCFCFD",
     textAlign: "center",

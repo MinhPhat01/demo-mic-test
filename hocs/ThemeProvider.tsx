@@ -59,6 +59,56 @@ const theme = createTheme({
                     "& .MuiTabs-scroller::-webkit-scrollbar": {
                         display: "none",
                     },
+                    "& .MuiTabs-indicator": {
+                        display: "none",
+                    },
+                    "& .Mui-selected": {
+                        backgroundColor: "#353945 !important",
+                        color: "white !important",
+                        borderRadius: "100px",
+                    },
+                }
+            }
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: defaultTheme.palette.primary.main
+                    },
+                    "& .Mui-focused": {
+                        borderColor: defaultTheme.palette.primary.main,
+                    },
+                }
+            }
+        },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#fcfcfd",
+                    padding: "16px 0",
+                }
+            }
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    "& .MuiInputBase-input": {
+                        padding: "12px 16px",
+                        fontSize: "14px",
+                        lineHeight: "24px",
+                        fontWeight: "500",
+                        color: "#777E91",
+                    }
+                }
+            }
+        },
+        MuiFormControl: {
+            styleOverrides: {
+                root: {
+                    "& .Mui-focused": {
+                        color: "#00a859 !important",
+                    },
                 }
             }
         },

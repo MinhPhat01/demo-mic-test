@@ -50,12 +50,6 @@ export default function MenuProduct({ href, dataCategory }: MenuProductProps) {
         </StyledWrapperMenuProduct>
       </Link>
       <HoverPopover
-        sx={{
-          "& .MuiPaper-root": {
-            backgroundColor: "#fcfcfd",
-            padding: "16px 0",
-          },
-        }}
         {...bindPopover(popupState)}
         anchorOrigin={{
           vertical: "bottom",

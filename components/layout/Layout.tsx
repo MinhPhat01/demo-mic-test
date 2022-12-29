@@ -6,6 +6,7 @@ import Footer from "components/footer/Footer";
 import useSWR from "swr"
 import { SETTING_API, TYPE_PARAMS, PAGES_API } from "apis";
 import { transformUrl } from "libs/transformUrl";
+import { boxShadow } from "constant";
 
 type LayoutProps = {
   children: React.ReactNode,
@@ -60,7 +61,6 @@ const Layout = (props: LayoutProps) => {
         {children}
       </Box>
       <Footer data={data} dataCategory={dataCategory} />
-
       <StyledScrollToTop
         onClick={scrollToTop}
         style={{ display: visible ? "flex" : "none" }}
@@ -88,6 +88,6 @@ const StyledScrollToTop = styled(Box)(({ theme }) => {
     display: 'flex',
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+    boxShadow: boxShadow.boxShadow3
   }
 })

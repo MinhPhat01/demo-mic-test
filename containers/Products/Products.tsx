@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState, } from "react";
 import { useRouter } from "next/router";
-import { Box, Container, Grid, Tab, Tabs, styled, Button } from "@mui/material";
-import CircularProgress from '@mui/material/CircularProgress';
+import { Box, Container, Grid, Tab, Tabs, styled } from "@mui/material";
 import useSWR from "swr";
 import { useParams } from "hooks/useParams";
 import { transformUrl } from "libs/transformUrl";
@@ -9,12 +8,12 @@ import Title from "components/title/Title";
 import TabPanel from "components/tabs/TabPanel";
 import ProductItem from "./components/ProductItem";
 import BtnSeeMore from "components/button/BtnSeeMore";
+import { PAGES_API, TYPE_PARAMS } from "apis";
 import { IPage, responseSchema } from "interface";
 import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
-import { PAGES_API, TYPE_PARAMS } from "apis";
-import SkeletonCard from "components/skeletonCard/SkeletonCard";
-import { useUpdateEffect } from "react-use";
 
+import { useUpdateEffect } from "react-use";
+import SkeletonContainer from "components/skeleton/SkeletonContainer";
 
 const itemAll = {
   id: 0,
@@ -133,10 +132,8 @@ export default function Products(props: ProductProps) {
   }, [dataCategories]);
 
   const renderTabPanel = useMemo(() => {
-    if (dataTabPanel === undefined) return null;
-    if (isLoading) {
-      return <SkeletonTabPanel />
-    }
+    if (dataTabPanel == undefined) return;
+    if (isLoading) return <SkeletonContainer quantity={4} />
     return (
       <TabPanel value={currentTab} index={currentTab}>
         <Grid container spacing={4}>
@@ -168,11 +165,7 @@ export default function Products(props: ProductProps) {
 
   return (
     <Container sx={{ mt: "40px" }}>
-      <Box
-        sx={{
-          mb: "100px",
-        }}
-      >
+      <Box sx={{ mb: "100px" }}>
         <Title title={"OUR PRODUCT"} widthText="190px" lineHeight={24}></Title>
         <StyledWrapTabs>
           <Tabs
@@ -183,12 +176,10 @@ export default function Products(props: ProductProps) {
           </Tabs>
         </StyledWrapTabs>
         {renderTabPanel}
-
       </Box>
     </Container>
   );
 }
-
 
 const StyledWrapTabs = styled(Box)(() => {
   return {
@@ -199,14 +190,6 @@ const StyledWrapTabs = styled(Box)(() => {
     justifyContent: "center",
     alignItems: "center",
     transition: "all 0.3s linear",
-    "& .Mui-selected": {
-      backgroundColor: "#353945 !important",
-      color: "white !important",
-      borderRadius: "100px",
-    },
-    "& .MuiTabs-indicator": {
-      display: "none",
-    },
     "& .MuiButtonBase-root": {
       color: "#777E90",
       fontSize: "14px !important",
@@ -227,17 +210,3 @@ const StyledBoxNothing = styled(Box)(() => {
     fontWeight: 500,
   }
 })
-
-const SkeletonTabPanel = () => {
-  return (
-    <Grid container spacing={"20px"} sx={{ mt: "20px" }}>
-      <SkeletonCard></SkeletonCard>
-      <SkeletonCard></SkeletonCard>
-      <SkeletonCard></SkeletonCard>
-      <SkeletonCard></SkeletonCard>
-      <Box sx={{ backgroundColor: "#e4e4e4", borderRadius: "90px", width: "100px", padding: "10px", display: "flex", alignItems: "center", justifyContent: "center", margin: "20px auto 0 auto" }}>
-        <CircularProgress size={"30px"} />
-      </Box>
-    </Grid>
-  )
-}

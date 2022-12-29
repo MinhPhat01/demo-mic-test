@@ -3,16 +3,15 @@ import { Box, styled } from '@mui/material'
 import DOMPurify from 'isomorphic-dompurify';
 
 type DomPurifyOfPostProps = {
-    key: number,
     value: string | Node
 }
 
-export default function DomPurifyOfPost({ key, value }: DomPurifyOfPostProps) {
+export default function DomPurifyOfPost({ value }: DomPurifyOfPostProps) {
     return (
         <StyledBox
             dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(value, { ALLOWED_TAGS: ['q'] })
-            }} key={key}
+            }}
         >
         </StyledBox>
     )

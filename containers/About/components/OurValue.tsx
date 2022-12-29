@@ -42,6 +42,7 @@ export default function OurValue({ data }: OurValueProps) {
       },
     ],
   };
+  
   const renderValue = useMemo(() => {
     if(!data) return;
     return data.map((item, index) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Link from "next/link";
 import { Box, styled } from "@mui/material";
 import Slider from "react-slick";
@@ -26,31 +26,32 @@ const Banner = ({ data }: BannerProps) => {
   const banners = data.items[0].banners
   const [ref, { width }] = useMeasure();
 
+  const renderBanner = useMemo(() => {
+    if (banners === undefined) return null;
+    return banners.map((item, index) => {
+      return (
+        <Link href={item.value.link} key={index}>
+          <Box height={width / (1440 / 516)} >
+            <Image
+              src={item.value.icon}
+              alt="banner"
+              width="100%"
+              height="100%"
+              style={{ objectFit: 'cover' }}
+            />
+          </Box>
+        </Link>
+      );
+    })
+  }, [banners, width])
+
   return (
     <StyledWrapper
       ref={ref}
-      sx={{
-        height: width / (1440 / 516),
-      }}
+      sx={{ height: width / (1440 / 516) }}
     >
       <Slider {...settings}>
-        {banners &&
-          banners.map((item, index) => {
-            return (
-              <Link href={item.value.link} key={index}>
-                <Box height={width / (1440 / 516)}
-                >
-                  <Image
-                    src={item.value.icon}
-                    alt="banner"
-                    width="100%"
-                    height="100%"
-                    style={{ objectFit: 'cover' }}
-                  />
-                </Box>
-              </Link>
-            );
-          })}
+        {renderBanner}
       </Slider>
     </StyledWrapper >
   );

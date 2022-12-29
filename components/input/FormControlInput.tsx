@@ -60,9 +60,6 @@ const StyledFormControl = styled(FormControl)(() => {
   return {
     width: "100%",
     marginBottom: "10px",
-    "& .Mui-focused": {
-      color: "#00a859 !important",
-    },
   }
 })
 
@@ -80,12 +77,5 @@ const StyledInputBase = styled(InputBase)(() => {
   return {
     border: "2px solid #E6E8EC",
     borderRadius: "12px",
-    "& .MuiInputBase-input": {
-      padding: "12px 16px",
-      fontSize: "14px",
-      lineHeight: "24px",
-      fontWeight: "500",
-      color: "#777E91",
-    }
   }
 })

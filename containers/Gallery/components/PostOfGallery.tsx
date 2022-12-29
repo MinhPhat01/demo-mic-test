@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 import { format, parseISO } from "date-fns";
+import { boxShadow } from "constant";
 
 type PostOfGalleryProps = {
   imgSrc: string,
@@ -43,7 +44,7 @@ const StyledWrapper = styled(Box)(() => {
     flexDirection: "column",
     padding: "20px",
     borderRadius: "16px",
-    boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.25)",
+    boxShadow: boxShadow.boxShadow3,
   }
 })
 

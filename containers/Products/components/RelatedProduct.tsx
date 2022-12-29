@@ -66,6 +66,7 @@ const RelatedProduct = ({ parentId, id }: RelatedProductProps) => {
       },
     ],
   };
+  
   if (!data) return null;
   return (
     <Grid item xs={12} sx={{ mt: "88px", mb: "20px" }}>
