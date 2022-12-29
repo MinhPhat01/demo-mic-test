@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Box, Button, Container, Grid, Typography, useTheme, styled } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, styled } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Slider from "react-slick";

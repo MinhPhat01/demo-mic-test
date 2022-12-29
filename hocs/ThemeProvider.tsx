@@ -32,7 +32,7 @@ export const defaultTheme = createTheme({
             lineHeight: "16px",
         },
         h2: {
-            fontWeight: "500",
+            fontWeight: 500,
             color: "#23262f",
             fontSize: "16px",
             lineHeight: "24px"
@@ -43,6 +43,18 @@ export const defaultTheme = createTheme({
             color: "#fcfcfd",
             fontSize: "14px",
             lineHeight: "16px",
+        },
+        h4: {
+            fontSize: "24px",
+            lineHeight: "32px",
+            fontWeight: 600,
+            color: color.primary.primary1,
+            margin: "12px 0",
+            display: "-webkit-box",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 2,
+            overflow: "hidden",
+            minHeight: "64px",
         }
     },
 });

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Box, Button, Grid, useTheme, styled } from "@mui/material";
+import { Box, Button, Grid, styled } from "@mui/material";
 import axios from "axios";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -35,7 +35,6 @@ const schema = yup.object({
 });
 
 export default function Form() {
-  const theme = useTheme();
   const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {

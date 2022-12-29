@@ -24,9 +24,9 @@ const PostOfGallery = ({ imgSrc, title, date }: PostOfGalleryProps) => {
           style={{ objectFit: "cover", borderRadius: "8px" }}
         ></Image>
       </Box>
-      <StyledTitle>
+      <Typography variant="h4">
         {title}
-      </StyledTitle>
+      </Typography>
       <StyledWrapDate>
         <StyledDate>
           {format(parseISO(date), "dd/mm/yyyy")}
@@ -48,20 +48,7 @@ const StyledWrapper = styled(Box)(() => {
   }
 })
 
-const StyledTitle = styled(Typography)(() => {
-  return {
-    margin: "12px 0",
-    color: "#00A859",
-    fontSize: "24px",
-    lineHeight: "32px",
-    fontWeight: "600",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 2,
-    overflow: "hidden",
-    minHeight: "64px",
-  }
-})
+
 
 const StyledWrapDate = styled(Box)(() => {
   return {

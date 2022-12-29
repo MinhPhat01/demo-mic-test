@@ -52,7 +52,7 @@ const Layout = (props: LayoutProps) => {
       <Box
         sx={{
           flex: 1,
-          mt: "128px",
+          mt: "122px",
           [theme.breakpoints.down("md")]: {
             mt: "152px",
           },

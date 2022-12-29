@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Box, Container, Grid, Stack, Typography, useTheme, styled } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Image from "components/Image";
 import Map from "components/map/Map"
 import PhoneIcon from "@mui/icons-material/Phone";
 import { menuOfFooter } from "constant";
@@ -140,17 +140,19 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
               Address
             </StyledHeading>
             <Stack direction={"column"} spacing={2}>
-              <Stack
-                fontSize="small"
-                direction={"row"}
-                spacing={"9px"}
-                alignItems={"center"}
-              >
-                <MapIcon sx={{ color: "white" }}></MapIcon>
-                <Typography variant="h3">
-                  {data.address}
-                </Typography>
-              </Stack>
+              <a href="https://www.google.com/maps/place/373a+D%C6%B0%C6%A1ng+Tr%E1%BA%A7n+Ph%C3%BA,+Ph%C6%B0%E1%BB%9Dng+8,+Qu%E1%BA%ADn+5,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam/@10.7556325,106.6720607,19z/data=!3m1!4b1!4m5!3m4!1s0x31752efcfa00ab03:0xd7a145dc04f2843c!8m2!3d10.7556325!4d106.6726079?hl=vi" target="_blank" rel="noreferrer">
+                <Stack
+                  fontSize="small"
+                  direction={"row"}
+                  spacing={"9px"}
+                  alignItems={"center"}
+                >
+                  <MapIcon sx={{ color: "white" }}></MapIcon>
+                  <Typography variant="h3">
+                    {data.address}
+                  </Typography>
+                </Stack>
+              </a>
               {data.emails.map((item, index) => {
                 return (
                   <Stack key={index} direction={"row"} alignItems="center" spacing={1} >

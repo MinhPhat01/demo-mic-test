@@ -1,9 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Typography, Box, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 import { boxShadow } from "constant";
+import Image from "components/Image"; 
 
 type CategoryItemProps = {
   imgSrc: string,
@@ -20,7 +20,7 @@ const CategoryItem = ({ imgSrc, title, id }: CategoryItemProps) => {
           <Image
             src={imgSrc}
             alt={title}
-            width={width}
+            width={"100%"}
             height={(width * 4) / 6}
             style={{ objectFit: "cover", borderRadius: "16px" }}
           ></Image>

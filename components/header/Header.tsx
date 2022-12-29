@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { Box, Container, Stack, styled, Typography } from "@mui/material";
+import { Box, Container, Stack, styled, Typography, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import MenuProduct from "./MenuProduct";
+import Image from "components/Image";
 import HeaderMobile from "./HeaderMobile";
 import Search from "components/Search";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
@@ -22,7 +22,7 @@ type HeaderProps = {
 }
 
 export default function Header({ data, dataCategory }: HeaderProps) {
-
+  const theme = useTheme()
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -35,7 +35,11 @@ export default function Header({ data, dataCategory }: HeaderProps) {
       return (
         <Box key={item.id}>
           <Link href={item.href}>
-            <Typography variant="h1">
+            <Typography variant="h1" sx={{
+              "&:hover": {
+                color: theme.palette.primary.main
+              }
+            }}>
               {item.name}
             </Typography>
           </Link>
@@ -104,6 +108,7 @@ const StyledWrapperHeaderChild = styled(Box)(({ theme }) => {
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+
   }
 })
 

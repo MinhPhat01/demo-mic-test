@@ -27,7 +27,7 @@ export default function DomPurify({ content }: DomPurifyProps) {
 
 const StyledBox = styled(Box)(({ theme }) => {
     return {
-        mb: "20px",
+        marginBottom: "20px",
         "& h1,h2,h3,h4,h5,h6": {
             fontSize: "40px",
             lineHeight: "48px",

@@ -20,6 +20,7 @@ const Title = ({ title, widthText, lineHeight = 0 }: TitleProps) => {
         position: "relative",
         width: widthImg,
         margin: "0 auto",
+        userSelect: "none"
       }}
     >
       <Image
@@ -27,7 +28,7 @@ const Title = ({ title, widthText, lineHeight = 0 }: TitleProps) => {
         height={heightImg}
         alt="frame"
         src="/frame.png"
-        style={{ objectFit: "cover", height: heightImg }}
+        style={{ objectFit: "cover", height: heightImg, pointerEvents: "none" }}
       ></Image>
       <StyledTitle
         ref={ref}

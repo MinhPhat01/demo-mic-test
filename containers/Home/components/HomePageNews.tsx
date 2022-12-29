@@ -34,7 +34,7 @@ const HomePageNews = ({ data }: HomePageNewsProps) => {
 
   return (
     <Box sx={{ mt: "24px", mb: "46px" }}>
-      <Title title="News" widthText="140px" lineHeight={10} />
+      <Title title="News" widthText="140px" lineHeight={12} />
       <Grid container sx={{ my: "12px" }} spacing={"32px"}>
         {renderList}
       </Grid>

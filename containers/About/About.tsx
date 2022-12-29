@@ -16,7 +16,7 @@ export default function About(props: PropsAbout) {
   const dataValue = initData[0].items[0].value_content
 
   const renderStory = useMemo(() => {
-    if(!dataStory) return;
+    if (!dataStory) return;
     return dataStory.filter((item) => item.block_type === "content").map((item, index) => {
       return (
         <OurStory key={index} content={item.value} />
@@ -25,7 +25,7 @@ export default function About(props: PropsAbout) {
     })
   }, [dataStory])
   const renderMission = useMemo(() => {
-    if(!dataMission) return;
+    if (!dataMission) return;
     return dataMission.filter((item) => item.block_type === "content").map((item, index) => {
       return (
         <OurMission key={index} content={item.value} />
@@ -37,15 +37,15 @@ export default function About(props: PropsAbout) {
   return (
     <Container sx={{ mt: "40px" }}>
       <Box>
-        <Title title={"Our Story"} widthText={"140px"}></Title>
+        <Title title={"Our Story"} widthText={"140px"} lineHeight={10}></Title>
         {renderStory}
       </Box>
       <Box>
-        <Title title={"Our Mission"} widthText={"140px"}></Title>
+        <Title title={"Our Mission"} widthText={"140px"} lineHeight={10}></Title>
         {renderMission}
       </Box>
       <Box>
-        <Title title={"Our Value"} widthText={"140px"}></Title>
+        <Title title={"Our Value"} widthText={"140px"} lineHeight={10}></Title>
         <OurValue data={dataValue} />
       </Box>
     </Container>

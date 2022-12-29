@@ -1,9 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 import { format, parseISO } from "date-fns";
 import DomPurifyOfPost from "components/dompurify/DomPurifyOfPost";
+import Image from "components/Image"
 import { boxShadow } from "constant";
 
 type PostProps = {
@@ -26,18 +26,18 @@ const Post = ({ imgSrc, title, date, content }: PostProps) => {
 
   return (
     <StyledWrapperPost>
-      <Box ref={ref} sx={{ width: "100%" }}>
+      <Box ref={ref}>
         <Image
-          width={width}
+          width="100%"
           src={imgSrc || "/bgEmpty.png"}
           alt="img"
-          height={(width * 4) / 6}
+          height={width * 4 / 6}
           style={{ objectFit: "contain", borderRadius: "8px" }}
         />
       </Box>
-      <StyledTitle>
+      <Typography variant="h4">
         {title}
-      </StyledTitle>
+      </Typography>
       <StyledWrapperDate>
         <StyledDate>
           {format(parseISO(date), "dd/MM/yyyy")}
@@ -48,7 +48,7 @@ const Post = ({ imgSrc, title, date, content }: PostProps) => {
         return <DomPurifyOfPost key={index} value={value}></DomPurifyOfPost>
       })}
 
-    </StyledWrapperPost >
+    </StyledWrapperPost>
   );
 };
 
@@ -61,21 +61,6 @@ const StyledWrapperPost = styled(Box)(() => {
     padding: "20px",
     borderRadius: "16px",
     boxShadow: boxShadow.boxShadow3,
-  }
-})
-
-const StyledTitle = styled(Typography)(() => {
-  return {
-    margin: '12px 0',
-    color: "#00A859",
-    fontSize: "24px",
-    lineHeight: "32px",
-    fontWeight: "600",
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    WebkitLineClamp: 2,
-    overflow: "hidden",
-    minHeight: "64px",
   }
 })
 
