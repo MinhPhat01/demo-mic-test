@@ -45,7 +45,10 @@ export default function ProductDetails(props: ProductDetailsProps) {
   const [ref, { width }] = useMeasure();
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  const refSlider = useRef({
+  const refSlider = useRef<{
+    ref1: Slider | undefined;
+    ref2: Slider | undefined;
+  }>({
     ref1: undefined,
     ref2: undefined,
   });
