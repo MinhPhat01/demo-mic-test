@@ -1,19 +1,28 @@
 import React from "react";
-import { FormControl, FormLabel, InputBase, Typography, styled } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
+import {
+  FormControl,
+  FormLabel,
+  InputBase,
+  Typography,
+  styled,
+} from "@mui/material";
+
 type FormControlInputProps = {
-  label: string
-  name: "name" | "email"
-  placeholder: string,
+  label: string;
+  name: "name" | "email";
+  placeholder: string;
   control: Control<
     {
-      name: string; email: string; message: string; phone_number: string;
-
+      name: string;
+      email: string;
+      message: string;
+      phone_number: string;
     },
     any
   >;
-}
+};
 
 export default function FormControlInput({
   label,
@@ -28,9 +37,7 @@ export default function FormControlInput({
       render={({ field: { onChange, value, name }, fieldState: { error } }) => {
         return (
           <StyledFormControl variant="standard">
-            <StyledFormLabel htmlFor={name}>
-              {label}
-            </StyledFormLabel>
+            <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
             <StyledInputBase
               autoComplete="off"
               id={name}
@@ -49,7 +56,7 @@ export default function FormControlInput({
             >
               {error?.message}
             </Typography>
-          </StyledFormControl >
+          </StyledFormControl>
         );
       }}
     />
@@ -60,8 +67,8 @@ const StyledFormControl = styled(FormControl)(() => {
   return {
     width: "100%",
     marginBottom: "10px",
-  }
-})
+  };
+});
 
 const StyledFormLabel = styled(FormLabel)(() => {
   return {
@@ -70,12 +77,12 @@ const StyledFormLabel = styled(FormLabel)(() => {
     fontWeight: "700",
     color: "#23262f",
     marginBottom: "12px",
-  }
-})
+  };
+});
 
 const StyledInputBase = styled(InputBase)(() => {
   return {
     border: "2px solid #E6E8EC",
     borderRadius: "12px",
-  }
-})
+  };
+});

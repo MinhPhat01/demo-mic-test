@@ -1,39 +1,43 @@
 import React from "react";
 import Image from "next/image";
-import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
+import { Box, Typography, styled } from "@mui/material";
 
 type TitleProps = {
-  title: string,
-  widthText?: string,
-  lineHeight?: number,
+  title: string;
+  widthOfText?: string;
+  heightOfText?: number;
 };
 
-const Title = ({ title, widthText, lineHeight = 0 }: TitleProps) => {
+const Title = ({ title, widthOfText, heightOfText = 0 }: TitleProps) => {
   const [ref, { width, height }] = useMeasure();
-  const widthImg = width + 80;
-  const heightImg = height + lineHeight;
+  const sizeWidth = width + 80;
+  const sizeHeight = height + heightOfText;
 
   return (
     <Box
       sx={{
         position: "relative",
-        width: widthImg,
+        width: sizeWidth,
         margin: "0 auto",
-        userSelect: "none"
+        userSelect: "none",
       }}
     >
       <Image
-        width={widthImg}
-        height={heightImg}
+        width={sizeWidth}
+        height={sizeHeight}
         alt="frame"
         src="/frame.png"
-        style={{ objectFit: "cover", height: heightImg, pointerEvents: "none" }}
+        style={{
+          objectFit: "cover",
+          height: sizeHeight,
+          pointerEvents: "none",
+        }}
       ></Image>
       <StyledTitle
         ref={ref}
         sx={{
-          width: widthText,
+          width: widthOfText,
         }}
       >
         {title}
@@ -54,5 +58,5 @@ const StyledTitle = styled(Typography)(() => {
     color: "#00A859",
     fontSize: "24px",
     lineHeight: "24Fpx",
-  }
-})
+  };
+});

@@ -1,19 +1,29 @@
-import React, { useMemo } from "react";
 import Link from "next/link";
-import { Box, Container, Grid, Stack, Typography, useTheme, styled } from "@mui/material";
+import React, { useMemo } from "react";
+
 import MapIcon from "@mui/icons-material/Map";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import Image from "components/Image";
-import Map from "components/map/Map"
 import PhoneIcon from "@mui/icons-material/Phone";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import {
+  Box,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+  styled,
+} from "@mui/material";
+
+import Map from "components/map/Map";
+import Image from "components/Image";
 import { menuOfFooter } from "constant";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
 type FooterProps = {
-  data?: HOME_PAGE_COMMON
-  dataCategory?: PRODUCT_CATEGORIES_ITEMS[]
-}
+  data?: HOME_PAGE_COMMON;
+  dataCategory?: PRODUCT_CATEGORIES_ITEMS[];
+};
 
 const Footer = ({ data, dataCategory }: FooterProps) => {
   const theme = useTheme();
@@ -22,9 +32,7 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
     return dataCategory.map((item) => {
       return (
         <Link key={item.id} href={`/products?child_of=${item.id}`}>
-          <Typography variant="h3">
-            {item.title}
-          </Typography>
+          <Typography variant="h3">{item.title}</Typography>
         </Link>
       );
     });
@@ -36,9 +44,7 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
       menuOfFooter.map((item) => {
         return (
           <Link key={item.id} href={item.href}>
-            <Typography variant="h3">
-              {item.name}
-            </Typography>
+            <Typography variant="h3">{item.name}</Typography>
           </Link>
         );
       })
@@ -49,16 +55,11 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
     return data?.social_icons.map((item, index) => {
       return (
         <Link href={item.value.link} key={index}>
-          <Image
-            alt={"social"}
-            src={item.value.icon}
-            width={20}
-            height={20}
-          />
+          <Image alt={"social"} src={item.value.icon} width={20} height={20} />
         </Link>
       );
-    })
-  }, [data?.social_icons])
+    });
+  }, [data?.social_icons]);
 
   if (!data) return;
 
@@ -86,7 +87,13 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
             }}
           >
             <Link href="/">
-              <Image src={data.logo} alt="logo" width={115} height={80} style={{ objectFit: "contain" }}></Image>
+              <Image
+                src={data.logo}
+                alt="logo"
+                width={115}
+                height={80}
+                style={{ objectFit: "contain" }}
+              ></Image>
             </Link>
           </Grid>
           <Grid
@@ -100,9 +107,7 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
               },
             }}
           >
-            <StyledHeading variant="h3">
-              Menu
-            </StyledHeading>
+            <StyledHeading variant="h3">Menu</StyledHeading>
             <Stack direction={"column"} rowGap={4}>
               {renderMenu}
             </Stack>
@@ -117,9 +122,7 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
               },
             }}
           >
-            <StyledHeading variant="h3">
-              Products
-            </StyledHeading>
+            <StyledHeading variant="h3">Products</StyledHeading>
             <Stack direction={"column"} spacing={2}>
               {renderProduct}
             </Stack>
@@ -136,11 +139,13 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
               },
             }}
           >
-            <StyledHeading variant="h3">
-              Address
-            </StyledHeading>
+            <StyledHeading variant="h3">Address</StyledHeading>
             <Stack direction={"column"} spacing={2}>
-              <a href="https://www.google.com/maps/place/373a+D%C6%B0%C6%A1ng+Tr%E1%BA%A7n+Ph%C3%BA,+Ph%C6%B0%E1%BB%9Dng+8,+Qu%E1%BA%ADn+5,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam/@10.7556325,106.6720607,19z/data=!3m1!4b1!4m5!3m4!1s0x31752efcfa00ab03:0xd7a145dc04f2843c!8m2!3d10.7556325!4d106.6726079?hl=vi" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.google.com/maps/place/373a+D%C6%B0%C6%A1ng+Tr%E1%BA%A7n+Ph%C3%BA,+Ph%C6%B0%E1%BB%9Dng+8,+Qu%E1%BA%ADn+5,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam/@10.7556325,106.6720607,19z/data=!3m1!4b1!4m5!3m4!1s0x31752efcfa00ab03:0xd7a145dc04f2843c!8m2!3d10.7556325!4d106.6726079?hl=vi"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Stack
                   fontSize="small"
                   direction={"row"}
@@ -148,25 +153,23 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
                   alignItems={"center"}
                 >
                   <MapIcon sx={{ color: "white" }}></MapIcon>
-                  <Typography variant="h3">
-                    {data.address}
-                  </Typography>
+                  <Typography variant="h3">{data.address}</Typography>
                 </Stack>
               </a>
               {data.emails.map((item, index) => {
                 return (
-                  <Stack key={index} direction={"row"} alignItems="center" spacing={1} >
-                    <MailOutlineIcon
-                      fontSize="small"
-                      sx={{ color: "white" }}
-                    />
+                  <Stack
+                    key={index}
+                    direction={"row"}
+                    alignItems="center"
+                    spacing={1}
+                  >
+                    <MailOutlineIcon fontSize="small" sx={{ color: "white" }} />
                     <a href={`mailto: ${item.value}`}>
-                      <Typography variant="h3">
-                        {item.value}
-                      </Typography>
+                      <Typography variant="h3">{item.value}</Typography>
                     </a>
                   </Stack>
-                )
+                );
               })}
               <Stack direction={"row"} spacing={"9px"} alignItems={"center"}>
                 <PhoneIcon fontSize="small" sx={{ color: "white" }}></PhoneIcon>
@@ -214,7 +217,6 @@ const Footer = ({ data, dataCategory }: FooterProps) => {
 
 export default Footer;
 
-
 const StyledHeading = styled(Typography)(() => {
   return {
     marginBottom: "40px",
@@ -222,8 +224,8 @@ const StyledHeading = styled(Typography)(() => {
     fontSize: "16px",
     lineHeight: "24px",
     fontWeight: "500",
-  }
-})
+  };
+});
 
 const StyledBoxCopyright = styled(Box)(({ theme }) => {
   return {
@@ -239,5 +241,5 @@ const StyledBoxCopyright = styled(Box)(({ theme }) => {
       alignItems: "center",
       justifyContent: "center",
     },
-  }
-})
+  };
+});

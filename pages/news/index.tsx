@@ -1,11 +1,11 @@
+import React from "react";
 import { PAGES_API, TYPE_PARAMS } from "apis";
-import News, { NewsProps } from "containers/News/News";
 import prefetchData from "libs/prefetchData";
 import { transformUrl } from "libs/transformUrl";
-import React from "react";
+import News, { NewsProps } from "containers/News/News";
 
 export default function NewsPage(props: NewsProps) {
-  return <News  {...props} />
+  return <News {...props} />;
 }
 
 export async function getServerSideProps() {
@@ -14,24 +14,22 @@ export async function getServerSideProps() {
       transformUrl(PAGES_API, {
         type: TYPE_PARAMS["news.NewDetailPage"],
         limit: 3,
-        fields: "*"
-      })
-    ]
-    const { resList, fallback } = await prefetchData(urls, {})
+        fields: "*",
+      }),
+    ];
+    const { resList, fallback } = await prefetchData(urls, {});
     return {
       props: {
         initData: resList,
-        fallback
-      }
-    }
-
+        fallback,
+      },
+    };
   } catch (error) {
     return {
       redirect: {
         destination: "/404",
-        permanent: false
-      }
-    }
+        permanent: false,
+      },
+    };
   }
-
 }

@@ -1,35 +1,40 @@
-import React, { useMemo } from "react";
 import Link from "next/link";
+import React, { useMemo } from "react";
+
 import { Box, Grid } from "@mui/material";
+
 import useSWR from "swr";
 import Slider from "react-slick";
-import Title from "components/title/Title";
 import { transformUrl } from "libs/transformUrl";
+
+import Title from "components/title/Title";
 import ProductItemV2 from "./ProductItemV2";
+
+import { responseSchema } from "interface";
 import { PAGES_API, TYPE_PARAMS } from "apis";
 import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
-import { responseSchema } from "interface";
 
 type RelatedProductProps = {
-  parentId: number,
-  id: string | string[]
-}
+  parentId: number;
+  id: string | string[];
+};
 
 const RelatedProduct = ({ parentId, id }: RelatedProductProps) => {
-  const { data: resData } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(transformUrl(PAGES_API, {
-    fields: "*",
-    child_of: parentId,
-    type: TYPE_PARAMS["product.ProductDetailPage"]
-
-  }));
-  const data = resData?.items
-  const filterData = data?.filter((item: PRODUCT_DETAIL_ITEMS) => item.id != Number(id));
-
+  const { data: resData } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(
+    transformUrl(PAGES_API, {
+      fields: "*",
+      child_of: parentId,
+      type: TYPE_PARAMS["product.ProductDetailPage"],
+    })
+  );
+  const data = resData?.items;
+  const filterData = data?.filter(
+    (item: PRODUCT_DETAIL_ITEMS) => item.id != Number(id)
+  );
 
   const renderListProduct = useMemo(() => {
     if (!filterData) return;
     return filterData.map((item: PRODUCT_DETAIL_ITEMS) => {
-
       return (
         <Link href={`/products/${item.id}`} key={item.id}>
           <ProductItemV2
@@ -66,12 +71,16 @@ const RelatedProduct = ({ parentId, id }: RelatedProductProps) => {
       },
     ],
   };
-  
+
   if (!data) return null;
   return (
     <Grid item xs={12} sx={{ mt: "88px", mb: "20px" }}>
       <Box sx={{ mb: "24px" }}>
-        <Title title={"RELATED PRODUCT"} widthText="240px" lineHeight={32} />
+        <Title
+          title={"RELATED PRODUCT"}
+          widthOfText="240px"
+          heightOfText={32}
+        />
       </Box>
       <Slider {...settings}>{renderListProduct}</Slider>
     </Grid>

@@ -1,20 +1,31 @@
 import React from "react";
-import { FormControl, FormLabel, InputProps, Typography, styled } from "@mui/material";
-import { Control, Controller } from "react-hook-form";
 import Input from "react-phone-number-input/input";
+import { Control, Controller } from "react-hook-form";
+
+import {
+  FormControl,
+  FormLabel,
+  InputProps,
+  Typography,
+  styled,
+} from "@mui/material";
+
 import CustomInput from "./CustomInput";
 
 type FormControlPhoneNumberProps = {
-  label: string
-  name: "phone_number"
-  placeholder: string,
+  label: string;
+  name: "phone_number";
+  placeholder: string;
   control: Control<
     {
-      name: string; email: string; message: string; phone_number: string;
+      name: string;
+      email: string;
+      message: string;
+      phone_number: string;
     },
     any
   >;
-}
+};
 
 type InputPropsWithoutValueAndOnChange = Omit<
   InputProps,
@@ -31,18 +42,19 @@ export default function FormControlPhoneNumber({
     <Controller
       control={control}
       name={name}
-
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <StyledFormControl variant="standard">
-          <StyledFormLabel htmlFor={name}>
-            {label}
-          </StyledFormLabel>
+          <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
           <Input
             defaultCountry="VN"
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            inputComponent={CustomInput as (props: InputPropsWithoutValueAndOnChange) => JSX.Element}
+            inputComponent={
+              CustomInput as (
+                props: InputPropsWithoutValueAndOnChange
+              ) => JSX.Element
+            }
           />
 
           <Typography
@@ -65,8 +77,8 @@ const StyledFormControl = styled(FormControl)(() => {
   return {
     width: "100%",
     marginBottom: "10px",
-  }
-})
+  };
+});
 
 const StyledFormLabel = styled(FormLabel)(() => {
   return {
@@ -75,5 +87,5 @@ const StyledFormLabel = styled(FormLabel)(() => {
     fontWeight: "700",
     color: "#23262f",
     marginBottom: "12px",
-  }
-})
+  };
+});

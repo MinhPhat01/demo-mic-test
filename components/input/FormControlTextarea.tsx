@@ -1,18 +1,27 @@
 import React from "react";
-import { FormControl, FormLabel, InputBase, Typography, styled } from "@mui/material";
+import {
+  FormControl,
+  FormLabel,
+  InputBase,
+  Typography,
+  styled,
+} from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
 type FormControlTextareaProps = {
-  label: string
-  name: "message"
-  placeholder: string,
+  label: string;
+  name: "message";
+  placeholder: string;
   control: Control<
     {
-      name: string; email: string; message: string; phone_number: string;
+      name: string;
+      email: string;
+      message: string;
+      phone_number: string;
     },
     any
   >;
-}
+};
 
 export default function FormControlTextarea({
   label,
@@ -26,9 +35,7 @@ export default function FormControlTextarea({
       name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <StyledFormControl variant="standard">
-          <StyledFormLabel htmlFor={name}>
-            {label}
-          </StyledFormLabel>
+          <StyledFormLabel htmlFor={name}>{label}</StyledFormLabel>
           <StyledInputBase
             autoComplete="off"
             multiline={true}
@@ -58,8 +65,8 @@ const StyledFormControl = styled(FormControl)(() => {
   return {
     width: "100%",
     marginBottom: "10px",
-  }
-})
+  };
+});
 
 const StyledFormLabel = styled(FormLabel)(() => {
   return {
@@ -68,12 +75,12 @@ const StyledFormLabel = styled(FormLabel)(() => {
     fontWeight: "700",
     color: "#23262f",
     marginBottom: "12px",
-  }
-})
+  };
+});
 
 const StyledInputBase = styled(InputBase)(() => {
   return {
     border: "2px solid #E6E8EC",
     borderRadius: "12px",
-  }
-})
+  };
+});

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useShow } from "hooks/useShow";
 
 const ChangeLanguage = () => {
-  const { show, handleShow } = useShow()
+  const { show, handleShow } = useShow();
   return (
     <Box
       sx={{

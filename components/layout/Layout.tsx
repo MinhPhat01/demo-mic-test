@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from "react";
+
 import { Box, useTheme, styled } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+import useSWR from "swr";
+import { transformUrl } from "libs/transformUrl";
+
 import Header from "components/header/Header";
 import Footer from "components/footer/Footer";
-import useSWR from "swr"
-import { SETTING_API, TYPE_PARAMS, PAGES_API } from "apis";
-import { transformUrl } from "libs/transformUrl";
+
 import { boxShadow } from "constant";
+import { SETTING_API, TYPE_PARAMS, PAGES_API } from "apis";
 
 type LayoutProps = {
-  children: React.ReactNode,
-}
+  children: React.ReactNode;
+};
 
 const Layout = (props: LayoutProps) => {
+  const { data } = useSWR(SETTING_API);
+  const { data: listCategory } = useSWR(
+    transformUrl(PAGES_API, {
+      type: TYPE_PARAMS["product.ProductCategoryPage"],
+      locale: "en",
+      fields: "*",
+    })
+  );
+  const dataCategory = listCategory?.items;
 
-  const { data } = useSWR(SETTING_API)
-  const { data: listCategory } = useSWR(transformUrl(PAGES_API, {
-    type: TYPE_PARAMS["product.ProductCategoryPage"],
-    locale: "en",
-    fields: "*"
-  }))
-  const dataCategory = listCategory?.items
-
-  const { children } = props
+  const { children } = props;
   const [visible, setVisible] = useState<boolean>(false);
   const theme = useTheme();
 
@@ -47,7 +52,14 @@ const Layout = (props: LayoutProps) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", overflow: "hidden" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        overflow: "hidden",
+      }}
+    >
       <Header data={data} dataCategory={dataCategory} />
       <Box
         sx={{
@@ -65,10 +77,7 @@ const Layout = (props: LayoutProps) => {
         onClick={scrollToTop}
         style={{ display: visible ? "flex" : "none" }}
       >
-        <KeyboardArrowUpIcon
-          fontSize="large"
-          sx={{ color: "white" }}
-        />
+        <KeyboardArrowUpIcon fontSize="large" sx={{ color: "white" }} />
       </StyledScrollToTop>
     </Box>
   );
@@ -85,9 +94,9 @@ const StyledScrollToTop = styled(Box)(({ theme }) => {
     backgroundColor: theme.palette.primary.main,
     padding: "4px",
     borderRadius: "14px",
-    display: 'flex',
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    boxShadow: boxShadow.boxShadow3
-  }
-})
+    boxShadow: boxShadow.boxShadow3,
+  };
+});

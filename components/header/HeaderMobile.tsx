@@ -1,23 +1,25 @@
-import React, { useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import React, { useCallback } from "react";
+
 import { Box, useTheme } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useForm } from "react-hook-form";
-import Search from "components/Search";
+
 import MenuMobile from "./MenuMobile";
+import Search from "components/Search";
 import { useShow } from "hooks/useShow";
 
 type ValuesSubmit = {
-  search: string,
+  search: string;
 };
 
 export default function HeaderMobile() {
   const theme = useTheme();
   const router = useRouter();
 
-  const { show, setShow, handleShow } = useShow()
+  const { show, setShow, handleShow } = useShow();
 
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -25,10 +27,13 @@ export default function HeaderMobile() {
     },
   });
 
-  const handleSearch = useCallback((values: ValuesSubmit) => {
-    router.push(`/products?search=${values.search}`);
-    reset();
-  }, [router]);
+  const handleSearch = useCallback(
+    (values: ValuesSubmit) => {
+      router.push(`/products?search=${values.search}`);
+      reset();
+    },
+    [router]
+  );
 
   return (
     <Box
@@ -37,7 +42,7 @@ export default function HeaderMobile() {
           display: "none",
         },
         pt: "20px",
-        cursor: "pointer"
+        cursor: "pointer",
       }}
     >
       {show ? (

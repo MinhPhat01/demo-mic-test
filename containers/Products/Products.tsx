@@ -1,24 +1,25 @@
-import React, { useCallback, useEffect, useMemo, useState, } from "react";
 import { useRouter } from "next/router";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+
 import { Box, Container, Grid, Tab, Tabs, styled } from "@mui/material";
+
 import useSWR from "swr";
+import { useUpdateEffect } from "react-use";
 import { useParams } from "hooks/useParams";
 import { transformUrl } from "libs/transformUrl";
+
 import Title from "components/title/Title";
 import TabPanel from "components/tabs/TabPanel";
 import ProductItem from "./components/ProductItem";
 import BtnSeeMore from "components/button/BtnSeeMore";
-import { PAGES_API, TYPE_PARAMS } from "apis";
-import { IPage, responseSchema } from "interface";
-import { PRODUCT_CATEGORIES_ITEMS, PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
-
-import { useUpdateEffect } from "react-use";
 import SkeletonContainer from "components/skeleton/SkeletonContainer";
 
-const itemAll = {
-  id: 0,
-  title: "All items",
-};
+import { PAGES_API, TYPE_PARAMS } from "apis";
+import { IPage, responseSchema } from "interface";
+import {
+  PRODUCT_CATEGORIES_ITEMS,
+  PRODUCT_DETAIL_ITEMS,
+} from "interface/responseSchema/product";
 
 export type ProductProps = IPage<
   [
@@ -27,8 +28,13 @@ export type ProductProps = IPage<
   ]
 >;
 
+const itemAll = {
+  id: 0,
+  title: "All items",
+};
+
 export default function Products(props: ProductProps) {
-  const router = useRouter()
+  const router = useRouter();
   const [params, setParams] = useParams({
     initState: {
       fields: "*",
@@ -38,35 +44,37 @@ export default function Products(props: ProductProps) {
     },
     excludeKeys: ["limit", "offset", "type", "search"],
   });
-  const { initData } = props
-  const dataCategories = initData[0].items
-  const fetchDataFirst = initData[1].items
-  const nextData = initData[1].next
+  const { initData } = props;
+  const dataCategories = initData[0].items;
+  const fetchDataFirst = initData[1].items;
+  const nextData = initData[1].next;
 
-  const [urlApi, setUrlApi] = useState<string>(nextData)
-  const [isFetch, setIsFetch] = useState<boolean>(false)
-  const [currentTab, setCurrentTab] = useState<number>((Number(router.query.child_of) || 0))
-  const [dataTabPanel, setDataTabPanel] = useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst)
-  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(() => {
+  const [urlOfNextData, setUrlOfNextData] = useState<string>(nextData);
+  const [isFetch, setIsFetch] = useState<boolean>(false);
+  const [currentTab, setCurrentTab] = useState<number>(
+    Number(router.query.child_of) || 0
+  );
+  const [dataTabPanel, setDataTabPanel] =
+    useState<PRODUCT_DETAIL_ITEMS[]>(fetchDataFirst);
+  const { data, isLoading } = useSWR<responseSchema<PRODUCT_DETAIL_ITEMS>>(
+    () => {
+      if (!isFetch) return;
 
-    if (!isFetch) return;
+      if (!urlOfNextData) return;
 
-    if (!urlApi) return;
-
-    return transformUrl(urlApi, params)
-  })
+      return transformUrl(urlOfNextData, params);
+    }
+  );
 
   useEffect(() => {
     if (data == undefined) return;
 
-    const nextData = data.next
-    setUrlApi(nextData)
-
+    const nextData = data.next;
+    setUrlOfNextData(nextData);
     setDataTabPanel((prevData) => {
-      return prevData.concat(data.items)
-    })
-    setIsFetch(false)
-
+      return prevData.concat(data.items);
+    });
+    setIsFetch(false);
   }, [data]);
 
   useUpdateEffect(() => {
@@ -82,12 +90,10 @@ export default function Products(props: ProductProps) {
         search: undefined,
       });
     }
-    setDataTabPanel([])
-    setUrlApi(PAGES_API)
-    setIsFetch(true)
+
+    handleResetData();
   }, [router.query.child_of]);
 
-  // Search
   useEffect(() => {
     if (router.query.search == undefined) {
       return;
@@ -97,11 +103,18 @@ export default function Products(props: ProductProps) {
         search: router.query.search,
       });
     }
-  }, [router.query.serach]);
+    handleResetData();
+  }, [router.query.search]);
+
+  const handleResetData = useCallback(() => {
+    setDataTabPanel([]);
+    setUrlOfNextData(PAGES_API);
+    setIsFetch(true);
+  }, []);
 
   const handleChange = useCallback(
     (event: React.SyntheticEvent, newValue: number) => {
-      setCurrentTab(newValue)
+      setCurrentTab(newValue);
       if (newValue == 0) {
         setParams({
           child_of: undefined,
@@ -113,16 +126,15 @@ export default function Products(props: ProductProps) {
           search: undefined,
         });
       }
-      setDataTabPanel([])
-      setUrlApi(PAGES_API)
-      setIsFetch(true)
-    }, []);
+      handleResetData();
+    },
+    []
+  );
 
   const handleSeeMore = useCallback(() => {
-    setIsFetch(true)
-  }, [])
+    setIsFetch(true);
+  }, []);
 
-  // Render Categories
   const renderCategories = useMemo(() => {
     if (dataCategories == undefined) return;
     const mergeCategories = [itemAll, ...dataCategories];
@@ -133,7 +145,7 @@ export default function Products(props: ProductProps) {
 
   const renderTabPanel = useMemo(() => {
     if (dataTabPanel == undefined) return;
-    if (isLoading) return <SkeletonContainer quantity={4} />
+    if (isLoading) return <SkeletonContainer quantity={4} />;
     return (
       <TabPanel value={currentTab} index={currentTab}>
         <Grid container spacing={4}>
@@ -154,24 +166,25 @@ export default function Products(props: ProductProps) {
           )}
         </Grid>
         <BtnSeeMore
-          style={urlApi === null ? "none" : "block"}
+          style={urlOfNextData === null ? "none" : "block"}
           onClick={handleSeeMore}
         >
           See More
         </BtnSeeMore>
       </TabPanel>
     );
-  }, [dataTabPanel, currentTab]);
+  }, [dataTabPanel, currentTab, isLoading]);
 
   return (
     <Container sx={{ mt: "40px" }}>
       <Box sx={{ mb: "100px" }}>
-        <Title title={"OUR PRODUCT"} widthText="190px" lineHeight={24}></Title>
+        <Title
+          title={"OUR PRODUCT"}
+          widthOfText="190px"
+          heightOfText={24}
+        ></Title>
         <StyledWrapTabs>
-          <Tabs
-            value={currentTab}
-            onChange={handleChange}
-          >
+          <Tabs value={currentTab} onChange={handleChange}>
             {renderCategories}
           </Tabs>
         </StyledWrapTabs>
@@ -197,8 +210,8 @@ const StyledWrapTabs = styled(Box)(() => {
       fontWeight: "700 !important",
       textTransform: "none",
     },
-  }
-})
+  };
+});
 
 const StyledBoxNothing = styled(Box)(() => {
   return {
@@ -208,5 +221,5 @@ const StyledBoxNothing = styled(Box)(() => {
     transform: "translate(-50%,0)",
     fontSize: "24px",
     fontWeight: 500,
-  }
-})
+  };
+});

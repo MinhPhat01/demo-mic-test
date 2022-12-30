@@ -1,7 +1,7 @@
-import { ParsedUrlQuery } from "querystring";
-import { PAGES_API, SETTING_API, TYPE_PARAMS } from "apis";
-import { transformUrl } from "./transformUrl";
 import axios from "../axios.config";
+import { ParsedUrlQuery } from "querystring";
+import { transformUrl } from "./transformUrl";
+import { PAGES_API, SETTING_API, TYPE_PARAMS } from "apis";
 
 const prefetchData = async (
   originalUrlList: string[],

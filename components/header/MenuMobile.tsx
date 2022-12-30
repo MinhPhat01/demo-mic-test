@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Box, useTheme, styled } from "@mui/material";
+import Image from "next/image";
+import React, { useMemo, useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, useTheme, styled } from "@mui/material";
+
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
 
 const listMenu = [
@@ -15,9 +17,9 @@ const listMenu = [
 ];
 
 type MenuMobileProps = {
-  setShow: (b: boolean) => void
-  show: boolean
-}
+  setShow: (b: boolean) => void;
+  show: boolean;
+};
 
 const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
   const theme = useTheme();
@@ -28,7 +30,8 @@ const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
   };
 
   const renderListMenu = useMemo(() => {
-    return listMenu.length > 0 &&
+    return (
+      listMenu.length > 0 &&
       listMenu.map((item, index) => {
         return (
           <Link href={`${item.src}`} key={item.id}>
@@ -36,8 +39,7 @@ const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
               onClick={handleClick(index)}
               sx={{
                 color: selectedIndex === index ? "#00A859" : "#141416",
-                borderLeft:
-                  selectedIndex === index ? "2px solid #00A859" : "",
+                borderLeft: selectedIndex === index ? "2px solid #00A859" : "",
                 [theme.breakpoints.down("sm")]: {
                   marginLeft: "-20px",
                 },
@@ -48,8 +50,9 @@ const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
           </Link>
         );
       })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listMenu])
+  }, [listMenu]);
 
   return (
     <StyledWrapperMenu>
@@ -67,9 +70,7 @@ const MenuMobile = ({ setShow, show }: MenuMobileProps) => {
           <CloseIcon />
         </Box>
       </Box>
-      <Box sx={{ mt: "88px" }}>
-        {renderListMenu}
-      </Box>
+      <Box sx={{ mt: "88px" }}>{renderListMenu}</Box>
       <ChangeLanguage />
     </StyledWrapperMenu>
   );
@@ -85,8 +86,8 @@ const StyledMenuItem = styled(Box)(() => {
     padding: "10px 0px 10px 20px",
     textTransform: "capitalize",
     marginLeft: "-20px",
-  }
-})
+  };
+});
 
 const StyledWrapperMenu = styled(Box)(({ theme }) => {
   return {
@@ -99,5 +100,5 @@ const StyledWrapperMenu = styled(Box)(({ theme }) => {
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-  }
-})
+  };
+});

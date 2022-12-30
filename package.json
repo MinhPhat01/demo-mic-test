@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -22,6 +23,7 @@
     "@mui/material": "^5.10.17",
     "@next/font": "^13.0.7",
     "@types/dompurify": "^2.4.0",
+    "@types/react-slick": "^0.23.10",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "axios": "^1.2.1",
     "date-fns": "^2.29.3",

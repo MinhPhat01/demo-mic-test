@@ -1,48 +1,66 @@
-import React, { useMemo, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Box, Button, Container, Grid, Typography, styled } from "@mui/material";
+import React, { useMemo, useRef } from "react";
+
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
+  styled,
+} from "@mui/material";
+import {
+  usePopupState,
+  bindTrigger,
+  bindMenu,
+} from "material-ui-popup-state/hooks";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 import useMeasure from "react-use-measure";
-import ImgLarge from "./components/ImgLarge";
-import ImgSmall from "./components/ImgSmall";
-import RelatedProduct from "./components/RelatedProduct";
-import { IPage, } from "interface";
-import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
-import { imgECommerce } from "constant";
 
-export type ProductDetailsProps = IPage<[PRODUCT_DETAIL_ITEMS]>
+import RelatedProduct from "./components/RelatedProduct";
+import ImgOfProductDetail from "./components/ImgOfProductDetail";
+
+import { IPage } from "interface";
+import { imgECommerce } from "constant";
+import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
+
+export type ProductDetailsProps = IPage<[PRODUCT_DETAIL_ITEMS]>;
 
 export default function ProductDetails(props: ProductDetailsProps) {
-  const router = useRouter()
+  const router = useRouter();
   const { id } = router.query;
 
-  const { initData } = props
-  const data = initData[0]
+  const { initData } = props;
+  const data = initData[0];
 
-  const parentId = data?.meta.parent.id;
+  const parentId = data?.meta?.parent?.id;
   const listImg = data?.images;
+
   const [ref, { width }] = useMeasure();
   const popupState = usePopupState({ variant: "popover", popupId: "demoMenu" });
 
-  const refSlider = useRef<{ ref1: Slider, ref2: Slider }>({ ref1: Slider, ref2: Slider })
+  const refSlider = useRef({
+    ref1: undefined,
+    ref2: undefined,
+  });
 
-  const renderListImgLarge = useMemo(() => {
+  const renderListImg = useMemo(() => {
     if (!listImg) return null;
     return listImg.map((item, index) => {
-      return <ImgLarge key={index} imgSrc={item.value} />;
+      return <ImgOfProductDetail key={index} imgSrc={item.value} />;
     });
   }, [listImg]);
 
-  const renderListImgSmall = useMemo(() => {
+  const renderListSmallImg = useMemo(() => {
     if (!listImg) return null;
     return listImg.map((item, index) => {
-      return <ImgSmall key={index} imgSrc={item.value} />;
+      return <ImgOfProductDetail key={index} imgSrc={item.value} />;
     });
   }, [listImg]);
 
@@ -74,10 +92,13 @@ export default function ProductDetails(props: ProductDetailsProps) {
       <Grid container columnSpacing={4}>
         <Grid item xs={12} md={6}>
           <Box sx={{ cursor: "pointer" }}>
-            <Slider asNavFor={refSlider.current.ref2} ref={(slider) => {
-              refSlider.current.ref1 = slider
-            }}>
-              {renderListImgLarge}
+            <Slider
+              asNavFor={refSlider.current.ref2}
+              ref={(slider) => {
+                refSlider.current.ref1 = slider;
+              }}
+            >
+              {renderListImg}
             </Slider>
           </Box>
           <Box
@@ -86,7 +107,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
             <Slider
               asNavFor={refSlider.current.ref1}
               ref={(slider) => {
-                refSlider.current.ref2 = slider
+                refSlider.current.ref2 = slider;
               }}
               slidesToShow={3}
               swipeToSlide={true}
@@ -94,20 +115,16 @@ export default function ProductDetails(props: ProductDetailsProps) {
               slidesToScroll={1}
               infinite={listImg.length > 3 ? true : false}
             >
-              {renderListImgSmall}
+              {renderListSmallImg}
             </Slider>
           </Box>
         </Grid>
         <Grid xs={12} item md={6}>
-          <StyledText variant="h5">
-            {data?.title}
-          </StyledText>
+          <StyledText variant="h5">{data?.title}</StyledText>
           <StyledText variant="h6">
             Specification: {data?.description}
           </StyledText>
-          <StyledDetails>
-            {data?.specification}
-          </StyledDetails>
+          <StyledDetails>{data?.specification}</StyledDetails>
           <Box
             sx={{
               "& .MuiPaper-root": {
@@ -153,8 +170,8 @@ const StyledText = styled(Typography)(({ theme }) => {
       lineHeight: "40px",
       marginTop: "30px",
     },
-  }
-})
+  };
+});
 
 const StyledDetails = styled(Typography)(() => {
   return {
@@ -162,8 +179,8 @@ const StyledDetails = styled(Typography)(() => {
     lineHeight: "24px",
     textAlign: "justify",
     marginBottom: "16px",
-  }
-})
+  };
+});
 
 const StyledButton = styled(Button)(() => {
   return {
@@ -175,7 +192,5 @@ const StyledButton = styled(Button)(() => {
     lineHeight: "16px",
     fontWeight: "700",
     textTransform: "none",
-  }
-})
-
-
+  };
+});

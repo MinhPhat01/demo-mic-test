@@ -1,22 +1,25 @@
 import React from "react";
-import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
-import { format, parseISO } from "date-fns";
+
+import { Box, Typography, styled } from "@mui/material";
+
+import Image from "components/Image";
 import DomPurifyOfPost from "components/dompurify/DomPurifyOfPost";
-import Image from "components/Image"
+
 import { boxShadow } from "constant";
+import { format, parseISO } from "date-fns";
 
 type PostProps = {
-  imgSrc: string,
-  title: string,
-  date: string,
-  content: any
-}
+  imgSrc: string;
+  title: string;
+  date: string;
+  content: any;
+};
 
 type FilterContent = {
-  block_type: string,
-  value: string | Node
-}
+  block_type: string;
+  value: string | Node;
+};
 
 const Post = ({ imgSrc, title, date, content }: PostProps) => {
   const [ref, { width }] = useMeasure();
@@ -31,23 +34,18 @@ const Post = ({ imgSrc, title, date, content }: PostProps) => {
           width="100%"
           src={imgSrc || "/bgEmpty.png"}
           alt="img"
-          height={width * 4 / 6}
+          height={(width * 4) / 6}
           style={{ objectFit: "contain", borderRadius: "8px" }}
         />
       </Box>
-      <Typography variant="h4">
-        {title}
-      </Typography>
+      <Typography variant="h4">{title}</Typography>
       <StyledWrapperDate>
-        <StyledDate>
-          {format(parseISO(date), "dd/MM/yyyy")}
-        </StyledDate>
+        <StyledDate>{format(parseISO(date), "dd/MM/yyyy")}</StyledDate>
       </StyledWrapperDate>
       {filterContent.map((item: FilterContent, index: number) => {
-        const { value } = item
-        return <DomPurifyOfPost key={index} value={value}></DomPurifyOfPost>
+        const { value } = item;
+        return <DomPurifyOfPost key={index} value={value}></DomPurifyOfPost>;
       })}
-
     </StyledWrapperPost>
   );
 };
@@ -61,8 +59,8 @@ const StyledWrapperPost = styled(Box)(() => {
     padding: "20px",
     borderRadius: "16px",
     boxShadow: boxShadow.boxShadow3,
-  }
-})
+  };
+});
 
 const StyledDate = styled(Typography)(() => {
   return {
@@ -71,8 +69,8 @@ const StyledDate = styled(Typography)(() => {
     lineHeight: "12px",
     color: "#23262F",
     fontWeight: "700",
-  }
-})
+  };
+});
 
 const StyledWrapperDate = styled(Box)(() => {
   return {
@@ -80,5 +78,5 @@ const StyledWrapperDate = styled(Box)(() => {
     width: "fit-content",
     border: "2px solid #E6E8EC",
     borderRadius: "4px",
-  }
-})
+  };
+});

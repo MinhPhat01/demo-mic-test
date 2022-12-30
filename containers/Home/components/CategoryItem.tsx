@@ -1,14 +1,18 @@
 import React from "react";
 import Link from "next/link";
+
 import { Typography, Box, styled } from "@mui/material";
-import { useMeasure } from "react-use";
+
 import { boxShadow } from "constant";
-import Image from "components/Image"; 
+
+import { useMeasure } from "react-use";
+
+import Image from "components/Image";
 
 type CategoryItemProps = {
-  imgSrc: string,
-  title: string,
-  id: number,
+  imgSrc: string;
+  title: string;
+  id: number;
 };
 
 const CategoryItem = ({ imgSrc, title, id }: CategoryItemProps) => {
@@ -42,6 +46,5 @@ const StyledWrapper = styled(Box)(() => {
     borderRadius: "20px",
     background: "#FCFCFD",
     textAlign: "center",
-  }
-})
-
+  };
+});

@@ -1,17 +1,28 @@
 import React, { Fragment } from "react";
+
 import { Container, Grid } from "@mui/material";
+
 import { IPage, responseSchema } from "interface";
-import { HOME_PAGE, HOME_PAGE_NEW, HOME_PAGE_OUR_CATEGORIES } from "interface/responseSchema/home";
+import {
+  HOME_PAGE,
+  HOME_PAGE_NEW,
+  HOME_PAGE_OUR_CATEGORIES,
+} from "interface/responseSchema/home";
+
 import Banner from "./components/Banner";
 import HomePageNews from "./components/HomePageNews";
 import OurCategories from "./components/OurCategories";
 
 export type HomeProps = IPage<
-  [responseSchema<HOME_PAGE>, responseSchema<HOME_PAGE_OUR_CATEGORIES>, responseSchema<HOME_PAGE_NEW>]
->
+  [
+    responseSchema<HOME_PAGE>,
+    responseSchema<HOME_PAGE_OUR_CATEGORIES>,
+    responseSchema<HOME_PAGE_NEW>
+  ]
+>;
 
 const Home = (props: HomeProps) => {
-  const { initData } = props
+  const { initData } = props;
 
   return (
     <Fragment>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Box } from "@mui/material";
 import { useMeasure } from "react-use";
 
-export default function ImgSmall({ imgSrc }: { imgSrc: string }) {
+export default function ImgOfProductDetail({ imgSrc }: { imgSrc: string }) {
   const [ref, { width }] = useMeasure();
 
   return (

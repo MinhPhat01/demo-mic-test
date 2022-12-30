@@ -1,24 +1,29 @@
 import "../styles/globals.css";
 import { AppProps } from "next/app";
-import createEmotionCache from "createEmotionCache";
-import { CacheProvider, EmotionCache } from "@emotion/react";
+
 import SWR from "contexts/SWR";
 import Setting from "contexts/Settings";
-import ErrorBoundaryUI from "hocs/ErrorBoundary";
-import ComponentThemeProvider from "hocs/ThemeProvider";
+import createEmotionCache from "createEmotionCache";
+import { CacheProvider, EmotionCache } from "@emotion/react";
+
 import { SnackbarProvider } from "notistack";
 import NextNProgress from "nextjs-progressbar";
+import ErrorBoundaryUI from "hocs/ErrorBoundary";
+import ComponentThemeProvider from "hocs/ThemeProvider";
+
 import Layout from "components/layout/Layout";
 
-const clientSideEmotionCache = createEmotionCache();
-
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache
+  emotionCache?: EmotionCache;
+  pageProps: {
+    initData: [];
+    fallback: {};
+  };
 }
+const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
   return (
     <CacheProvider value={emotionCache}>
       <ErrorBoundaryUI>
@@ -35,9 +40,8 @@ function MyApp(props: MyAppProps) {
           </ComponentThemeProvider>
         </SnackbarProvider>
       </ErrorBoundaryUI>
-    </CacheProvider >
+    </CacheProvider>
   );
 }
-
 
 export default MyApp;

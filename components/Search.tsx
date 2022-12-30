@@ -1,13 +1,14 @@
-import SearchIcon from "@mui/icons-material/Search";
-import { OutlinedInput, useTheme, styled } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
+import SearchIcon from "@mui/icons-material/Search";
+import { OutlinedInput, styled } from "@mui/material";
+
 type SearchProps = {
-  name: "search"
+  name: "search";
   control: Control<{
-    search: any
-  }>
-}
+    search: any;
+  }>;
+};
 
 const Search = ({ control, name }: SearchProps) => {
   return (
@@ -39,5 +40,5 @@ const StyledInput = styled(OutlinedInput)(({ theme }) => {
     [theme.breakpoints.down("md")]: {
       width: "100%",
     },
-  }
-})
+  };
+});

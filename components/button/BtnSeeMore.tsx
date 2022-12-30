@@ -2,13 +2,18 @@ import React from "react";
 import { Button, styled } from "@mui/material";
 
 type BtnSeeMoreProps = {
-  children: React.ReactNode,
-  onClick?: () => void,
-  disable?: boolean,
-  style?: string
+  children: React.ReactNode;
+  onClick?: () => void;
+  disable?: boolean;
+  style?: string;
 };
 
-export default function BtnSeeMore({ children, onClick, disable, style }: BtnSeeMoreProps) {
+export default function BtnSeeMore({
+  children,
+  onClick,
+  disable,
+  style,
+}: BtnSeeMoreProps) {
   return (
     <StyledButton
       style={{ display: style }}
@@ -35,7 +40,5 @@ const StyledButton = styled(Button)(({ theme }) => {
     position: "relative",
     left: "50%",
     transform: "translate(-50%,0)",
-  }
-})
-
-
+  };
+});

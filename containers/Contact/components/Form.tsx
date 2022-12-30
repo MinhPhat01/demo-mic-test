@@ -1,21 +1,24 @@
 import { useCallback } from "react";
+
 import { Box, Button, Grid, styled } from "@mui/material";
+
 import axios from "axios";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { useNotify } from "hooks/useNotify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { isPossiblePhoneNumber } from "react-phone-number-input";
-import { useNotify } from "hooks/useNotify";
+
 import FormControlInput from "components/input/FormControlInput";
 import FormControlPhoneNumber from "components/input/FormControlPhoneNumber";
 import FormControlTextarea from "components/input/FormControlTextarea";
 
 type SubmitValues = {
-  name: string,
-  email: string,
-  message: string,
-  phone_number: string
-}
+  name: string;
+  email: string;
+  message: string;
+  phone_number: string;
+};
 
 const schema = yup.object({
   name: yup.string().required("Please enter your name"),
@@ -119,8 +122,8 @@ const StyledWrapButton = styled(Box)(({ theme }) => {
     [theme.breakpoints.down("md")]: {
       justifyContent: "center",
     },
-  }
-})
+  };
+});
 
 const StyledButton = styled(Button)(({ theme }) => {
   return {
@@ -137,5 +140,5 @@ const StyledButton = styled(Button)(({ theme }) => {
       backgroundColor: "#00A859 !important",
       color: "white",
     },
-  }
-})
+  };
+});

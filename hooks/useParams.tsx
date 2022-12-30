@@ -1,103 +1,104 @@
-import queryString from "query-string";
-import { usePrevious } from "react-use";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
+
 import pick from "lodash/pick";
 import omit from "lodash/omit";
 import isEqual from "lodash/isEqual";
+import queryString from "query-string";
+import { usePrevious } from "react-use";
 import { transformUrl } from "libs/transformUrl";
 
 interface UseParamsProps {
-    initState?: {
-        [key: string]: any;
-    };
-    callback?: (params: object) => void;
-    excludeKeys?: string[];
-    isUpdateRouter?: boolean;
-    isShallow?: boolean;
-    isScroll?: boolean;
+  initState?: {
+    [key: string]: any;
+  };
+  callback?: (params: object) => void;
+  excludeKeys?: string[];
+  isUpdateRouter?: boolean;
+  isShallow?: boolean;
+  isScroll?: boolean;
 }
 
 export const useParams = (props: UseParamsProps = {}) => {
-    const {
-        initState = {},
-        callback = () => {
-            //
-        },
-        excludeKeys = [],
-        isScroll = false,
-        isShallow = true,
-        isUpdateRouter = true,
-    } = props;
+  const {
+    initState = {},
+    callback = () => {
+      //
+    },
+    excludeKeys = [],
+    isScroll = false,
+    isShallow = true,
+    isUpdateRouter = true,
+  } = props;
 
-    const router = useRouter();
-    const [isReady, setIsReady] = useState(false);
-    const [params, setParams] = useState(initState);
-    const prevParams = usePrevious(params);
+  const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
+  const [params, setParams] = useState(initState);
+  const prevParams = usePrevious(params);
 
-    useEffect(() => {
-        setParams((prev) => {
-            const originalObj = { ...prev, ...router.query };
+  useEffect(() => {
+    setParams((prev) => {
+      const originalObj = { ...prev, ...router.query };
 
-            const newObj: Record<string, any> = {};
+      const newObj: Record<string, any> = {};
 
-            for (const key of Object.keys(originalObj)) {
-                if (!!originalObj[key]) {
-                    newObj[key] = originalObj[key];
-                }
-            }
-
-            return newObj;
-        });
-        setIsReady(true);
-    }, []);
-
-    useEffect(() => {
-        if (isEqual(prevParams, params)) {
-            return;
+      for (const key of Object.keys(originalObj)) {
+        if (!!originalObj[key]) {
+          newObj[key] = originalObj[key];
         }
+      }
 
-        const urlParams = omit(params, [...excludeKeys]);
+      return newObj;
+    });
+    setIsReady(true);
+  }, []);
 
-        const { url } = queryString.parseUrl(router.asPath);
+  useEffect(() => {
+    if (isEqual(prevParams, params)) {
+      return;
+    }
 
-        const pathname = transformUrl(url, urlParams);
+    const urlParams = omit(params, [...excludeKeys]);
 
-        callback(params);
+    const { url } = queryString.parseUrl(router.asPath);
 
-        if (isUpdateRouter) {
-            router.push(pathname, pathname, {
-                shallow: isShallow,
-                scroll: isScroll,
-            });
-        }
-    }, [params, prevParams]);
+    const pathname = transformUrl(url, urlParams);
 
-    const paramsHandler = useCallback((newParams: object) => {
-        setParams((prev) => {
-            return {
-                ...prev,
-                ...newParams,
-            };
-        });
-    }, []);
+    callback(params);
 
-    const resetParams = useCallback(() => {
-        const whiteList = ["limit", "use_cache", "offset"];
+    if (isUpdateRouter) {
+      router.push(pathname, pathname, {
+        shallow: isShallow,
+        scroll: isScroll,
+      });
+    }
+  }, [params, prevParams]);
 
-        const defaultParams = {
-            limit: 10,
-            offset: 0,
-            with_count: true,
-        };
+  const paramsHandler = useCallback((newParams: object) => {
+    setParams((prev) => {
+      return {
+        ...prev,
+        ...newParams,
+      };
+    });
+  }, []);
 
-        setParams({ ...defaultParams, ...pick(params, whiteList) });
-    }, [params]);
+  const resetParams = useCallback(() => {
+    const whiteList = ["limit", "use_cache", "offset"];
 
-    return [params, paramsHandler, isReady, resetParams] as [
-        params: typeof params,
-        paramsHandler: typeof paramsHandler,
-        isReady: typeof isReady,
-        resetParams: typeof resetParams
-    ];
+    const defaultParams = {
+      limit: 10,
+      offset: 0,
+      with_count: true,
+    };
+
+    setParams({ ...defaultParams, ...pick(params, whiteList) });
+  }, [params]);
+
+  return [params, paramsHandler, isReady, resetParams] as [
+    params: typeof params,
+    paramsHandler: typeof paramsHandler,
+    isReady: typeof isReady,
+    resetParams: typeof resetParams
+  ];
 };

@@ -17,6 +17,6 @@
     "downlevelIteration": true,
     "baseUrl": ".",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/title/Title.tsx", "containers/About/About.tsx", "containers/Products/components/ImgLarge.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/title/Title.tsx", "containers/About/About.tsx", "containers/Products/components/ImgLarge.tsx", "containers/Products/components/index.js"],
   "exclude": ["node_modules"]
 }

@@ -1,15 +1,18 @@
-import { useMemo } from "react";
 import Link from "next/link";
+import { useMemo } from "react";
+
 import { Box, Grid } from "@mui/material";
-import { HOME_PAGE_NEW } from "interface/responseSchema/home";
+
 import { responseSchema } from "interface";
+import { HOME_PAGE_NEW } from "interface/responseSchema/home";
+
+import Post from "components/Post/Post";
 import Title from "components/title/Title";
 import BtnSeeMore from "components/button/BtnSeeMore";
-import Post from "components/Post/Post";
 
 type HomePageNewsProps = {
-  data: responseSchema<HOME_PAGE_NEW>
-}
+  data: responseSchema<HOME_PAGE_NEW>;
+};
 
 const HomePageNews = ({ data }: HomePageNewsProps) => {
   const renderList = useMemo(() => {
@@ -34,12 +37,12 @@ const HomePageNews = ({ data }: HomePageNewsProps) => {
 
   return (
     <Box sx={{ mt: "24px", mb: "46px" }}>
-      <Title title="News" widthText="140px" lineHeight={12} />
+      <Title title="News" widthOfText="140px" heightOfText={12} />
       <Grid container sx={{ my: "12px" }} spacing={"32px"}>
         {renderList}
       </Grid>
       <Link href="/news">
-        <BtnSeeMore >See More</BtnSeeMore>
+        <BtnSeeMore>See More</BtnSeeMore>
       </Link>
     </Box>
   );

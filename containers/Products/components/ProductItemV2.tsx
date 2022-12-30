@@ -1,14 +1,20 @@
 import Image from "next/image";
+
 import { Box, Typography, styled } from "@mui/material";
+
 import { useMeasure } from "react-use";
 
 type ProductItemV2Props = {
-  pieces: string,
-  imgSrc: string,
-  title: string
-}
+  pieces: string;
+  imgSrc: string;
+  title: string;
+};
 
-export default function ProductItemV2({ pieces, imgSrc, title }: ProductItemV2Props) {
+export default function ProductItemV2({
+  pieces,
+  imgSrc,
+  title,
+}: ProductItemV2Props) {
   const [ref, { width }] = useMeasure();
   return (
     <Box
@@ -26,12 +32,8 @@ export default function ProductItemV2({ pieces, imgSrc, title }: ProductItemV2Pr
           style={{ objectFit: "cover", height: width, borderRadius: "4px" }}
         ></Image>
       </Box>
-      <StyledTitle>
-        {title}
-      </StyledTitle>
-      <StyledPieces>
-        {pieces || "pieces"}
-      </StyledPieces>
+      <StyledTitle>{title}</StyledTitle>
+      <StyledPieces>{pieces || "pieces"}</StyledPieces>
     </Box>
   );
 }
@@ -48,8 +50,8 @@ const StyledTitle = styled(Typography)(() => {
     minHeight: "48px",
     WebkitBoxOrient: "vertical",
     WebkitLineClamp: 2,
-  }
-})
+  };
+});
 
 const StyledPieces = styled(Box)(() => {
   return {
@@ -61,5 +63,5 @@ const StyledPieces = styled(Box)(() => {
     borderRadius: "4px",
     width: "fit-content",
     fontWeight: "700",
-  }
-})
+  };
+});

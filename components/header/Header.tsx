@@ -1,28 +1,38 @@
-import { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Box, Container, Stack, styled, Typography, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
-import MenuProduct from "./MenuProduct";
+import { useCallback, useMemo } from "react";
+
+import {
+  Box,
+  Container,
+  Stack,
+  styled,
+  Typography,
+  useTheme,
+} from "@mui/material";
+
 import Image from "components/Image";
-import HeaderMobile from "./HeaderMobile";
 import Search from "components/Search";
+import MenuProduct from "./MenuProduct";
+import HeaderMobile from "./HeaderMobile";
 import ChangeLanguage from "components/changeLanguage/ChangeLanguage";
+
 import { boxShadow, listMenuHeader } from "constant";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
-import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product"
+import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 
 type ValuesSubmit = {
-  search: string
-}
+  search: string;
+};
 
 type HeaderProps = {
-  data: HOME_PAGE_COMMON
-  dataCategory: PRODUCT_CATEGORIES_ITEMS[]
-}
+  data: HOME_PAGE_COMMON;
+  dataCategory: PRODUCT_CATEGORIES_ITEMS[];
+};
 
 export default function Header({ data, dataCategory }: HeaderProps) {
-  const theme = useTheme()
+  const theme = useTheme();
   const router = useRouter();
   const { handleSubmit, control, reset } = useForm({
     defaultValues: {
@@ -35,24 +45,34 @@ export default function Header({ data, dataCategory }: HeaderProps) {
       return (
         <Box key={item.id}>
           <Link href={item.href}>
-            <Typography variant="h1" sx={{
-              "&:hover": {
-                color: theme.palette.primary.main
-              }
-            }}>
+            <Typography
+              variant="h1"
+              sx={{
+                "&:hover": {
+                  color: theme.palette.primary.main,
+                },
+              }}
+            >
               {item.name}
             </Typography>
           </Link>
-          {item.component ? <MenuProduct dataCategory={dataCategory} href={item.href} /> : ""}
+          {item.component ? (
+            <MenuProduct dataCategory={dataCategory} href={item.href} />
+          ) : (
+            ""
+          )}
         </Box>
       );
     });
   }, [listMenuHeader]);
 
-  const handleSearch = useCallback((values: ValuesSubmit) => {
-    router.push(`/products?search=${values.search}`);
-    reset();
-  }, [router]);
+  const handleSearch = useCallback(
+    (values: ValuesSubmit) => {
+      router.push(`/products?search=${values.search}`);
+      reset();
+    },
+    [router]
+  );
 
   if (!data) return;
   return (
@@ -61,7 +81,13 @@ export default function Header({ data, dataCategory }: HeaderProps) {
         <StyledWrapperHeaderChild>
           <Box>
             <Link href="/">
-              <Image src={data.logo} alt="logo" width={115} height={80} style={{ objectFit: "contain" }} />
+              <Image
+                src={data.logo}
+                alt="logo"
+                width={115}
+                height={80}
+                style={{ objectFit: "contain" }}
+              />
             </Link>
           </Box>
           <Box
@@ -86,7 +112,6 @@ export default function Header({ data, dataCategory }: HeaderProps) {
   );
 }
 
-
 const StyledWrapperHeader = styled(Box)(() => {
   return {
     padding: "0",
@@ -96,9 +121,9 @@ const StyledWrapperHeader = styled(Box)(() => {
     right: 0,
     backgroundColor: "white",
     zIndex: "999",
-    boxShadow: boxShadow.boxShadow3
-  }
-})
+    boxShadow: boxShadow.boxShadow3,
+  };
+});
 const StyledWrapperHeaderChild = styled(Box)(({ theme }) => {
   return {
     display: "flex",
@@ -108,8 +133,5 @@ const StyledWrapperHeaderChild = styled(Box)(({ theme }) => {
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
-
-  }
-})
-
-
+  };
+});

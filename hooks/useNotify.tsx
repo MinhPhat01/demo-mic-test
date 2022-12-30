@@ -1,5 +1,5 @@
-import { useSnackbar } from "notistack";
 import { useCallback } from "react";
+import { useSnackbar } from "notistack";
 
 export function useNotify() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
