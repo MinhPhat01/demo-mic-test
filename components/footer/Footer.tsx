@@ -16,7 +16,7 @@ import {
 
 import Map from "components/map/Map";
 import Image from "components/Image";
-import { menuOfFooter } from "constant";
+import { menuOfFooter } from "constants";
 import { HOME_PAGE_COMMON } from "interface/responseSchema/common";
 import { PRODUCT_CATEGORIES_ITEMS } from "interface/responseSchema/product";
 

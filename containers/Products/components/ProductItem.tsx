@@ -6,7 +6,7 @@ import { Box, Grid, Typography, styled } from "@mui/material";
 
 import { useMeasure } from "react-use";
 
-import { boxShadow } from "constant";
+import { boxShadow } from "constants";
 
 type ProductItemProps = {
   title: string;

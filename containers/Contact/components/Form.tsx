@@ -49,24 +49,28 @@ export default function Form() {
   });
   const { snackbarSuccess, snackbarError } = useNotify();
 
-  const onSubmit = useCallback(async (values: SubmitValues) => {
-    try {
-      const headers = {
-        Authorization: process.env.NEXT_PUBLIC_API_KEY,
-      };
-      await axios.post(
-        "https://mic.t-solution.vn/api/v2/submissions/",
-        values,
-        {
-          headers,
-        }
-      );
-      snackbarSuccess("Submit form successfully");
-      reset();
-    } catch (error: any) {
-      snackbarError(error.response.data.message);
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (values: SubmitValues) => {
+      try {
+        const headers = {
+          Authorization: process.env.NEXT_PUBLIC_API_KEY,
+        };
+        await axios.post(
+          "https://mic.t-solution.vn/api/v2/submissions/",
+          values,
+          {
+            headers,
+          }
+        );
+        snackbarSuccess("Submit form successfully");
+        reset();
+      } catch (error: any) {
+        snackbarError(error.response.data.message);
+      }
+    },
+    [reset]
+  );
+  
   return (
     <Box component="form">
       <FormControlInput

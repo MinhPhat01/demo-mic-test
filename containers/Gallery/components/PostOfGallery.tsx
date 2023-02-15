@@ -6,7 +6,7 @@ import { Box, Typography, styled } from "@mui/material";
 import { useMeasure } from "react-use";
 import { format, parseISO } from "date-fns";
 
-import { boxShadow } from "constant";
+import { boxShadow } from "constants";
 
 type PostOfGalleryProps = {
   imgSrc: string;

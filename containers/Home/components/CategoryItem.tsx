@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Typography, Box, styled } from "@mui/material";
 
-import { boxShadow } from "constant";
+import { boxShadow } from "constants";
 
 import { useMeasure } from "react-use";
 

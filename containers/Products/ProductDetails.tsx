@@ -27,7 +27,7 @@ import RelatedProduct from "./components/RelatedProduct";
 import ImgOfProductDetail from "./components/ImgOfProductDetail";
 
 import { IPage } from "interface";
-import { imgECommerce } from "constant";
+import { imgECommerce } from "constants";
 import { PRODUCT_DETAIL_ITEMS } from "interface/responseSchema/product";
 
 export type ProductDetailsProps = IPage<[PRODUCT_DETAIL_ITEMS]>;

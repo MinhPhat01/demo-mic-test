@@ -9,7 +9,7 @@ import { transformUrl } from "libs/transformUrl";
 import Header from "components/header/Header";
 import Footer from "components/footer/Footer";
 
-import { boxShadow } from "constant";
+import { boxShadow } from "constants";
 import { SETTING_API, TYPE_PARAMS, PAGES_API } from "apis";
 
 type LayoutProps = {

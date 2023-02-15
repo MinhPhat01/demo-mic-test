@@ -1,5 +1,11 @@
 import { ErrorBoundary } from "react-error-boundary";
 
+const ErrorBoundaryUI = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
+  );
+};
+
 function ErrorFallback({ error }) {
   return (
     <div role="alert">
@@ -7,11 +13,5 @@ function ErrorFallback({ error }) {
     </div>
   );
 }
-
-const ErrorBoundaryUI = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
-  );
-};
 
 export default ErrorBoundaryUI;

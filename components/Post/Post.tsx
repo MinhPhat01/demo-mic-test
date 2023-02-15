@@ -6,7 +6,7 @@ import { Box, Typography, styled } from "@mui/material";
 import Image from "components/Image";
 import DomPurifyOfPost from "components/dompurify/DomPurifyOfPost";
 
-import { boxShadow } from "constant";
+import { boxShadow } from "constants";
 import { format, parseISO } from "date-fns";
 
 type PostProps = {

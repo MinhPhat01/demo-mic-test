@@ -15,8 +15,8 @@ export type PropsAbout = IPage<[responseSchema<ITEM_ABOUT>]>;
 export default function About(props: PropsAbout) {
   const { initData } = props;
   const dataStory = initData[0].items[0].story_content;
-  const dataMission = initData[0].items[0].mission_content;
   const dataValue = initData[0].items[0].value_content;
+  const dataMission = initData[0].items[0].mission_content;
 
   const renderStory = useMemo(() => {
     if (!dataStory) return;
@@ -26,6 +26,7 @@ export default function About(props: PropsAbout) {
         return <OurStory key={index} content={item.value} />;
       });
   }, [dataStory]);
+  
   const renderMission = useMemo(() => {
     if (!dataMission) return;
     return dataMission
